@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "nodemon main.ts"
+    "dev": "nodemon ./src/main.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
