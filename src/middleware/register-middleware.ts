@@ -22,7 +22,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			.max(32)
 			.pattern(/^\S*$/, {name: "name"})
 			.messages({
-				'string.base.name': "name cannot contains whitespace"
+				'string.pattern.name': "name cannot contains whitespace"
 			}),
 		password: Joi.string()
 			.required()
@@ -32,7 +32,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			.max(24)
 			.pattern(/^\S*$/, {name: "password"})
 			.messages({
-				'string.base.name': "password cannot contains whitespace"
+				'string.pattern.name': "password cannot contains whitespace"
 			}),
 	})
 
@@ -55,7 +55,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			})
 		}
 
-		console.log(err);
 		return res.status(500).json({
 			code: 500,
 			result: 'internal server error',
