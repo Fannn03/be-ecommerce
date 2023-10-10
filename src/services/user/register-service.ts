@@ -1,4 +1,3 @@
-import { Request } from "express";
 import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
