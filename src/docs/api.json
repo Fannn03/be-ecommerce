@@ -9,11 +9,11 @@
     {"url": "http://localhost:3000/"}
   ],
   "paths": {
-    "/users": {
+    "/users/register": {
       "post": {
         "summary": "User register",
         "description": "Create user account",
-        "tags": ["Users"],
+        "tags": ["Users", "Auth"],
         "requestBody": {
           "description": "Example form request body",
           "required": true,
@@ -60,6 +60,66 @@
                     "email": "email field is required",
                     "name": "name cannot less than 5 characters"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "User Login",
+        "description": "Retrieve data token user",
+        "tags": ["Users", "Auth"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "string",
+                "password": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "login success",
+                  "data": {
+                    "token": "some random token"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "cannot retrieve data user"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "data and hash arguments required"
                 }
               }
             }
