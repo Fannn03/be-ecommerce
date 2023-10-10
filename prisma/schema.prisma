@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id            String      @id @db.Char(26)
-  email         String      @unique @db.VarChar(50)
-  name          String      @unique @db.VarChar(32)
-  password      String      
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  deletedAt     DateTime?
+  id              String      @id @db.Char(26)
+  email           String      @unique @db.VarChar(50)
+  name            String      @unique @db.VarChar(32)
+  password        String      
+  email_verified  DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  deletedAt       DateTime?
 
   @@map("users")
 }
