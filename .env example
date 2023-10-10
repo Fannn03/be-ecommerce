@@ -1,2 +1,9 @@
 # server configuration
 SERVER_PORT=
+DATABASE_URL="mysql://user:pass@localhost:3306/db"
+SECRET_TOKEN=
+
+# webmail configuration
+EMAIL_HOST=
+EMAIL_USER=
+EMAIL_PASSWORD=
