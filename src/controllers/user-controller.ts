@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import registerService from "../services/user/register-service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import loginService from "../services/user/login-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -11,7 +12,7 @@ export const registerUser = async (req: Request, res: Response) => {
         code: 400,
         result: 'bad request',
         message: err.message
-      })
+      });
     }
   }
 
@@ -19,5 +20,31 @@ export const registerUser = async (req: Request, res: Response) => {
     code: 200,
     result: 'success',
     message: 'record has been created'
-  })
+  });
+}
+
+export const loginUser = async (req: Request, res: Response) => {
+  const data = await loginService(req.body);
+
+  if(!data) return res.status(404).json({
+    code: 404,
+    result: 'not found',
+    message: 'cannot retrieve data user'
+  });
+  else if(data instanceof Error) {
+    return res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: data.message
+    })
+  };
+
+  return res.json({
+    code: 200,
+    result: 'success',
+    message: 'login success',
+    data: {
+      token: data
+    }
+  });
 }
