@@ -63,18 +63,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "internal server error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 500,
-                  "result": "internal server error",
-                  "message": "internal server error"
-                }
-              }
-            }
           }
         }
       }
