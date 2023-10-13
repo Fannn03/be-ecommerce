@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import 'dotenv/config'
 
 declare global {
   namespace Express {
     interface Request {
-      user?: jwt.JwtPayload | string
+      user: JwtPayload
     }
   }
 }
@@ -24,9 +24,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       code: 403,
       result: 'forbidden',
       message: 'invalid token or token already expired'
-    })
+    }) 
 
-    req.user = decoded
+    req.user = decoded as JwtPayload
     return next()
   })
 }
