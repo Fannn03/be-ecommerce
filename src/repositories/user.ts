@@ -4,21 +4,9 @@ import bcrypt from 'bcrypt'
 import { RegisterBody } from "../services/user/register-service";
 const prisma = new PrismaClient()
 
-export const getUser = async (request: string) => {
-  return await prisma.user.findFirst({
-    where: {
-      OR: [
-        {id: request},
-        {email: request},
-        {name: request}
-      ]
-    }
-  })
-}
-
 export const insertUser = async (request: RegisterBody) => {
   try {
-    await prisma.user.create({
+    return await prisma.user.create({
       data: {
         id: ulid(),
         email: request.email,
@@ -29,4 +17,16 @@ export const insertUser = async (request: RegisterBody) => {
   } catch (err) {
     throw err
   }
+}
+
+export const getUser = async (request: string) => {
+  return await prisma.user.findFirst({
+    where: {
+      OR: [
+        {id: request},
+        {email: request},
+        {name: request}
+      ]
+    }
+  })
 }
