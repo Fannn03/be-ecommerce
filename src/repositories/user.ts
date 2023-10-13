@@ -4,6 +4,14 @@ import bcrypt from 'bcrypt'
 import { RegisterBody } from "../services/user/register-service";
 const prisma = new PrismaClient()
 
+interface User {
+  id?: string,
+  email?: string,
+  name?: string,
+  password?: string,
+  email_verified?: Date
+}
+
 export const insertUser = async (request: RegisterBody) => {
   try {
     return await prisma.user.create({
@@ -29,4 +37,19 @@ export const getUser = async (request: string) => {
       ]
     }
   })
+}
+
+export const verifyUser = async (id: string) => {
+  try {
+    await prisma.user.update({
+      data: {
+        email_verified: new Date().toISOString()
+      },
+      where: {
+        id: id
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
 }
