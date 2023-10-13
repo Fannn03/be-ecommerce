@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 export default (keyId: string) => {
   return `
     <html>
@@ -37,7 +39,7 @@ export default (keyId: string) => {
         <div class="container">
           <h1>Verifikasi Akun</h1>
           <p>Harap verifikasi akun dengan menekan tombol di bawah ini.</p>
-          <a class="button" href="http://localhost:3000/verify?key=${keyId}">Verifikasi Akun</a>
+          <a class="button" href="${process.env.VERIF_EMAIL_URL}?key=${keyId}">Verifikasi Akun</a>
         </div>
       </body>
     </html>
