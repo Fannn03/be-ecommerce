@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import registerService from "../services/user/register-service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import loginService from "../services/user/login-service";
+import loginService, { LoginError } from "../services/user/login-service";
 import verifyEmailService, { VerifyEmailError } from "../services/user/verify-email-service";
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -27,11 +27,19 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   const data = await loginService(req.body);
 
+  // TODO: refactor error message
   if(!data) return res.status(404).json({
     code: 404,
     result: 'not found',
     message: 'cannot retrieve data user'
   });
+  else if (data instanceof LoginError) {
+    return res.status(data.code).json({
+      code: data.code,
+      result: data.result,
+      message: data.message
+    })
+  }
   else if(data instanceof Error) {
     return res.status(500).json({
       code: 500,
