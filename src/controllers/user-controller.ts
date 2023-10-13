@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import registerService from "../services/user/register-service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import loginService from "../services/user/login-service";
+import verifyEmailService from "../services/user/verify-email-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -47,4 +48,19 @@ export const loginUser = async (req: Request, res: Response) => {
       token: data
     }
   });
+}
+
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    await verifyEmailService(req.query)
+    res.send('ok')
+  } catch (err) {
+    if(err instanceof Error) {
+      return res.status(400).json({
+        code: 400,
+        result: 'error',
+        message: err.message
+      })
+    }
+  }
 }
