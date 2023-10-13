@@ -16,7 +16,7 @@ export default async (request: RegisterBody) => {
     const uuid = uuidv4()
 
     cache.set(uuid, user.id, 15 * 60) // set cache expired in 15 minutes
-    await sendRegisterMail("fann.fann771@gmail.com", uuid) // send inbox mail to user
+    await sendRegisterMail(user.email, uuid) // send inbox mail to user
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "users_email_key") {
