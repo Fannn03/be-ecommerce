@@ -3,6 +3,7 @@ import registerService from "../services/user/register-service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import loginService, { LoginError } from "../services/user/login-service";
 import verifyEmailService, { VerifyEmailError } from "../services/user/verify-email-service";
+import updateService from "../services/user/update-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -83,4 +84,12 @@ export const verifyEmail = async (req: Request, res: Response) => {
     result: 'success',
     message: 'success verif email'
   });
+}
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    await updateService(req)
+  } catch (err) {
+
+  }
 }
