@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import { RegisterBody } from "../services/user/register-service";
 const prisma = new PrismaClient()
 
+// TODO: don't know what to use in here
 interface User {
   id?: string,
   email?: string,
