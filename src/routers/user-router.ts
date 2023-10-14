@@ -3,8 +3,11 @@ import registerMiddleware from '../middleware/register-middleware'
 import { 
   loginUser,
   registerUser, 
+  updateUser, 
   verifyEmail 
 } from '../controllers/user-controller'
+import authMiddleware from '../middleware/auth-middleware'
+import updateUserMiddleware from '../middleware/update-user-middleware'
 
 const router = express.Router()
 
@@ -12,5 +15,8 @@ const router = express.Router()
 router.post('/register', registerMiddleware, registerUser)
 router.post('/login', loginUser)
 router.put('/verify', verifyEmail)
+
+// crud user
+router.put('/update', [authMiddleware, updateUserMiddleware], updateUser)
 
 export default router
