@@ -14,7 +14,6 @@ export interface RegisterBody {
 export default async (request: RegisterBody) => {
   try {
     const user = await insertUser(request);
-    const document = await insertDocument(user.id)
     const uuid = uuidv4()
 
     cache.set(uuid, user.id, 15 * 60) // set cache expired in 15 minutes
