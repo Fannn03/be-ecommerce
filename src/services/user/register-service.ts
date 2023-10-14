@@ -3,6 +3,7 @@ import { sendRegisterMail } from "../../repositories/mail";
 import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import cache from '../../config/cache';
+import { insertDocument } from '../../repositories/document';
 
 export interface RegisterBody {
   email: string,
@@ -13,6 +14,7 @@ export interface RegisterBody {
 export default async (request: RegisterBody) => {
   try {
     const user = await insertUser(request);
+    const document = await insertDocument(user.id)
     const uuid = uuidv4()
 
     cache.set(uuid, user.id, 15 * 60) // set cache expired in 15 minutes
