@@ -4,6 +4,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import loginService, { LoginError } from "../services/user/login-service";
 import verifyEmailService, { VerifyEmailError } from "../services/user/verify-email-service";
 import updateService, { UserUpdateError } from "../services/user/update-service";
+import detailsService from "../services/user/details-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -84,6 +85,17 @@ export const verifyEmail = async (req: Request, res: Response) => {
     result: 'success',
     message: 'success verif email'
   });
+}
+
+export const detailsuser = async (req: Request, res: Response) => {
+  const user = await detailsService(req.user)
+
+  return res.json({
+    code: 200,
+    result: 'success',
+    message: 'success get data user',
+    data: user
+  })
 }
 
 export const updateUser = async (req: Request, res: Response) => {

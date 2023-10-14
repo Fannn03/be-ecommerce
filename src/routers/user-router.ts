@@ -1,6 +1,7 @@
 import express from 'express'
 import registerMiddleware from '../middleware/register-middleware'
 import { 
+  detailsuser,
   loginUser,
   registerUser, 
   updateUser, 
@@ -17,6 +18,7 @@ router.post('/login', loginUser)
 router.put('/verify', verifyEmail)
 
 // crud user
+router.get('/details', authMiddleware, detailsuser)
 router.put('/update', [authMiddleware, updateUserMiddleware], updateUser)
 
 export default router
