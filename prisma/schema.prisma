@@ -19,6 +19,22 @@ model User {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   deletedAt       DateTime?
+  document        Document?
 
   @@map("users")
+}
+
+model Document {
+  id          Int         @id @default(autoincrement())
+  user        User        @relation(fields: [user_id], references: [id])
+  user_id     String      @unique @db.Char(26)
+  fullname    String?     @db.Char(255)
+  nik         String?     @db.Char(16)
+  photos      String?     @db.VarChar(255)
+  verifiedAt  DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+
+  @@map("documents")
 }
