@@ -192,11 +192,76 @@
           }
         }
       }
+    },
+    "/users/update": {
+      "put": {
+        "summary": "User Update",
+        "description": "Update current data user, identified by login token",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "new name"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "some ramdom id",
+                  "email": "sample@mail.com",
+                  "name": "bastus",
+                  "email_verified": "2023-10-13T05:11:17.034Z",
+                  "createdAt": "2023-10-13T05:10:31.633Z",
+                  "updatedAt": "2023-10-14T00:33:00.156Z",
+                  "deletedAt": null
+              }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "securitySchemes": {
-      "jwt_auth": {
+      "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
