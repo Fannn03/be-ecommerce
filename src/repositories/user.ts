@@ -10,7 +10,6 @@ interface User {
   email?: string,
   name?: string,
   password?: string,
-  email_verified?: Date
 }
 
 export const insertUser = async (request: RegisterBody) => {
@@ -52,5 +51,18 @@ export const verifyUser = async (id: string) => {
     });
   } catch (err) {
     throw err;
+  }
+}
+
+export const updateUser = async (request: User) => {
+  try {
+    await prisma.user.update({
+      data: request,
+      where: {
+        id: request.id
+      }
+    })
+  } catch (err) {
+    throw err
   }
 }
