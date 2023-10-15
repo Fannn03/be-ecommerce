@@ -20,6 +20,7 @@ model User {
   updatedAt       DateTime    @updatedAt
   deletedAt       DateTime?
   document        Document?
+  store           Store?
 
   @@map("users")
 }
@@ -37,4 +38,19 @@ model Document {
   deletedAt   DateTime?
 
   @@map("documents")
+}
+
+model Store {
+  id          Int         @id @default(autoincrement())
+  user        User        @relation(fields: [user_id], references: [id])
+  user_id     String      @unique @db.Char(26)
+  username    String      @unique @db.VarChar(255)
+  name        String      @db.VarChar(255)
+  photos      String?     @db.VarChar(255)
+  description String?     @db.LongText
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+
+  @@map("stores")
 }
