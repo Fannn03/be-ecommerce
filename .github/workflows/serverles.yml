@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 18
       
+      - name: Compile typescriot
+        uses: alexthemaster/action-build-typescript@v1.3.1
+
       - name: install dependencies & bundle code
         env:
           CI: true
