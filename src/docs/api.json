@@ -326,6 +326,65 @@
           }
         }
       }
+    },
+    "/stores/create": {
+      "post": {
+        "summary": "Create store",
+        "description": "Create store for use who wants to sell their products",
+        "tags": ["Stores"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "username": "Username for their store, required for slug or etc",
+                "name": "Display name for their store",
+                "photos": "optional, can be skip later",
+                "description": "optional, can be skip later"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success created data store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "this already has store exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
