@@ -9,6 +9,6 @@ const router = express.Router()
 
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 router.use('/users', userRouter)
-router.use('/store', authMiddleware, storeRouter)
+router.use('/stores', authMiddleware, storeRouter)
 
 export default router
