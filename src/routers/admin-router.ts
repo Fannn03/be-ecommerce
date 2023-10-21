@@ -4,7 +4,7 @@ import { loginAdmin } from '../controllers/admin-controller'
 
 const router = express.Router()
 
-// router.post('/create', registerMiddleware)
+router.post('/create', registerMiddleware)
 router.post('/login', loginAdmin)
 
 export default router
