@@ -399,6 +399,73 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admins/login": {
+      "post": {
+        "summary": "Login admin",
+        "description": "Login as cs, admin, superadmin",
+        "tags": ["Admins"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "admin",
+                "password": "yourpassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "code": 200,
+              "status": "success",
+              "message": "login message",
+              "data": {
+                "id": 1,
+                "name": "admin",
+                "level": "admin",
+                "token": "some random token"
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "code": 404,
+              "status": "not found",
+              "message": "cannot retrieved data admin"
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
           }
         }
       }
