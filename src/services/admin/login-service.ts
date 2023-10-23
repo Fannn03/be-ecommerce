@@ -1,11 +1,18 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import jwt from 'jsonwebtoken'
 import { getAdmin } from "../../repositories/admin";
 
 interface LoginBody {
   name: string,
   password: string
+}
+
+interface Response {
+  id: number,
+  name: string,
+  level: string,
+  token: string
 }
 
 export default async (req: LoginBody) => {
@@ -21,7 +28,14 @@ export default async (req: LoginBody) => {
       level: admin.level
     }
 
-    return jwt.sign(payload, process.env.SECRET_TOKEN as string, {expiresIn: '3h'})
+    const response: Response = {
+      id: admin.id,
+      name: admin.name,
+      level: admin.level,
+      token: jwt.sign(payload, process.env.SECRET_TOKEN as string, {expiresIn: '3h'})
+    }
+
+    return response
   } catch (err) {
     return err
   }

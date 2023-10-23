@@ -327,6 +327,149 @@
         }
       }
     },
+    "/admins/create": {
+      "post": {
+        "summary": "Create admin account",
+        "description": "Create new admin or cs account",
+        "tags": ["Admins"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "admin@mail.com",
+                "name": "yourname",
+                "password": "password",
+                "level": "cs, admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": {
+                    "email": "\"email\" is required",
+                    "name": "\"name\" is required",
+                    "password": "\"password\" is required",
+                    "level": "\"level\" is required"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "You don't have any permission to use this level"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admins/login": {
+      "post": {
+        "summary": "Login admin",
+        "description": "Login as cs, admin, superadmin",
+        "tags": ["Admins"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "admin",
+                "password": "yourpassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "code": 200,
+              "status": "success",
+              "message": "login message",
+              "data": {
+                "id": 1,
+                "name": "admin",
+                "level": "admin",
+                "token": "some random token"
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "code": 404,
+              "status": "not found",
+              "message": "cannot retrieved data admin"
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/stores/create": {
       "post": {
         "summary": "Create store",

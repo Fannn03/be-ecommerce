@@ -54,9 +54,7 @@ export const loginUser = async (req: Request, res: Response) => {
     code: 200,
     result: 'success',
     message: 'login success',
-    data: {
-      token: data
-    }
+    data: data
   });
 }
 
