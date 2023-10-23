@@ -43,9 +43,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
       code: 200,
       status: 'success',
       message: 'login message',
-      data :{
-        token: admin
-      }
+      data : admin
     })
   } catch (err: any) {
     return res.status(500).json({
