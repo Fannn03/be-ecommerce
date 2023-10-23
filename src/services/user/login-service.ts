@@ -32,7 +32,7 @@ export default async (request: LoginBody) => {
     id: user.id,
   }
   try {
-    const verifyPassword = await bcrypt.compare(request.password as string, user.password);
+    const verifyPassword = await bcrypt.compare(request.password as string || "", user.password);
     if(!verifyPassword) return null;
 
     // check if email user isn't verified
