@@ -8,6 +8,12 @@ interface LoginBody {
   password: string | undefined
 }
 
+interface Response {
+  id: string,
+  name: string,
+  token: string
+}
+
 export class LoginError extends Error {
   constructor (message: string, public code: number, public result: string) {
     super()
@@ -32,7 +38,13 @@ export default async (request: LoginBody) => {
     // check if email user isn't verified
     if(!user.email_verified) throw new LoginError("Email must be verified first!", 403, 'forbidden')
 
-    return jwt.sign(payload, process.env.SECRET_TOKEN as string, {expiresIn: '3h'});
+    const response: Response = {
+      id: user.id,
+      name: user.name,
+      token: jwt.sign(payload, process.env.SECRET_TOKEN as string, {expiresIn: '3h'})
+    }
+
+    return response
   } catch (err) {
     if(err instanceof Error) return err
   }
