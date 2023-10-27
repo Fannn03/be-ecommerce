@@ -1,4 +1,6 @@
 import { JwtPayload } from "jsonwebtoken"
+import { Request } from "express"
+import fs from 'fs/promises'
 import { createStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
@@ -19,12 +21,20 @@ export class CreateStoreError extends Error {
   }
 }
 
-export default async (request: CreateStore, user: JwtPayload) => {
-  if(request.file) request.file = "photo.jpg"
-  request.user_id = user.id
+export default async (request: Request, user: JwtPayload) => {
+  request.body.user_id = user.id
   
+  if(request.file) {
+    delete request.body.file
+
+    const extension = request.file?.mimetype.split("/")[1]
+    request.body.photos = `${user.id}.${extension}`
+
+    fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${request.body.photos}`)
+  }
+
   try {
-    await createStore(request)
+    await createStore(request.body)
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "stores_user_id_key") {

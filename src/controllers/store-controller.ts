@@ -3,7 +3,7 @@ import createService, { CreateStoreError } from "../services/store/create-servic
 
 export const createStore = async (req: Request, res: Response) => {
   try {
-    await createService(req.body, req.user)
+    await createService(req, req.user)
   } catch (err) {
     if(err instanceof CreateStoreError) {
       return res.status(err.code).json({
