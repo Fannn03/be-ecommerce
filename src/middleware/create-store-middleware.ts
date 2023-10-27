@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import fs from 'fs/promises'
 import Joi from "joi";
 
 interface ErrorMessage {
@@ -52,7 +53,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         if(data.context?.key) errMessages[data.context?.key as keyof ErrorMessage] = data.message
       })
     }
-    
+
+    if(req.file) fs.unlink(req.file?.destination + '/' + req.file?.filename)
+
     return res.status(400).json({
       code: 400,
       result: 'bad request',
