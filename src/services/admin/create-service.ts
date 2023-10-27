@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
-import jwt from 'jsonwebtoken'
-import { createAdmin, getAdmin } from "../../repositories/admin";
+import { createAdmin } from "../../repositories/admin";
 import { Admin, AdminLevel } from '@prisma/client';
 
 interface createBody {

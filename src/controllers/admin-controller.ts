@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import loginService from "../services/admin/login-service";
 import createService from "../services/admin/create-service";
+import deleteService from "../services/admin/delete-service";
 
 export const loginAdmin = async (req: Request, res: Response) => {
     try {
@@ -45,6 +46,30 @@ export const createAdmin = async (req: Request, res: Response) => {
             status: 'success',
             message: 'Success to create record',
             data : adminCreated
+        });
+
+    } catch (err: any) {
+        return res.status(500).json({
+            code: 500,
+            status: 'internal server error',
+            message: err.message
+        })
+    }
+}
+export const deleteAdmin = async (req: Request, res: Response) => {
+    try {
+        const adminCreated = await deleteService(Object(req.params));
+
+        if (!adminCreated) return res.status(400).json({
+            code: 400,
+            status: 'error',
+            message: 'Failed to delete record'
+        });
+
+        return res.json({
+            code: 200,
+            status: 'success',
+            message: 'Success to delete record',
         });
 
     } catch (err: any) {
