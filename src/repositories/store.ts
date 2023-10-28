@@ -12,3 +12,16 @@ export const createStore = async (request: CreateStore) => {
     throw err
   }
 }
+
+export const updateStore = async (request: any) => {
+  try {
+    return await prisma.store.update({
+      data: request,
+      where: {
+        user_id: request.user_id
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
