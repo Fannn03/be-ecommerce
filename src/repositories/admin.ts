@@ -1,12 +1,20 @@
 import { AdminLevel, PrismaClient } from "@prisma/client"
+import dayjs from "dayjs";
 
 const prisma = new PrismaClient()
 
-interface CreateAdmin {
-  email: string,
-  name: string,
-  password: string,
-  level: AdminLevel
+interface adminInterface {
+  name      : string;
+  email     : string;
+  password  : string; 
+  level     : AdminLevel;
+}
+
+interface updateInterface {
+  name      : string;
+  email     : string;
+  password? : string; 
+  level     : AdminLevel;
 }
 
 export const getAdmin = async (request: string) => {
@@ -20,17 +28,41 @@ export const getAdmin = async (request: string) => {
   })
 }
 
-export const createAdmin = async (request: CreateAdmin) => {
+export const createAdmin  = async (data: adminInterface)  => {
   try {
     await prisma.admin.create({
       data: {
-        email: request.email,
-        name: request.name,
-        password: request.password,
-        level: request.level
+        name      : data.name,
+        email     : data.email,
+        password  : data.password, 
+        level     : data.level
       }
     })
   } catch (err) {
     throw err
   }
+}
+
+export const updateAdmin  = async (data: updateInterface, id : number)  => {
+  return await prisma.admin.update({
+    where : {
+      id: id,
+      deletedAt: null
+    },
+    data: data
+  })
+}
+
+export const deleteAdmin  = async (id : number)  => {
+
+  const now = dayjs().toISOString();
+
+  return await prisma.admin.update({
+    where: {
+      id: id
+    },
+    data: {
+      deletedAt: now
+    }
+  })
 }
