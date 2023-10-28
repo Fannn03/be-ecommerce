@@ -3,7 +3,6 @@ import { sendRegisterMail } from "../../repositories/mail";
 import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import cache from '../../config/cache';
-import { insertDocument } from '../../repositories/document';
 
 export interface RegisterBody {
   email: string,
