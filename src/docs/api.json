@@ -528,6 +528,65 @@
           }
         }
       }
+    },
+    "/stores/update": {
+      "put": {
+        "summary": "Update store",
+        "description": "Update their own store",
+        "tags": ["Stores"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "username": "Username for their store, required for slug or etc",
+                "name": "Display name for their store",
+                "photos": "optional, can be skip later",
+                "description": "optional, can be skip later"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success update record data"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "Username store already taken"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
