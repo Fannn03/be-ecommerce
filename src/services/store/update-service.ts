@@ -1,18 +1,10 @@
 import { Request } from "express"
 import fs from 'fs/promises'
-import { createStore } from "../../repositories/store"
+import { updateStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-export interface CreateStore {
-  user_id: string,
-  username: string,
-  name: string,
-  file?: string,
-  description?: string
-}
-
-export class CreateStoreError extends Error {
-  constructor(message: string, public code: number, public result: string) {
+export class UpdateStoreError extends Error {
+  constructor (public message: string, public code: number, public result: string) {
     super()
     this.message = message
     this.code = code
@@ -31,10 +23,11 @@ export default async (request: Request) => {
   }
 
   try {
-    await createStore(request.body)
+    const store = await updateStore(request.body)
 
     if(request.file) {
       // move file into public store images
+      if(store.photos) fs.unlink(`public/images/stores/${store.photos}`)
       fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${request.body.photos}`)
     }
   } catch (err) {
@@ -42,12 +35,10 @@ export default async (request: Request) => {
     if(request.file) fs.unlink(`public/images/temp/${request.file?.filename}`)
 
     if(err instanceof PrismaClientKnownRequestError) {
-      if(err.code === "P2002" && err.meta?.target === "stores_user_id_key") {
-        throw new CreateStoreError("This account already has store exists", 400, "bad request")
-      } else if (err.code === "P2002" && err.meta?.target === "stores_username_key") {
-        throw new CreateStoreError("Username store already taken", 400, "bad request")
+      if (err.code === "P2002" && err.meta?.target === "stores_username_key") {
+        throw new UpdateStoreError("Username store already taken", 400, "bad request")
       }
-    } else {
+    }else {
       throw err
     }
   }
