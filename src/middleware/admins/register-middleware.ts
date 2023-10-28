@@ -34,10 +34,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			.messages({
 				'string.pattern.name': "password cannot contains whitespace"
 			}),
-    level: Joi.valid('cs', 'admin')
-      .required()
-      .empty()
-	})
+		level: Joi.valid('cs', 'admin')
+		.required()
+		.empty()
+		})
 
 	try {
 		await request.validateAsync(req.body, {
