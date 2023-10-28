@@ -1,11 +1,9 @@
 import 'dotenv/config'
-import { createAdmin, deleteAdmin } from "../../repositories/admin";
-import { Admin, AdminLevel } from '@prisma/client';
+import { deleteAdmin } from "../../repositories/admin";
 
 interface deleteParams {
   id      : number;
 }
-
 
 export default async (req: deleteParams) => {
   try {

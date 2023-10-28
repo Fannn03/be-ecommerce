@@ -9,6 +9,7 @@ interface adminInterface {
   password  : string; 
   level     : AdminLevel;
 }
+
 interface updateInterface {
   name      : string;
   email     : string;
@@ -28,17 +29,13 @@ export const getAdmin = async (request: string) => {
 }
 
 export const createAdmin  = async (data: adminInterface)  => {
-
-  const now = dayjs().toISOString();
-
   try {
     await prisma.admin.create({
       data: {
         name      : data.name,
         email     : data.email,
         password  : data.password, 
-        level     : data.level,
-        createdAt : now
+        level     : data.level
       }
     })
   } catch (err) {
@@ -47,7 +44,6 @@ export const createAdmin  = async (data: adminInterface)  => {
 }
 
 export const updateAdmin  = async (data: updateInterface, id : number)  => {
-
   return await prisma.admin.update({
     where : {
       id: id,
