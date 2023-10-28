@@ -1,5 +1,23 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-import { createAdmin } from "../../repositories/admin"
+import bcrypt from 'bcrypt'
+import { AdminLevel } from '@prisma/client';
+import 'dotenv/config'
+import { createAdmin } from "../../repositories/admin";
+
+interface createBody {
+  name      : string;
+  email     : string;
+  password  : string;
+  level     : AdminLevel;
+}
+
+interface Response {
+  id      : number;
+  name    : string;
+  email   : string;
+  level   : AdminLevel;
+  createdAt: Date
+}
 
 export class CreateAdminError extends Error {
   constructor(public message: string, public code: number, public result: string) {
@@ -10,22 +28,28 @@ export class CreateAdminError extends Error {
   }
 }
 
-export default async (req: any) => {
-  if(req.user.level == 'admin' && (req.body.level == "admin" || req.body.level == "superadmin")) {
-    throw new CreateAdminError("You don't have any permission to use this level", 403, "forbidden")
-  }
-
-  if(req.user.level == 'cs') {
-    throw new CreateAdminError("You don't have any permission to use this level", 403, "forbidden")
-  }
-
+export default async (req: createBody) => {
   try {
-    await createAdmin({
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password,
-      level: req.body.level
-    })
+    const salt = bcrypt.genSaltSync(10);
+    const password = bcrypt.hashSync(req.password, salt);
+    const adminCreated = await createAdmin({
+        name      : req.name,
+        email     : req.email,
+        password  : password,
+        level     : req.level
+    });
+
+    if(!adminCreated) return null
+
+    const response : Response = {
+      id: adminCreated.id,
+      name: adminCreated.name,
+      email: adminCreated.email,
+      level: adminCreated.level,
+      createdAt: adminCreated.createdAt
+    }
+
+    return response
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code == "P2002" && err.meta?.target == 'admins_email_key') {
@@ -37,6 +61,6 @@ export default async (req: any) => {
       }
     }
     
-    throw err
+    return err
   }
 }

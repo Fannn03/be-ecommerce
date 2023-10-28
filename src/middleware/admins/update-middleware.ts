@@ -25,7 +25,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 				'string.pattern.name': "name cannot contains whitespace"
 			}),
 		password: Joi.string()
-			.required()
 			.empty()
 			.trim()
 			.min(5)
@@ -34,7 +33,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			.messages({
 				'string.pattern.name': "password cannot contains whitespace"
 			}),
-	})
+		level: Joi.valid('cs', 'admin')
+            .required()
+            .empty()
+		})
 
 	try {
 		await request.validateAsync(req.body, {
@@ -42,7 +44,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		})
 	} catch (err) {
 		if(err instanceof ValidationError) {
-			
 			let errMessages: ErrorMessages = {}
 		
 			err.details.map((err: ValidationErrorItem) => {

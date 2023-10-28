@@ -18,6 +18,7 @@ interface Response {
 export default async (req: LoginBody) => {
   try {
     const admin = await getAdmin(req.name)
+    
     if(!admin) return null
 
     const validatePassword = await bcrypt.compare(req.password || '', admin.password)
