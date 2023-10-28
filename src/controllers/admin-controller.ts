@@ -32,29 +32,28 @@ export const registerAdmin = async (req: Request, res: Response) => {
 
 export const loginAdmin = async (req: Request, res: Response) => {
     try {
-        const admin = await loginService(req.body)
+      const admin = await loginService(req.body)
 
-        if (!admin) return res.status(400).json({
-            code: 404,
-            status: 'not found',
-            message: 'cannot retrieved data admin'
-        });
+      if (!admin) return res.status(400).json({
+        code: 404,
+        status: 'not found',
+        message: 'cannot retrieved data admin'
+      });
 
-        return res.json({
-            code: 200,
-            status: 'success',
-            message: 'login message',
-            data: {
-                token: admin
-            }
-        })
-
+      return res.json({
+        code: 200,
+        status: 'success',
+        message: 'login message',
+        data: {
+          token: admin
+        }
+      })
     } catch (err: any) {
-        return res.status(500).json({
-            code: 500,
-            status: 'internal server error',
-            message: err.message
-        })
+      return res.status(500).json({
+          code: 500,
+          status: 'internal server error',
+          message: err.message
+      })
     }
 }
 

@@ -11,13 +11,13 @@ interface createBody {
   level     : AdminLevel;
 }
 
-interface Response {
-  id      : number;
-  name    : string;
-  email   : string;
-  level   : AdminLevel;
-  createdAt: Date
-}
+// interface Response {
+//   id      : number;
+//   name    : string;
+//   email   : string;
+//   level   : AdminLevel;
+//   createdAt: Date
+// }
 
 export class CreateAdminError extends Error {
   constructor(public message: string, public code: number, public result: string) {
@@ -39,17 +39,17 @@ export default async (req: createBody) => {
         level     : req.level
     });
 
-    if(!adminCreated) return null
+    // if(!adminCreated) return null
 
-    const response : Response = {
-      id: adminCreated.id,
-      name: adminCreated.name,
-      email: adminCreated.email,
-      level: adminCreated.level,
-      createdAt: adminCreated.createdAt
-    }
+    // const response : Response = {
+    //   id: adminCreated.id,
+    //   name: adminCreated.name,
+    //   email: adminCreated.email,
+    //   level: adminCreated.level,
+    //   createdAt: adminCreated.createdAt
+    // }
 
-    return response
+    // return response
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code == "P2002" && err.meta?.target == 'admins_email_key') {
@@ -61,6 +61,6 @@ export default async (req: createBody) => {
       }
     }
     
-    return err
+    throw err
   }
 }

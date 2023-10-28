@@ -31,15 +31,19 @@ export const createAdmin  = async (data: adminInterface)  => {
 
   const now = dayjs().toISOString();
 
-  return await prisma.admin.create({
-    data: {
-      name      : data.name,
-      email     : data.email,
-      password  : data.password, 
-      level     : data.level,
-      createdAt : now
-    }
-  })
+  try {
+    await prisma.admin.create({
+      data: {
+        name      : data.name,
+        email     : data.email,
+        password  : data.password, 
+        level     : data.level,
+        createdAt : now
+      }
+    })
+  } catch (err) {
+    throw err
+  }
 }
 
 export const updateAdmin  = async (data: updateInterface, id : number)  => {
