@@ -6,7 +6,7 @@ import authMiddleware from '../middleware/auth-middleware'
 const router = express.Router()
 
 router.post('/create', authMiddleware, registerMiddleware, registerAdmin)
-router.patch('/:id', updateAdmin)
+router.put('/:id', updateAdmin)
 router.post('/login', loginAdmin)
 
 export default router
