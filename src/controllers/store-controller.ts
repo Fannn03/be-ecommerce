@@ -52,6 +52,6 @@ export const updateStore = async (req: Request, res: Response) => {
   return res.json({
     code: 200,
     result: 'success',
-    message: 'record sucessfully updated'
+    message: 'success update record data'
   })
 }
