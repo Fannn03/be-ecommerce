@@ -6,7 +6,7 @@ import updateService from "../services/admin/update-service";
 
 export const registerAdmin = async (req: Request, res: Response) => {
   try {
-    await createService(req)
+    await createService(req.body)
 
     return res.json({
       code: 200,
