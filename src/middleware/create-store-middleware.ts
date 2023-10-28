@@ -37,7 +37,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       })
       .messages({
         'any.invalid': "File type must be a PNG, JPG, or JPEG"
-      })
+      }),
+    description: Joi.string()
+      .optional()
+      .trim()
   })
 
   try {
