@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import { updateAdmin } from "../../repositories/admin";
-import { Admin, AdminLevel } from '@prisma/client';
+import { AdminLevel } from '@prisma/client';
 
 interface body {
   name: string;
@@ -10,7 +10,7 @@ interface body {
   level: AdminLevel;
 }
 
-interface params {
+interface requestParams {
   id: string;
 }
 
@@ -22,14 +22,14 @@ interface Response {
   updatedAt : Date;
 }
 
-export default async (body: body, params: params) => {
+export default async (body: body, params: requestParams) => {
   try {
     const salt = bcrypt.genSaltSync(10);
 
     const payload : body  = {
-        name      : body.name,
-        email     : body.email,
-        level     : body.level
+      name      : body.name,
+      email     : body.email,
+      level     : body.level
     };
 
     if(body.password != null) payload.password = bcrypt.hashSync(body.password, salt);
