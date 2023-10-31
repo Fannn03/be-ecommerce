@@ -44,8 +44,14 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "record has been created"
-                }
+                  "message": "record has been created",
+                  "data": {
+                      "id": "01HE34AHXKKDXJHQBRHN5P3J9V",
+                      "name": "johndoe1",
+                      "email": "johndoe1@gmail.com",
+                      "createdAt": "2023-10-31T15:06:09.294Z"
+                  }
+              }
               }
             }
           },

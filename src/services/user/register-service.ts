@@ -4,19 +4,38 @@ import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import cache from '../../config/cache';
 
-export interface RegisterBody {
-  email: string,
-  name: string,
-  password: string
+interface CreateBody {
+  email     : string,
+  name      : string,
+  password  : string
 }
 
-export default async (request: RegisterBody) => {
-  try {
-    const user = await insertUser(request);
-    const uuid = uuidv4()
+interface Response {
+  id        : String,
+  name      : String,
+  email     : String,
+  createdAt : Date
+}
 
+export default async (request: CreateBody) => {
+  try {
+    const user = await insertUser({
+      email: request.email,
+      name: request.name,
+      password: request.password
+    });
+    
+    const uuid = uuidv4()
     cache.set(uuid, user.id, 15 * 60) // set cache expired in 15 minutes
     await sendRegisterMail(user.email, uuid) // send inbox mail to user
+
+    const response: Response = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt
+    }
+    return response
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "users_email_key") {

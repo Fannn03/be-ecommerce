@@ -8,7 +8,14 @@ import detailsService from "../services/user/details-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    await registerService(req.body);
+    const userRegister = await registerService(req.body);
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'record has been created',
+      data: userRegister
+    });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError || err instanceof Error) {
       return res.status(400).json({
@@ -18,12 +25,6 @@ export const registerUser = async (req: Request, res: Response) => {
       });
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'record has been created'
-  });
 }
 
 export const loginUser = async (req: Request, res: Response) => {
