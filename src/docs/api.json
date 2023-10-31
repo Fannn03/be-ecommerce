@@ -517,7 +517,21 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "success created data store"
+                  "message": "success created data store",
+                  "data": {
+                    "user": {
+                      "name": "bastues",
+                      "email": "batues@gmail.com"
+                    },
+                    "store": {
+                      "id": 47,
+                      "username": "store12",
+                      "name": "My first store",
+                      "photos": null,
+                      "description": null,
+                      "createdAt": "2023-10-31T23:24:59.079Z"
+                    }
+                  }
                 }
               }
             }

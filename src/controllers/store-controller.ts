@@ -4,7 +4,14 @@ import updateService, { UpdateStoreError } from "../services/store/update-servic
 
 export const createStore = async (req: Request, res: Response) => {
   try {
-    await createService(req)
+    const createdStore = await createService(req)
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success created data store',
+      data: createdStore
+    })
   } catch (err) {
     if(err instanceof CreateStoreError) {
       return res.status(err.code).json({
@@ -21,12 +28,6 @@ export const createStore = async (req: Request, res: Response) => {
       })
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success created data store'
-  })
 }
 
 export const updateStore = async (req: Request, res: Response) => {

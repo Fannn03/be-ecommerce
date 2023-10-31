@@ -1,12 +1,22 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateStore } from "../services/store/create-service";
+
+interface StoreInterface {
+  user_id: string,
+  username: string,
+  name: string,
+  file?: string,
+  description?: string
+}
 
 const prisma = new PrismaClient()
 
-export const createStore = async (request: CreateStore) => {
+export const createStore = async (request: StoreInterface) => {
   try {
-    await prisma.store.create({
-      data: request
+    return await prisma.store.create({
+      data: request,
+      include: {
+        user: true
+      }
     })
   } catch (err) {
     throw err

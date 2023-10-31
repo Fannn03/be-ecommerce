@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import { createStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-export interface CreateStore {
+interface CreateBody {
   user_id: string,
   username: string,
   name: string,
@@ -31,12 +31,29 @@ export default async (request: Request) => {
   }
 
   try {
-    await createStore(request.body)
+    const storeCreated = await createStore(request.body)
 
     if(request.file) {
       // move file into public store images
       fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${request.body.photos}`)
     }
+
+    const response = {
+      user: {
+        name: storeCreated.user.name,
+        email: storeCreated.user.email
+      },
+      store: {
+        id: storeCreated.id,
+        username: storeCreated.username,
+        name: storeCreated.name,
+        photos: storeCreated.photos,
+        description: storeCreated.description,
+        createdAt: storeCreated.createdAt,
+      }
+    }
+
+    return response
   } catch (err) {
     // delete current file in public store images
     if(request.file) fs.unlink(`public/images/temp/${request.file?.filename}`)
