@@ -1,20 +1,28 @@
 import { JwtPayload } from "jsonwebtoken";
 import { getUser } from "../../repositories/user";
 
-interface DataUser {
-  id: string,
-  email: string,
-  name: string,
-  password?: string,
-  email_verified: Date | null,
-  createdAt: Date,
-  updatedAt: Date,
-  deletedAt: Date | null
+interface Response {
+  id              : string | undefined,
+  email           : string | undefined,
+  name            : string | undefined,
+  email_verified  : Date | null | undefined,
+  createdAt       : Date | undefined,
+  updatedAt       : Date | undefined,
+  deletedAt       : Date | null | undefined
 }
 
 export default async (user: JwtPayload) => {
-  const dataUser: DataUser | null = await getUser(user.id)
-  delete dataUser?.password
+  const dataUser = await getUser(user.id)
+  
+  const response: Response | null = {
+    id: dataUser?.id,
+    email: dataUser?.email,
+    name: dataUser?.name,
+    email_verified: dataUser?.email_verified,
+    createdAt: dataUser?.createdAt,
+    updatedAt: dataUser?.updatedAt,
+    deletedAt: dataUser?.deletedAt
+  }
 
-  return dataUser
+  return response
 }
