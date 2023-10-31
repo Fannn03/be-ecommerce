@@ -7,7 +7,13 @@ interface UserInterface {
   id?: string,
   email: string,
   name: string,
-  password: string
+  password: string,
+}
+
+interface UpdateUser {
+  id    : string,
+  email : string,
+  name  : string
 }
 
 export const insertUser = async (request: UserInterface) => {
@@ -52,10 +58,13 @@ export const verifyUser = async (id: string) => {
   }
 }
 
-export const updateUser = async (request: any) => {
+export const updateUser = async (request: UpdateUser) => {
   try {
-    await prisma.user.update({
-      data: request,
+    return await prisma.user.update({
+      data: {
+        email: request.email,
+        name: request.name
+      },
       where: {
         id: request.id
       }

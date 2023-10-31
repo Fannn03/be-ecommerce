@@ -99,7 +99,14 @@ export const detailsuser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    await updateService(req)
+    const updatedUser = await updateService(req)
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success update record data',
+      data: updatedUser
+    })
   } catch (err) {
     if(err instanceof UserUpdateError) {
       return res.status(err.code).json({
@@ -117,10 +124,4 @@ export const updateUser = async (req: Request, res: Response) => {
       })
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success update record data'
-  })
 }
