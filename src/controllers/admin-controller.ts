@@ -6,12 +6,13 @@ import updateService from "../services/admin/update-service";
 
 export const registerAdmin = async (req: Request, res: Response) => {
   try {
-    await createService(req.body)
+    const adminRegister = await createService(req.body)
 
     return res.json({
       code: 200,
       result: 'success',
-      message: 'record has been created'
+      message: 'record has been created',
+      data: adminRegister
     })
   } catch (err) {
     if(err instanceof CreateAdminError) {

@@ -30,7 +30,7 @@ export const getAdmin = async (request: string) => {
 
 export const createAdmin  = async (data: adminInterface)  => {
   try {
-    await prisma.admin.create({
+    return await prisma.admin.create({
       data: {
         name      : data.name,
         email     : data.email,

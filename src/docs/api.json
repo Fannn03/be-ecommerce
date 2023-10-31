@@ -354,7 +354,14 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "record has been created"
+                  "message": "record has been created",
+                  "data": {
+                    "id": 19,
+                    "name": "bastus",
+                    "email": "bastus@gmail.com",
+                    "level": "admin",
+                    "createdAt": "2023-10-31T14:44:07.052Z"
+                  }
                 }
               }
             }
