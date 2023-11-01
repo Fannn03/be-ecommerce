@@ -44,8 +44,14 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "record has been created"
-                }
+                  "message": "record has been created",
+                  "data": {
+                      "id": "01HE34AHXKKDXJHQBRHN5P3J9V",
+                      "name": "johndoe1",
+                      "email": "johndoe1@gmail.com",
+                      "createdAt": "2023-10-31T15:06:09.294Z"
+                  }
+              }
               }
             }
           },
@@ -193,7 +199,7 @@
         }
       }
     },
-    "/users/detail": {
+    "/users/details": {
       "get": {
         "summary": "Details User",
         "description": "Get details user, identified by login token",
@@ -268,7 +274,8 @@
           "content": {
             "application/json": {
               "example": {
-                "name": "new name"
+                "email": "email user",
+                "name": "name user"
               }
             }
           }
@@ -281,7 +288,13 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "success update record data"
+                  "message": "success update record data",
+                  "data": {
+                    "id": "01HCRQKDH9WVZY64GKT9QS6B2A",
+                    "name": "bastues",
+                    "email": "batues@gmail.com",
+                    "updatedAt": "2023-10-31T15:22:03.563Z"
+                  }
                 }
               }
             }
@@ -354,7 +367,14 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "record has been created"
+                  "message": "record has been created",
+                  "data": {
+                    "id": 19,
+                    "name": "bastus",
+                    "email": "bastus@gmail.com",
+                    "level": "admin",
+                    "createdAt": "2023-10-31T14:44:07.052Z"
+                  }
                 }
               }
             }
@@ -497,7 +517,21 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "success created data store"
+                  "message": "success created data store",
+                  "data": {
+                    "user": {
+                      "name": "bastues",
+                      "email": "batues@gmail.com"
+                    },
+                    "store": {
+                      "id": 47,
+                      "username": "store12",
+                      "name": "My first store",
+                      "photos": null,
+                      "description": null,
+                      "createdAt": "2023-10-31T23:24:59.079Z"
+                    }
+                  }
                 }
               }
             }
@@ -515,7 +549,7 @@
             }
           },
           "500": {
-            "description": "bad request",
+            "description": "internal server error",
             "content": {
               "application/json": {
                 "example": {
@@ -540,11 +574,24 @@
           "content": {
             "application/json": {
               "example": {
-                "username": "Username for their store, required for slug or etc",
-                "name": "Display name for their store",
-                "photos": "optional, can be skip later",
-                "description": "optional, can be skip later"
-              }
+                "code": 200,
+                "result": "success",
+                "message": "success update record data",
+                "data": {
+                  "user": {
+                    "name": "bastues",
+                    "email": "batues@gmail.com"
+                  },
+                  "store": {
+                    "id": 64,
+                    "username": "mystore",
+                    "name": "Digital Store 1",
+                    "photos": "01HCRQKDH9WVZY64GKT9QS6B2A.jpeg",
+                    "description": "Adalah sebuah toko digital murah terpecaya",
+                    "updatedAt": "2023-11-01T14:09:43.908Z"
+                  }
+                }
+            }
             }
           }
         },
@@ -574,7 +621,7 @@
             }
           },
           "500": {
-            "description": "bad request",
+            "description": "internal server error",
             "content": {
               "application/json": {
                 "example": {

@@ -8,7 +8,14 @@ import detailsService from "../services/user/details-service";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    await registerService(req.body);
+    const userRegister = await registerService(req.body);
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'record has been created',
+      data: userRegister
+    });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError || err instanceof Error) {
       return res.status(400).json({
@@ -18,12 +25,6 @@ export const registerUser = async (req: Request, res: Response) => {
       });
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'record has been created'
-  });
 }
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -98,7 +99,14 @@ export const detailsuser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    await updateService(req)
+    const updatedUser = await updateService(req)
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success update record data',
+      data: updatedUser
+    })
   } catch (err) {
     if(err instanceof UserUpdateError) {
       return res.status(err.code).json({
@@ -116,10 +124,4 @@ export const updateUser = async (req: Request, res: Response) => {
       })
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success update record data'
-  })
 }

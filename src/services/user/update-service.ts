@@ -2,6 +2,13 @@ import { Request } from "express";
 import { updateUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
+interface Response {
+  id        : string,
+  email     : string,
+  name      : string,
+  updatedAt : Date
+}
+
 export class UserUpdateError extends Error {
   constructor(message: string, public code: number, public result: string) {
     super()
@@ -12,10 +19,21 @@ export class UserUpdateError extends Error {
 }
 
 export default async (req: Request) => {
-  req.body.id = req.user.id
-
   try {
-    await updateUser(req.body)
+    const updatedUser = await updateUser({
+      id: req.user.id,
+      email: req.body.email,
+      name: req.body.name
+    })
+
+    const response: Response = {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      updatedAt: updatedUser.updatedAt
+    }
+
+    return response
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002" && err.meta?.target === "users_name_key") {

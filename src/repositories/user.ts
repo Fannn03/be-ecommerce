@@ -1,18 +1,22 @@
 import { PrismaClient } from "@prisma/client"
 import { ulid } from 'ulid'
 import bcrypt from 'bcrypt'
-import { RegisterBody } from "../services/user/register-service";
 const prisma = new PrismaClient()
 
-// TODO: don't know what to use in here
-interface User {
+interface UserInterface {
   id?: string,
-  email?: string,
-  name?: string,
-  password?: string,
+  email: string,
+  name: string,
+  password: string,
 }
 
-export const insertUser = async (request: RegisterBody) => {
+interface UpdateUser {
+  id    : string,
+  email : string,
+  name  : string
+}
+
+export const insertUser = async (request: UserInterface) => {
   try {
     return await prisma.user.create({
       data: {
@@ -54,10 +58,13 @@ export const verifyUser = async (id: string) => {
   }
 }
 
-export const updateUser = async (request: User) => {
+export const updateUser = async (request: UpdateUser) => {
   try {
-    await prisma.user.update({
-      data: request,
+    return await prisma.user.update({
+      data: {
+        email: request.email,
+        name: request.name
+      },
       where: {
         id: request.id
       }
