@@ -51,7 +51,7 @@ export default async (request: Request) => {
         name: storeUpdated.name,
         photos: storeUpdated.photos,
         description: storeUpdated.description,
-        createdAt: storeUpdated.createdAt,
+        updatedAt: storeUpdated.updatedAt,
       }
     }
 
