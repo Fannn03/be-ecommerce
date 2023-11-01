@@ -199,7 +199,7 @@
         }
       }
     },
-    "/users/detail": {
+    "/users/details": {
       "get": {
         "summary": "Details User",
         "description": "Get details user, identified by login token",
@@ -549,7 +549,7 @@
             }
           },
           "500": {
-            "description": "bad request",
+            "description": "internal server error",
             "content": {
               "application/json": {
                 "example": {
@@ -574,11 +574,24 @@
           "content": {
             "application/json": {
               "example": {
-                "username": "Username for their store, required for slug or etc",
-                "name": "Display name for their store",
-                "photos": "optional, can be skip later",
-                "description": "optional, can be skip later"
-              }
+                "code": 200,
+                "result": "success",
+                "message": "success update record data",
+                "data": {
+                  "user": {
+                    "name": "bastues",
+                    "email": "batues@gmail.com"
+                  },
+                  "store": {
+                    "id": 64,
+                    "username": "mystore",
+                    "name": "Digital Store 1",
+                    "photos": "01HCRQKDH9WVZY64GKT9QS6B2A.jpeg",
+                    "description": "Adalah sebuah toko digital murah terpecaya",
+                    "updatedAt": "2023-11-01T14:09:43.908Z"
+                  }
+                }
+            }
             }
           }
         },
@@ -608,7 +621,7 @@
             }
           },
           "500": {
-            "description": "bad request",
+            "description": "internal server error",
             "content": {
               "application/json": {
                 "example": {
