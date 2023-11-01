@@ -32,7 +32,14 @@ export const createStore = async (req: Request, res: Response) => {
 
 export const updateStore = async (req: Request, res: Response) => {
   try {
-    await updateService(req)
+    const storeUpdated = await updateService(req)
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success update record data',
+      data: storeUpdated
+    })
   } catch (err: any) {
     if(err instanceof UpdateStoreError) {
       return res.status(err.code).json({
@@ -49,10 +56,4 @@ export const updateStore = async (req: Request, res: Response) => {
       })
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success update record data'
-  })
 }

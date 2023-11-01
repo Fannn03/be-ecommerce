@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
 interface StoreInterface {
-  user_id: string,
-  username: string,
-  name: string,
-  photos?: string,
-  description?: string
+  user_id       : string,
+  username      : string,
+  name          : string,
+  photos?       : string,
+  description?  : string
 }
 
 const prisma = new PrismaClient()
@@ -29,6 +29,9 @@ export const updateStore = async (request: any) => {
       data: request,
       where: {
         user_id: request.user_id
+      },
+      include: {
+        user: true
       }
     })
   } catch (err) {
