@@ -4,7 +4,7 @@ interface StoreInterface {
   user_id: string,
   username: string,
   name: string,
-  file?: string,
+  photos?: string,
   description?: string
 }
 

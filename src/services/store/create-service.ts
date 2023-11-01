@@ -3,14 +3,6 @@ import fs from 'fs/promises'
 import { createStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-interface CreateBody {
-  user_id: string,
-  username: string,
-  name: string,
-  file?: string,
-  description?: string
-}
-
 export class CreateStoreError extends Error {
   constructor(message: string, public code: number, public result: string) {
     super()
@@ -21,21 +13,27 @@ export class CreateStoreError extends Error {
 }
 
 export default async (request: Request) => {
-  request.body.user_id = request.user.id
+  let {username, name, photos, description} = request.body
 
   if(request.file) {
     delete request.body.file
 
     const extension = request.file?.mimetype.split("/")[1]
-    request.body.photos = `${request.user.id}.${extension}`
+    photos = `${request.user.id}.${extension}`
   }
 
   try {
-    const storeCreated = await createStore(request.body)
+    const storeCreated = await createStore({
+      user_id: request.user.id,
+      username: username,
+      name: name,
+      photos: photos,
+      description: description
+    })
 
     if(request.file) {
       // move file into public store images
-      fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${request.body.photos}`)
+      fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${storeCreated.photos}`)
     }
 
     const response = {
