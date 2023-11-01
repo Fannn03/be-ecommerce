@@ -23,13 +23,39 @@ export default async (request: Request) => {
   }
 
   try {
-    const store = await updateStore(request.body)
+    const storeUpdated = await updateStore(request.body)
 
     if(request.file) {
+      // check if photo is db is exist and images in public store is exist
+      if(storeUpdated.photos) {
+        try {
+          await fs.readFile(`public/images/stores/${storeUpdated.photos}`)
+          fs.unlink(`public/images/stores/${storeUpdated.photos}`)
+        } catch (err) {
+          console.log('no file image stores found in previous value, skipping remove images');
+        }
+      }
+
       // move file into public store images
-      if(store.photos) fs.unlink(`public/images/stores/${store.photos}`)
-      fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${request.body.photos}`)
+      fs.rename(`public/images/temp/${request.file?.filename}`, `public/images/stores/${storeUpdated.photos}`)
     }
+
+    const response = {
+      user: {
+        name: storeUpdated.user.name,
+        email: storeUpdated.user.email
+      },
+      store: {
+        id: storeUpdated.id,
+        username: storeUpdated.username,
+        name: storeUpdated.name,
+        photos: storeUpdated.photos,
+        description: storeUpdated.description,
+        createdAt: storeUpdated.createdAt,
+      }
+    }
+
+    return response
   } catch (err) {
     // delete current file in public store images
     if(request.file) fs.unlink(`public/images/temp/${request.file?.filename}`)
