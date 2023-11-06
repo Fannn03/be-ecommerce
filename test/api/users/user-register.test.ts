@@ -36,7 +36,7 @@ describe("User Register API", () => {
     expect(response.body.message).toBe("record has been created")
   })
 
-  test("Should return 404 when request body is null", async () => {
+  test("Should return 400 when request body is null", async () => {
     const data = {
 
     }
@@ -56,7 +56,7 @@ describe("User Register API", () => {
     expect(response.body.message).toEqual(responseMessage)
   })
 
-  test("Should return 404 when request body email is required", async () => {
+  test("Should return 400 when request body email is required", async () => {
     const data = {
       name: faker.internet.userName(),
       password: "password"
@@ -75,7 +75,7 @@ describe("User Register API", () => {
     expect(response.body.message).toEqual(responseMessage)
   })
 
-  test("Should return 404 when request body name is required", async () => {
+  test("Should return 400 when request body name is required", async () => {
     const data = {
       email: faker.internet.email(),
       password: "password"
@@ -94,7 +94,7 @@ describe("User Register API", () => {
     expect(response.body.message).toEqual(responseMessage)
   })
 
-  test("Should return 404 when request body password is required", async () => {
+  test("Should return 400 when request body password is required", async () => {
     const data = {
       email: faker.internet.email(),
       name: faker.internet.userName(),
@@ -142,6 +142,26 @@ describe("User Register API", () => {
 
     const responseMessage = {
       name: "name cannot contains whitespace"
+    }
+
+    const response = await request(app).post('/users/register')
+      .send(data)
+
+    expect(response.statusCode).toEqual(400)
+    expect(response.body.code).toEqual(400)
+    expect(response.body.result).toBe("bad request")
+    expect(response.body.message).toEqual(responseMessage)
+  })
+
+  test("Should return 400 when password is contains whitespace", async () => {
+    const data = {
+      email: faker.internet.email(),
+      name: faker.internet.userName(),
+      password: "my password"
+    }
+
+    const responseMessage = {
+      password: "password cannot contains whitespace"
     }
 
     const response = await request(app).post('/users/register')
