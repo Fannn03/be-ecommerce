@@ -23,7 +23,7 @@ export const insertUser = async (request: UserInterface) => {
         id: ulid(),
         email: request.email,
         name: request.name,
-        password: await bcrypt.hash(request.password, 10)
+        password: request.password
       }
     });
   } catch (err) {
