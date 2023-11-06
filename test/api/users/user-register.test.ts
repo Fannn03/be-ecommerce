@@ -172,4 +172,36 @@ describe("User Register API", () => {
     expect(response.body.result).toBe("bad request")
     expect(response.body.message).toEqual(responseMessage)
   })
+
+  test("Should return 400 when email already taken", async () => {
+    const data = {
+      email: email,
+      name: faker.internet.userName(),
+      password: "password"
+    }
+
+    const response = await request(app).post('/users/register')
+      .send(data)
+
+    expect(response.statusCode).toEqual(400)
+    expect(response.body.code).toEqual(400)
+    expect(response.body.result).toBe("bad request")
+    expect(response.body.message).toEqual("Email already taken")
+  })
+
+  test("Should return 400 when name already taken", async () => {
+    const data = {
+      email: faker.internet.email(),
+      name: name,
+      password: "password"
+    }
+
+    const response = await request(app).post('/users/register')
+      .send(data)
+
+    expect(response.statusCode).toEqual(400)
+    expect(response.body.code).toEqual(400)
+    expect(response.body.result).toBe("bad request")
+    expect(response.body.message).toEqual("Name already taken")
+  })
 })
