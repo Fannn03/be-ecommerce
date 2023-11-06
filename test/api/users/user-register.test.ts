@@ -132,4 +132,24 @@ describe("User Register API", () => {
     expect(response.body.result).toBe("bad request")
     expect(response.body.message).toEqual(responseMessage)
   })
+
+  test("Should return 400 when name is contains whitespace", async () => {
+    const data = {
+      email: faker.internet.email(),
+      name: "my username",
+      password: "password"
+    }
+
+    const responseMessage = {
+      name: "name cannot contains whitespace"
+    }
+
+    const response = await request(app).post('/users/register')
+      .send(data)
+
+    expect(response.statusCode).toEqual(400)
+    expect(response.body.code).toEqual(400)
+    expect(response.body.result).toBe("bad request")
+    expect(response.body.message).toEqual(responseMessage)
+  })
 })
