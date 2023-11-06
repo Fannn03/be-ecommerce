@@ -1,6 +1,7 @@
 {
   "exclude": [
-    "./prisma/seeder"
+    "./prisma/seeder",
+    "./test"
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

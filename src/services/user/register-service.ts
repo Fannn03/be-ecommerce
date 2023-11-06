@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import bcrypt from 'bcrypt'
 import { sendRegisterMail } from "../../repositories/mail";
 import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -19,10 +20,12 @@ interface Response {
 
 export default async (request: CreateBody) => {
   try {
+    const hashPassword = await bcrypt.hash(request.password, 10)
+
     const user = await insertUser({
       email: request.email,
       name: request.name,
-      password: request.password
+      password: hashPassword
     });
     
     const uuid = uuidv4()
