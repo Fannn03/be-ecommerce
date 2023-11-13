@@ -1,5 +1,5 @@
 import express from 'express'
-import registerMiddleware from '../middleware/register-middleware'
+import registerMiddleware from '../middleware/users/register-middleware'
 import { 
   detailsuser,
   loginUser,
@@ -8,7 +8,7 @@ import {
   verifyEmail 
 } from '../controllers/user-controller'
 import authMiddleware from '../middleware/auth-middleware'
-import updateUserMiddleware from '../middleware/update-user-middleware'
+import updateUserMiddleware from '../middleware/users/update-user-middleware'
 
 const router = express.Router()
 
