@@ -644,6 +644,98 @@
           }
         }
       }
+    },
+    "/categories/create": {
+      "post": {
+        "summary": "Create category",
+        "description": "Create category of products",
+        "tags": ["Categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "required, name for category product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "id": 5,
+                    "name": "Phone",
+                    "createdAt": "2023-11-13T08:59:22.254Z",
+                    "updatedAt": "2023-11-13T08:59:22.254Z",
+                    "deletedAt": null
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "Category name already taken"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
