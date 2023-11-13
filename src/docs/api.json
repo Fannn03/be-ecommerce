@@ -553,6 +553,30 @@
               }
             }
           },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
           "500": {
             "description": "internal server error",
             "content": {
@@ -584,24 +608,8 @@
           "content": {
             "application/json": {
               "example": {
-                "code": 200,
-                "result": "success",
-                "message": "success update record data",
-                "data": {
-                  "user": {
-                    "name": "bastues",
-                    "email": "batues@gmail.com"
-                  },
-                  "store": {
-                    "id": 64,
-                    "username": "mystore",
-                    "name": "Digital Store 1",
-                    "photos": "01HCRQKDH9WVZY64GKT9QS6B2A.jpeg",
-                    "description": "Adalah sebuah toko digital murah terpecaya",
-                    "updatedAt": "2023-11-01T14:09:43.908Z"
-                  }
-                }
-            }
+                
+              }
             }
           }
         },
@@ -613,7 +621,21 @@
                 "example": {
                   "code": 200,
                   "result": "success",
-                  "message": "success update record data"
+                  "message": "success update record data",
+                  "data": {
+                    "user": {
+                      "name": "bastues",
+                      "email": "batues@gmail.com"
+                    },
+                    "store": {
+                      "id": 64,
+                      "username": "mystore",
+                      "name": "Digital Store 1",
+                      "photos": "01HCRQKDH9WVZY64GKT9QS6B2A.jpeg",
+                      "description": "Adalah sebuah toko digital murah terpecaya",
+                      "updatedAt": "2023-11-01T14:09:43.908Z"
+                    }
+                  }
                 }
               }
             }
@@ -626,6 +648,30 @@
                   "code": 400,
                   "result": "bad request",
                   "message": "Username store already taken"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
                 }
               }
             }
@@ -710,7 +756,7 @@
               }
             }
           },
-          "402": {
+          "403": {
             "description": "forbidden",
             "content": {
               "application/json": {
