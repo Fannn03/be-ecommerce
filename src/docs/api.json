@@ -100,6 +100,8 @@
                   "result": "success",
                   "message": "login success",
                   "data": {
+                    "id": "user id",
+                    "name": "user name",
                     "token": "some random token"
                   }
                 }
@@ -456,23 +458,31 @@
           "200": {
             "description": "success",
             "content": {
-              "code": 200,
-              "status": "success",
-              "message": "login message",
-              "data": {
-                "id": 1,
-                "name": "admin",
-                "level": "admin",
-                "token": "some random token"
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": "login message",
+                  "data": {
+                    "id": 1,
+                    "name": "admin",
+                    "level": "admin",
+                    "token": "some random token"
+                  }
+                }
               }
             }
           },
           "404": {
             "description": "not found",
             "content": {
-              "code": 404,
-              "status": "not found",
-              "message": "cannot retrieved data admin"
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "status": "not found",
+                  "message": "cannot retrieved data admin"
+                }
+              }
             }
           },
           "500": {
