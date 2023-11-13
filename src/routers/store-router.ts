@@ -2,7 +2,7 @@ import express from 'express'
 import multer from 'multer'
 import storageMulter from '../config/multer'
 import { createStore, updateStore } from '../controllers/store-controller'
-import createStoreMiddleware from '../middleware/create-store-middleware'
+import createStoreMiddleware from '../middleware/stores/create-store-middleware'
 
 const router = express.Router()
 const upload = multer({storage: storageMulter('/temp')})
