@@ -495,6 +495,11 @@
         "summary": "Create store",
         "description": "Create store for use who wants to sell their products",
         "tags": ["Stores"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Example form request body",
           "required": true,
@@ -568,6 +573,11 @@
         "summary": "Update store",
         "description": "Update their own store",
         "tags": ["Stores"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "description": "Example form request body",
           "required": true,
