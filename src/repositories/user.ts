@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client"
 import { ulid } from 'ulid'
-import bcrypt from 'bcrypt'
 const prisma = new PrismaClient()
 
 interface UserInterface {
