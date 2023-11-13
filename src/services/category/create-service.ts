@@ -22,7 +22,7 @@ export default async (request: CreateBody) => {
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "categories_name_key") {
-        throw new CreateCategoryError("This category name already exist", 400, "bad request")
+        throw new CreateCategoryError("Category name already exist", 400, "bad request")
       }
     } else {
       throw err
