@@ -33,7 +33,7 @@ export default async (req: LoginBody) => {
       id: admin.id,
       name: admin.name,
       level: admin.level,
-      token: jwt.sign(payload, process.env.SECRET_TOKEN as string, {expiresIn: '3h'})
+      token: jwt.sign(payload, process.env.SECRET_TOKEN as jwt.Secret, {expiresIn: '3h'})
     }
 
     return response
