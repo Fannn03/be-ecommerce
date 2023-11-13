@@ -13,6 +13,6 @@ router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 router.use('/users', userRouter)
 router.use('/admins', adminRouter)
 router.use('/stores', authMiddleware, storeRouter)
-router.use('/categories', categoryRouter)
+router.use('/categories', authMiddleware, categoryRouter)
 
 export default router
