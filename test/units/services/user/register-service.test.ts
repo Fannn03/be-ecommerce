@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import register from '../../../src/services/user/register-service'
+import register from '../../../../src/services/user/register-service'
 
 describe("User Register Service", () => {
   let email:string, name:string
