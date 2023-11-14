@@ -10,7 +10,7 @@ const prompt = promptSync()
 export default {
   name: 'store',
   run: async () => {
-    const number = prompt("How many user do you want to create ? : ")
+    const number = prompt("How many stores do you want to create ? : ")
     if(!Number(number)) throw new Error("Invalid value number")
 
     console.log("seeding store...")
