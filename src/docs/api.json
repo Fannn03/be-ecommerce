@@ -686,6 +686,18 @@
               }
             }
           },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "Record to update not found"
+                }
+              }
+            }
+          },
           "500": {
             "description": "internal server error",
             "content": {
