@@ -518,7 +518,7 @@
               "example": {
                 "username": "Username for their store, required for slug or etc",
                 "name": "Display name for their store",
-                "photos": "optional, can be skip later",
+                "file": "optional, can be skip later",
                 "description": "optional, can be skip later"
               }
             }
