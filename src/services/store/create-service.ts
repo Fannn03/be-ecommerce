@@ -3,9 +3,8 @@ import fs from 'fs/promises'
 import { createStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-export class CreateStoreError extends Error {
-  constructor(message: string, public code: number, public result: string) {
-    super()
+export class CreateStoreError{
+  constructor(public message: string, public code: number, public result: string) {
     this.message = message
     this.code = code
     this.result = result

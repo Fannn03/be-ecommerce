@@ -14,13 +14,11 @@ interface Response {
   token: string
 }
 
-export class LoginError extends Error {
-  constructor (message: string, public code: number, public result: string) {
-    super()
+export class LoginError{
+  constructor (public message: string, public code: number, public result: string) {
     this.message = message
     this.code = code
     this.result = result
-    Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 

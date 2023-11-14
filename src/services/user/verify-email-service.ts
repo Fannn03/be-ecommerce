@@ -3,13 +3,11 @@ import { Key } from "node-cache"
 import cache from "../../config/cache"
 import { verifyUser } from "../../repositories/user"
 
-export class VerifyEmailError extends Error {
-  constructor(message: string, public code:number, public result: string) {
-    super()
+export class VerifyEmailError{
+  constructor(public message: string, public code:number, public result: string) {
     this.message = message
     this.code = code
     this.result = result
-    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
