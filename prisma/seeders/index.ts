@@ -2,6 +2,7 @@ import superAdminSeeder from "./super-admin-seeder";
 import userSeeder from "./user-seeder";
 import storeSeeder from "./store-seeder";
 import categorySeeder from "./category-seeder";
+import productSeeder from "./product-seeder";
 
 interface Seeder {
   name: string,
@@ -19,6 +20,7 @@ interface Seeder {
   seeders.push(userSeeder)
   seeders.push(storeSeeder)
   seeders.push(categorySeeder)
+  seeders.push(productSeeder)
 
   const getAllSeederName = () => {
     console.log("Available seeders name :\n");
