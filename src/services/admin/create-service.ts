@@ -19,9 +19,8 @@ interface Response {
   createdAt: Date
 }
 
-export class CreateAdminError extends Error {
+export class CreateAdminError{
   constructor(public message: string, public code: number, public result: string) {
-    super()
     this.message = message
     this.code = code
     this.result = result

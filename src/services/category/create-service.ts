@@ -5,9 +5,8 @@ interface CreateBody {
   name: string
 }
 
-export class CreateCategoryError extends Error {
+export class CreateCategoryError{
   constructor (public message: string, public code: number, public result: string) {
-    super();
     this.message = message;
     this.code = code;
     this.result = result;

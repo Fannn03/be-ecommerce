@@ -9,9 +9,8 @@ interface Response {
   updatedAt : Date
 }
 
-export class UserUpdateError extends Error {
-  constructor(message: string, public code: number, public result: string) {
-    super()
+export class UserUpdateError{
+  constructor(public message: string, public code: number, public result: string) {
     this.message = message
     this.code = code
     this.result = result
