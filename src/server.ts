@@ -1,7 +1,7 @@
 import app from './app'
 import 'dotenv/config'
 import { transport } from './config/mailer'
-import createPublic from './utils/server/create-public'
+import createPublic from './helpers/server/create-public'
 
 app.listen(process.env.SERVER_PORT, async () => {
 	const mailer = await transport.verify()

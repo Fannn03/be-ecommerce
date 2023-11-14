@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcrypt'
-import { sendRegisterMail } from "../../repositories/mail";
-import { insertUser } from "../../repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import cache from '../../config/cache';
+import { insertUser } from "../../repositories/user";
+import { sendRegisterMail } from '../../helpers/email/send-email-register';
 
 interface CreateBody {
   email     : string,
