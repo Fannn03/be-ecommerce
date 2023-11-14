@@ -1,11 +1,10 @@
-import { PrismaClient, User } from "@prisma/client"
+import { PrismaClient } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { fa, faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker/locale/id_ID'
 import { ulid } from 'ulid'
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient
-const users: User[] = []
 const prompt = promptSync()
 
 export default {
