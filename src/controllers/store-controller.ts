@@ -40,7 +40,7 @@ export const updateStore = async (req: Request, res: Response) => {
       message: 'success update record data',
       data: storeUpdated
     })
-  } catch (err: any) {
+  } catch (err) {
     if(err instanceof UpdateStoreError) {
       return res.status(err.code).json({
         code: err.code,

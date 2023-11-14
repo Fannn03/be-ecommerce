@@ -1,6 +1,6 @@
 import { ParsedQs } from "qs"
-import cache from "../../config/cache"
 import { Key } from "node-cache"
+import cache from "../../config/cache"
 import { verifyUser } from "../../repositories/user"
 
 export class VerifyEmailError extends Error {
