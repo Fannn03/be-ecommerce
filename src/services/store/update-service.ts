@@ -3,9 +3,8 @@ import fs from 'fs/promises'
 import { updateStore } from "../../repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-export class UpdateStoreError extends Error {
-  constructor (public message: string, public code: number, public result: string) {
-    super()
+export class UpdateStoreError{
+  constructor(public message: string, public code: number, public result: string) {
     this.message = message
     this.code = code
     this.result = result
@@ -63,8 +62,12 @@ export default async (request: Request) => {
     if(err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002" && err.meta?.target === "stores_username_key") {
         throw new UpdateStoreError("Username store already taken", 400, "bad request")
+      } else if (err.code === "P2025" && err.meta?.cause === "Record to update not found.") {
+        throw new UpdateStoreError("Record to update not found", 404, "not found")
+      } else {
+        throw err
       }
-    }else {
+    } else {
       throw err
     }
   }
