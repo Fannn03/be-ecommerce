@@ -14,4 +14,18 @@ describe("User Verify Service", () => {
       expect(err.result).toBe("bad request")
     }
   })
+
+  test("Should return error when key already expired or invalid key", async () => {
+    const payload = {
+      key: "randomKeyThatExpiredOrInvalid"
+    }
+
+    try {
+      await verifyEmail(payload)
+    } catch (err: any) {
+      expect(err.message).toBe("Invalid key or key already expired")
+      expect(err.code).toEqual(400)
+      expect(err.result).toBe("bad request")
+    }
+  })
 })
