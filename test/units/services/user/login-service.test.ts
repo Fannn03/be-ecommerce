@@ -47,8 +47,13 @@ describe("User Login Service", () => {
       password: "password"
     }
 
-    const response = await login(payload)
-    expect(response).toBeUndefined()
+    try {
+      await login(payload)
+    } catch (err: any) {
+      expect(err.message).toBe("Email must be verified first!")
+      expect(err.code).toEqual(403)
+      expect(err.result).toBe("forbidden")
+    }
   })
 
   test("Should return property response when login success", async () => {
