@@ -44,7 +44,7 @@ export const getUser = async (request: string) => {
 
 export const verifyUser = async (id: string) => {
   try {
-    await prisma.user.update({
+    return await prisma.user.update({
       data: {
         email_verified: new Date().toISOString()
       },

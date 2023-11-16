@@ -18,7 +18,16 @@ export default async (req: ParsedQs) => {
   if(!getCache) throw new VerifyEmailError("Invalid key or key already expired", 400, 'bad request')
 
   try {
-    await verifyUser(getCache as string)
+    const verify = await verifyUser(getCache as string)
+
+    const response = {
+      id: verify.id,
+      email: verify.email,
+      email_verified_at: verify.email_verified,
+      updatedAt: verify.updatedAt
+    }
+
+    return response
   } catch (err) {
     throw err
   }
