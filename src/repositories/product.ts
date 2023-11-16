@@ -2,12 +2,12 @@ import { PrismaClient } from "@prisma/client"
 
 interface productInterface {
   store_id: number,
-  categpry_id: number,
-  name: string,
-  slug: string,
-  description: string,
-  price: number,
-  stock: number
+  categpry_id   : number,
+  name          : string,
+  slug          : string,
+  description   : string,
+  price         : number,
+  stock         : number
 }
 
 const prisma = new PrismaClient()
