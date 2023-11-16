@@ -79,6 +79,7 @@ enum AdminLevel {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique @db.VarChar(255)
+  slug      String    @db.VarChar(255)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?

@@ -1,4 +1,5 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
+import slugify from "slugify";
 import { createCategory } from "../../repositories/category"
 
 interface CreateBody {
@@ -16,7 +17,10 @@ export class CreateCategoryError{
 export default async (request: CreateBody) => {
   try {
     return await createCategory({
-      name: request.name
+      name: request.name,
+      slug: slugify(request.name, {
+        lower: true,
+      })
     })
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
