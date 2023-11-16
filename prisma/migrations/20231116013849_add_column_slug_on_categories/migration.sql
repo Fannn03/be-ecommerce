@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `categories` ADD COLUMN `slug` VARCHAR(255) AFTER `name`;
+ALTER TABLE `categories` ADD COLUMN `slug` VARCHAR(255) NOT NULL AFTER `name`;
