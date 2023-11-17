@@ -10,6 +10,7 @@ interface StoreInterface {
 
 interface findStore {
   id?: number,
+  user_id?: string,
   name?: string
 }
 
@@ -20,6 +21,7 @@ export const findStore = async (query: findStore) => {
     where: {
       OR: [
         {id: query.id},
+        {user_id: query.user_id},
         {name: query.name}
       ]
     }
