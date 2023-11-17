@@ -5,7 +5,23 @@ interface categoryInterface {
   slug: string
 }
 
+interface findCategory {
+  id?: number,
+  name?: string,
+}
+
 const prisma = new PrismaClient()
+
+export const findCategory = async (category: findCategory) => {
+  return await prisma.category.findFirst({
+    where: {
+      OR: [
+        {id: category.id},
+        {name: category.name}
+      ]
+    }
+  })
+}
 
 export const createCategory = async (category: categoryInterface) => {
   try {
