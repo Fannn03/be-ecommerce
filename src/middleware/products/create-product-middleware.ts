@@ -7,9 +7,8 @@ interface ErrorMessage {
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
-    store_id: Joi.string()
+    store_id: Joi.number()
       .required()
-      .trim()
       ,
     category_id: Joi.number()
       .required()
