@@ -6,6 +6,8 @@ interface ErrorMessage {
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
+  req.body.photos = req.files
+
   const form = Joi.object({
     store_id: Joi.number()
       .required()
@@ -19,6 +21,21 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .min(4)
       .max(50)
       ,
+    photos: Joi.array()
+    .min(1)
+    .custom((value, helpers) => {
+      const extensions = ['image/png', 'image/jpg', 'image/jpeg']
+
+      for(let file in value) {
+        if(!extensions.includes(value[file].mimetype)) {
+          return helpers.error('any.invalid')
+        }
+      }
+    })
+    .messages({
+      'any.invalid': 'File type must be PNG, JPG, or JPEG'
+    })
+    ,
     description: Joi.string()
       .required()
       .trim()
@@ -54,5 +71,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     })
   }
 
-  return next()
+  // return next()
+  return res.send('check log')
 }
