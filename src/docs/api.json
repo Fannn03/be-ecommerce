@@ -804,6 +804,108 @@
           }
         }
       }
+    },
+    "/products/create": {
+      "post": {
+        "summary": "Create Product",
+        "description": "Create product store",
+        "tags": ["Products"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "content": {
+            "application/json": {
+              "example": {
+                "category_id": 1,
+                "store_id": 1,
+                "name": "Jam Tangan",
+                "price": 150000,
+                "stock": 329,
+                "description": "Jam tangan bagus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "id": 1,
+                    "store_id": 1,
+                    "category_id": 1,
+                    "name": "Jam Tangan",
+                    "slug": "rhino-official-jam-tangan-1700202563475",
+                    "description": "Jam tangan bagus",
+                    "price": 150000,
+                    "stock": 329,
+                    "createdAt": "2023-11-17T06:29:23.477Z",
+                    "updatedAt": "2023-11-17T06:29:23.477Z",
+                    "deletedAt": null
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "Category doesn't exist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
