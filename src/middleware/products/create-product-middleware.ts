@@ -7,6 +7,12 @@ interface ErrorMessage {
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
+    store_id: Joi.number()
+      .required()
+      ,
+    category_id: Joi.number()
+      .required()
+      ,
     name: Joi.string()
       .required()
       .trim()
@@ -46,4 +52,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       message: errMessage
     })
   }
+
+  return next()
 }
