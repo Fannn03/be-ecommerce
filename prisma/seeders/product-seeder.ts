@@ -50,6 +50,7 @@ export default {
             category_id: categories[getCategory].id,
             name: productName,
             slug: slug.toLowerCase(),
+            description: faker.lorem.paragraphs(),
             price: price,
             stock: stock,
             createdAt: faker.date.past(),
