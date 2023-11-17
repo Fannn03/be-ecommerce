@@ -8,7 +8,23 @@ interface StoreInterface {
   description?  : string
 }
 
+interface findStore {
+  id?: number,
+  name?: string
+}
+
 const prisma = new PrismaClient()
+
+export const findStore = async (query: findStore) => {
+  return prisma.store.findFirst({
+    where: {
+      OR: [
+        {id: query.id},
+        {name: query.name}
+      ]
+    }
+  })
+}
 
 export const createStore = async (request: StoreInterface) => {
   try {
