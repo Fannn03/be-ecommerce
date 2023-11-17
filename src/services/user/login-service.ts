@@ -34,7 +34,7 @@ export default async (request: LoginBody) => {
     if(!verifyPassword) return null;
 
     // check if email user isn't verified
-    if(!user.email_verified) throw new LoginError("Email must be verified first!", 403, 'forbidden')
+    if(!user.email_verified) return new LoginError("Email must be verified first!", 403, 'forbidden')
 
     const response: Response = {
       id: user.id,
