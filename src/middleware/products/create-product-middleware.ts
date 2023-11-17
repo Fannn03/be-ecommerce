@@ -7,8 +7,9 @@ interface ErrorMessage {
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
-    store_id: Joi.number()
+    store_id: Joi.string()
       .required()
+      .trim()
       ,
     category_id: Joi.number()
       .required()
@@ -20,6 +21,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .max(50)
       ,
     description: Joi.string()
+      .required()
       .trim()
       ,
     price: Joi.number()
