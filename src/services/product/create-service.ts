@@ -25,7 +25,7 @@ export default async (req: Request) => {
   })
 
   if(!category) throw new CreateProductError("Category doesn't exist", 400, "bad request")
-  if(!store) throw new CreateProductError("Store doesn't exist", 403, "forbidden")
+  if(!store) throw new CreateProductError("Store doesn't exist", 400, "bad request")
   if(store.user_id !== req.user.id) throw new CreateProductError("You don't have any permission to create other product store", 403, "forbidden")
 
   try {
