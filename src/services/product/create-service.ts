@@ -1,10 +1,27 @@
 import { Request } from "express";
-import { findStore } from "../../repositories/store";
-import { Category, Store } from "@prisma/client";
-import { createProduct } from "../../repositories/product";
 import slugify from "slugify";
+import { Category, Store } from "@prisma/client";
+import fs from 'fs'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { findStore } from "../../repositories/store";
+import { createProduct } from "../../repositories/product";
 import { findCategory } from "../../repositories/category";
+
+interface fileInterface {
+  fieldname: string,
+  originalname: string,
+  encoding: string,
+  mimetype: string,
+  destination: string,
+  filename: string,
+  path: string,
+  size: number
+}
+
+interface productPhotosInterface {
+  filename: string,
+  newname: string
+}
 
 export class CreateProductError {
   constructor(public message: string, public code: number, public result: string) {
@@ -15,7 +32,7 @@ export class CreateProductError {
 }
 
 export default async (req: Request) => {
-  const { store_id, category_id, name, description, price, stock } = req.body
+  const { store_id, category_id, name, photos, description, price, stock } = req.body
 
   const category: Category | null = await findCategory({
     id: Number(category_id)
@@ -29,7 +46,25 @@ export default async (req: Request) => {
   if(store.user_id !== req.user.id) throw new CreateProductError("You don't have any permission to create other product store", 403, "forbidden")
 
   try {
-    return await createProduct({
+    const localPhotos: productPhotosInterface[] = [] // used for move file photos in directory public
+    const dbPhotos: any[] = [] // used for naming photos in database
+
+    photos.map((data: fileInterface, index: number) => {
+      const extension = data.mimetype.split('/')[1]
+      const filename = slugify(`${store.username} ${name} ${new Date().getTime()}`, {
+        lower: true
+      })
+      
+      localPhotos.push({
+        filename: data.filename,
+        newname: `${filename}-${index + 1}.${extension}`,
+      })
+      dbPhotos.push({
+        name: `${filename}-${index + 1}.${extension}`,
+      })
+    })
+
+    await createProduct({
       store_id: Number(store_id),
       categpry_id: Number(category_id),
       name: name,
@@ -39,6 +74,10 @@ export default async (req: Request) => {
       description: description,
       price: Number(price),
       stock: Number(stock)
+    }, dbPhotos)
+
+    localPhotos.map((data: productPhotosInterface) => {
+      fs.renameSync(`public/images/temp/${data.filename}`, `public/images/products/${data.newname}`)
     })
   } catch (err: any) {
     if(err instanceof PrismaClientKnownRequestError) {

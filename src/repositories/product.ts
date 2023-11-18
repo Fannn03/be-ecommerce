@@ -10,9 +10,13 @@ interface productInterface {
   stock         : number
 }
 
+interface photosInterface {
+  name: string
+}
+
 const prisma = new PrismaClient()
 
-export const createProduct = async (product: productInterface) => {
+export const createProduct = async (product: productInterface, photos: photosInterface[]) => {
   try {
     return prisma.product.create({
       data: {
@@ -22,7 +26,10 @@ export const createProduct = async (product: productInterface) => {
         slug: product.slug,
         description: product.description,
         price: product.price,
-        stock: product.stock
+        stock: product.stock,
+        images: {
+          create: photos
+        }
       }
     })
   } catch (err) {
