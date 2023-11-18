@@ -67,9 +67,11 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     }
 
     // delete product photos in temp directory
-    req.body.photos.map((data: productBodyInterface) => {
-      fs.rmSync(`public/images/temp/${data.filename}`)
-    })
+    if(req.body.photos?.length) {
+      req.body.photos.map((data: productBodyInterface) => {
+        fs.rmSync(`public/images/temp/${data.filename}`)
+      })
+    }
 
     return res.status(400).json({
       code: 400,
