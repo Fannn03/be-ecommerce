@@ -7,7 +7,7 @@ import { findStore } from "../../repositories/store";
 import { createProduct } from "../../repositories/product";
 import { findCategory } from "../../repositories/category";
 
-interface fileInterface {
+export interface productBodyInterface {
   fieldname: string,
   originalname: string,
   encoding: string,
@@ -49,7 +49,7 @@ export default async (req: Request) => {
     const localPhotos: productPhotosInterface[] = [] // used for move file photos in directory public
     const dbPhotos: any[] = [] // used for naming photos in database
 
-    photos.map((data: fileInterface, index: number) => {
+    photos.map((data: productBodyInterface, index: number) => {
       const extension = data.mimetype.split('/')[1]
       const filename = slugify(`${store.username} ${name} ${new Date().getTime()}`, {
         lower: true

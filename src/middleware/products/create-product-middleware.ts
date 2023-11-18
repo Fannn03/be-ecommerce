@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+import fs from 'fs'
+import { productBodyInterface } from "../../services/product/create-service";
 
 interface ErrorMessage {
   name?: string
@@ -63,6 +65,11 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         errMessage[data.context?.key as keyof ErrorMessage] = data.message
       })
     }
+
+    // delete product photos in temp directory
+    req.body.photos.map((data: productBodyInterface) => {
+      fs.rmSync(`public/images/temp/${data.filename}`)
+    })
 
     return res.status(400).json({
       code: 400,
