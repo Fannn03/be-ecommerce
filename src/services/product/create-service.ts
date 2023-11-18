@@ -34,18 +34,20 @@ export class CreateProductError {
 export default async (req: Request) => {
   const { store_id, category_id, name, photos, description, price, stock } = req.body
 
-  const category: Category | null = await findCategory({
-    id: Number(category_id)
-  })
-  const store: Store | null = await findStore({
-    id: Number(store_id)
-  })
-
-  if(!category) throw new CreateProductError("Category doesn't exist", 400, "bad request")
-  if(!store) throw new CreateProductError("Store doesn't exist", 400, "bad request")
-  if(store.user_id !== req.user.id) throw new CreateProductError("You don't have any permission to create other product store", 403, "forbidden")
-
   try {
+    const category: Category | null = await findCategory({
+      id: Number(category_id)
+    })
+    const store: Store | null = await findStore({
+      id: Number(store_id)
+    })
+
+    if(!category) throw new CreateProductError("Category doesn't exist", 400, "bad request")
+    if(!store) throw new CreateProductError("Store doesn't exist", 400, "bad request")
+    if(store.user_id !== req.user.id) throw new CreateProductError("You don't have any permission to create other product store", 403, "forbidden")
+    
+  // TODO: minimize loop file photos due reduce lack of memory if it's possible
+
     const localPhotos: productPhotosInterface[] = [] // used for move file photos in directory public
     const dbPhotos: any[] = [] // used for naming photos in database
 
@@ -80,6 +82,11 @@ export default async (req: Request) => {
       fs.renameSync(`public/images/temp/${data.filename}`, `public/images/products/${data.newname}`)
     })
   } catch (err: any) {
+    // delete file in temp directory folder
+    photos.map((data: productBodyInterface) => {
+      fs.rmSync(`public/images/temp/${data.filename}`)
+    })
+
     if(err instanceof PrismaClientKnownRequestError) {
       throw new CreateProductError(err.message, 404, "bad request")
     } else {
