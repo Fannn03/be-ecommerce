@@ -16,11 +16,14 @@ interface photosInterface {
 
 const prisma = new PrismaClient()
 
-export const findAllProduct = async (take: number = 10, skip: number = 10) => {
+export const findAllProduct = async (take: number, skip: number) => {
   try {
     return await prisma.product.findMany({
       where: {
         deletedAt: null
+      },
+      include: {
+        images: true
       },
       take: take,
       skip: skip
