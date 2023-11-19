@@ -1,17 +1,25 @@
 import { Request, Response } from "express";
 import { Category } from "@prisma/client";
-import findAllCategoryService from '../services/category/findall-service'
+import findAllCategoryService, { categoryInterface } from '../services/category/findall-service'
 import categoryService, { CreateCategoryError } from '../services/category/create-service'
 
 export const findAllCategory = async (req: Request, res: Response) => {
-  const categories: any = await findAllCategoryService()
+  try {
+    const categories: categoryInterface[] = await findAllCategoryService()
 
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success get record data',
-    data: categories
-  })
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success get record data',
+      data: categories
+    })
+  } catch (err: any) {
+    return res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+  }
 }
 
 export const createCategory = async (req: Request, res: Response) => {
