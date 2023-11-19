@@ -5,6 +5,7 @@ import userRouter from './user-router'
 import storeRouter from './store-router'
 import adminRouter from './admin-router'
 import categoryRouter from './category-router'
+import productRouter from './product-router'
 import authMiddleware from '../middleware/auth-middleware'
 
 const router = express.Router()
@@ -14,5 +15,6 @@ router.use('/users', userRouter)
 router.use('/admins', adminRouter)
 router.use('/stores', authMiddleware, storeRouter)
 router.use('/categories', authMiddleware, categoryRouter)
+router.use('/products', productRouter)
 
 export default router

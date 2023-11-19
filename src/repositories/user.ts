@@ -3,10 +3,10 @@ import { ulid } from 'ulid'
 const prisma = new PrismaClient()
 
 interface UserInterface {
-  id?: string,
-  email: string,
-  name: string,
-  password: string,
+  id?       : string,
+  email     : string,
+  name      : string,
+  password  : string,
 }
 
 interface UpdateUser {

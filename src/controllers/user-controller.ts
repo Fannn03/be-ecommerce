@@ -31,16 +31,16 @@ export const loginUser = async (req: Request, res: Response) => {
   const data = await loginService(req.body);
 
   // TODO: refactor error message
-  if(!data) return res.status(404).json({
-    code: 404,
-    result: 'not found',
-    message: 'cannot retrieve data user'
+  if(data instanceof LoginError) return res.status(data.code).json({
+    code: data.code,
+    result: data.result,
+    message: data.message
   });
-  else if (data instanceof LoginError) {
-    return res.status(data.code).json({
-      code: data.code,
-      result: data.result,
-      message: data.message
+  else if (!data) {
+    return res.status(404).json({
+      code: 404,
+      result: 'not found',
+      message: 'cannot retrieve data user'
     })
   }
   else if(data instanceof Error) {

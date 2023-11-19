@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client"
 import promptSync from 'prompt-sync'
 import { faker } from "@faker-js/faker/locale/id_ID"
+import slugify from "slugify"
 
 const prisma = new PrismaClient()
 const prompt = promptSync()
 
 interface Category {
   name: string,
+  slug: string,
   createdAt: Date,
   updatedAt: Date
 }
@@ -21,8 +23,13 @@ export default {
 
     const categories: Category[] = []
     for(let i = 0; i < Number(number); i++){
+      const name  = faker.commerce.department()
+
       const data = {
-        name: faker.commerce.department(),
+        name: name,
+        slug: slugify(name, {
+          lower: true
+        }),
         createdAt: faker.date.past(),
         updatedAt: faker.date.recent()
       }
