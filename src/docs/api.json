@@ -713,6 +713,55 @@
         }
       }
     },
+    "/categories": {
+      "get": {
+        "summary": "Get Categories",
+        "description": "Get all available categories",
+        "tags": ["Categories"],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": [
+                    {
+                      "id": 1,
+                      "name": "Elektronik",
+                      "slug": "elektronik",
+                      "createdAt": "2023-11-17T02:17:45.932Z",
+                      "updatedAt": "2023-11-17T02:17:45.932Z"
+                    },
+                    {
+                      "id": 3,
+                      "name": "Fashion",
+                      "slug": "fashion",
+                      "createdAt": "2023-11-17T02:18:33.858Z",
+                      "updatedAt": "2023-11-17T02:18:33.858Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/categories/create": {
       "post": {
         "summary": "Create category",
