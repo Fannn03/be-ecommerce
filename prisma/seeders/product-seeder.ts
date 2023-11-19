@@ -1,6 +1,9 @@
 import { Category, PrismaClient, Store } from "@prisma/client"
 import promptSync from 'prompt-sync'
 import { faker } from "@faker-js/faker/locale/id_ID"
+import slugify from "slugify"
+import axios from "axios"
+import fs from 'fs'
 
 const prisma = new PrismaClient()
 const prompt = promptSync()
@@ -44,7 +47,7 @@ export default {
       })
 
       try {
-        await prisma.product.create({
+        const product = await prisma.product.create({
           data: {
             store_id: stores[getStore].id,
             category_id: categories[getCategory].id,
@@ -55,8 +58,32 @@ export default {
             stock: stock,
             createdAt: faker.date.past(),
             updatedAt: faker.date.recent(),
-            deletedAt: isDeleted ? faker.date.recent() : null
+            deletedAt: isDeleted ? faker.date.recent() : null,
+            images: {
+              createMany: {
+                data: [
+                  {name: slugify(`${stores[getStore].name} ${productName} ${new Date().getTime()} 1.jpeg`, {
+                    lower: true
+                  })},
+                  {name: slugify(`${stores[getStore].name} ${productName} ${new Date().getTime()} 2.jpeg`, {
+                    lower: true
+                  })}
+                ]
+              }
+            }
+          },
+          include: {
+            images: true
           }
+        })
+
+        product.images.map(async (data: any) => {
+          const fileName = data.name
+          const image = await axios.get(faker.image.urlLoremFlickr(), {
+            responseType: 'arraybuffer'
+          })
+
+          fs.writeFileSync(`./public/images/products/${fileName}`, image.data)
         })
       } catch (err) {
         throw err
