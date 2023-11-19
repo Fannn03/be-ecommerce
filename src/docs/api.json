@@ -874,7 +874,8 @@
                 "name": "Jam Tangan",
                 "price": 150000,
                 "stock": 329,
-                "description": "Jam tangan bagus"
+                "description": "Jam tangan bagus",
+                "photos": "product.jpeg"
               }
             }
           }
