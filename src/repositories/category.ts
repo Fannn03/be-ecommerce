@@ -23,6 +23,10 @@ export const findCategory = async (category: findCategory) => {
   })
 }
 
+export const findAllCategory = async () => {
+  return await prisma.category.findMany()
+}
+
 export const createCategory = async (category: categoryInterface) => {
   try {
     return await prisma.category.create({
