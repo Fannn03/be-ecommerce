@@ -9,6 +9,6 @@ const router: Router = express.Router()
 const upload = multer({storage: storageMulter('/temp')})
 
 router.get('/', findAllProduct)
-router.post('/create', upload.array('file'), authMiddleware, createProductMiddleware, createProduct)
+router.post('/create', upload.array('photos'), authMiddleware, createProductMiddleware, createProduct)
 
 export default router
