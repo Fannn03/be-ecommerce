@@ -4,7 +4,6 @@ import createProductService, { CreateProductError } from '../services/product/cr
 
 export const findAllProduct = async (req: Request, res: Response) => {
   try {
-
     const products = await findAllProductService(req.query)
 
     return res.json({
