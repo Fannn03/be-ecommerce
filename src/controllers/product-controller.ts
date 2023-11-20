@@ -29,6 +29,18 @@ export const findAllProduct = async (req: Request, res: Response) => {
   }
 }
 
+export const findProduct = async (req: Request, res: Response) => {
+  try {
+    
+  } catch (err: any) {
+    return res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+  }
+}
+
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const product = await createProductService(req)
