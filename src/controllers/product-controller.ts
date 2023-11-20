@@ -6,6 +6,14 @@ export const findAllProduct = async (req: Request, res: Response) => {
   try {
     const products = await findAllProductService(req.query)
 
+    if(!products.length && req.query.page) {
+      return res.status(404).json({
+        code: 404,
+        result: 'not found',
+        message: 'record data not found'
+      })
+    }
+
     return res.json({
       code: 200,
       result: 'success',
