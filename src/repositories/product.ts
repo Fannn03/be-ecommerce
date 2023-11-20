@@ -16,6 +16,23 @@ interface photosInterface {
 
 const prisma = new PrismaClient()
 
+export const findAllProduct = async (take: number, skip: number) => {
+  try {
+    return await prisma.product.findMany({
+      where: {
+        deletedAt: null
+      },
+      include: {
+        images: true
+      },
+      take: take,
+      skip: skip
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
 export const createProduct = async (product: productInterface, photos: photosInterface[]) => {
   try {
     return prisma.product.create({

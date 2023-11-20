@@ -3,6 +3,7 @@ SERVER_PORT=
 DATABASE_URL="mysql://user:pass@localhost:3306/db"
 SECRET_TOKEN=
 VERIF_EMAIL_URL=
+BASE_URL=localhost:http://localhost:3000
 
 # webmail configuration
 EMAIL_HOST=

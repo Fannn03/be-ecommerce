@@ -1,9 +1,29 @@
 import { Request, Response } from "express";
-import createService, { CreateProductError } from '../services/product/create-service'
+import findAllProductService from '../services/product/findall-service'
+import createProductService, { CreateProductError } from '../services/product/create-service'
+
+export const findAllProduct = async (req: Request, res: Response) => {
+  try {
+    const products = await findAllProductService(req.query)
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success get record data',
+      data: products
+    })
+  } catch (err: any) {
+    return res.status(500).json({
+      code: 500,
+      result: 'bad request',
+      message: err.message
+    })
+  }
+}
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = await createService(req)
+    const product = await createProductService(req)
 
     return res.json({
       code: 200,
