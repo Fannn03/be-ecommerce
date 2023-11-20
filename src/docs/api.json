@@ -854,6 +854,83 @@
         }
       }
     },
+    "/products": {
+      "get": {
+        "summary": "Get All products",
+        "description": "Get all available products",
+        "tags": ["Products"],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data products, default 10",
+            "required": false,
+            "example": 5
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "display current pagination of products, default 0",
+            "required": false,
+            "example": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": [
+                    {
+                      "id": 125,
+                      "name": "Refined Steel Chips",
+                      "slug": "refined-steel chips-1700398918822",
+                      "price": 478287,
+                      "image": "http://localhost:3000/images/products/clock-store-refined-steel-chips-1700398918824-1.jpeg"
+                    },
+                    {
+                      "id": 126,
+                      "name": "Incredible Frozen Ball",
+                      "slug": "incredible-frozen ball-1700398918940",
+                      "price": 407679,
+                      "image": "http://localhost:3000/images/products/fa-torphy-incredible-frozen-ball-1700398918941-1.jpeg"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record data not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products/create": {
       "post": {
         "summary": "Create Product",
