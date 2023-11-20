@@ -66,7 +66,7 @@ export default async (req: Request) => {
       })
     })
 
-    await createProduct({
+    const product = await createProduct({
       store_id: Number(store_id),
       categpry_id: Number(category_id),
       name: name,
@@ -81,6 +81,22 @@ export default async (req: Request) => {
     localPhotos.map((data: productPhotosInterface) => {
       fs.renameSync(`public/images/temp/${data.filename}`, `public/images/products/${data.newname}`)
     })
+
+    const response = {
+      store_id: product.store_id,
+      category_id: product.category_id,
+      name: product.name,
+      slug: product.slug,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      images: product.images.map((data: any) => ({
+        product_id: data.product_id,
+        name: data.name
+      }))
+    }
+
+    return response
   } catch (err: any) {
     // delete file in temp directory folder
     photos.map((data: productBodyInterface) => {

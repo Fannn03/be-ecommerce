@@ -47,6 +47,9 @@ export const createProduct = async (product: productInterface, photos: photosInt
         images: {
           create: photos
         }
+      },
+      include: {
+        images: true
       }
     })
   } catch (err) {

@@ -946,13 +946,24 @@
           "content": {
             "application/json": {
               "example": {
-                "category_id": 1,
-                "store_id": 1,
-                "name": "Jam Tangan",
-                "price": 150000,
-                "stock": 329,
-                "description": "Jam tangan bagus",
-                "photos": "product.jpeg"
+                "code": 200,
+                "result": "success",
+                "message": "record has been created",
+                "data": {
+                  "store_id": 1,
+                  "category_id": 3,
+                  "name": "Underwear",
+                  "slug": "mystore-Underwear-1700466471189",
+                  "description": "Sell angel chan underwear",
+                  "price": 25000,
+                  "stock": 2,
+                  "images": [
+                    {
+                      "product_id": 158,
+                      "name": "mystore-underwear-1700466471187-1.jpeg"
+                    }
+                  ]
+                }
               }
             }
           }
