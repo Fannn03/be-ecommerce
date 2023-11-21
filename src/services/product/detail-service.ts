@@ -6,6 +6,8 @@ export default async (query: string) => {
       slug: query
     })
 
+    if(!product) return null;
+
     const response = {
       name: product?.name,
       slug: product?.slug,
