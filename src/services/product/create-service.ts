@@ -92,7 +92,7 @@ export default async (req: Request) => {
       stock: product.stock,
       images: product.images.map((data: any) => ({
         product_id: data.product_id,
-        name: data.name
+        name: `products/${data.name}`
       }))
     }
 

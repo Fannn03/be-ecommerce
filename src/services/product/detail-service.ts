@@ -24,7 +24,7 @@ export default async (query: string) => {
         updatedAt: product?.store.updatedAt
       },
       images: product?.images.map((data: any) => ({
-        name: data.name
+        name: `products/${data.name}`
       }))
     }
 
