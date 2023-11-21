@@ -48,7 +48,7 @@ export default async (request: Request) => {
         id: storeUpdated.id,
         username: storeUpdated.username,
         name: storeUpdated.name,
-        photos: storeUpdated.photos,
+        photos: `stores/${storeUpdated.photos}`,
         description: storeUpdated.description,
         updatedAt: storeUpdated.updatedAt,
       }

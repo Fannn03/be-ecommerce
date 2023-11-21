@@ -854,6 +854,83 @@
         }
       }
     },
+    "/products": {
+      "get": {
+        "summary": "Get All products",
+        "description": "Get all available products",
+        "tags": ["Products"],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data products, default 10",
+            "required": false,
+            "example": 5
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "display current pagination of products, default 0",
+            "required": false,
+            "example": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": [
+                    {
+                      "id": 125,
+                      "name": "Refined Steel Chips",
+                      "slug": "refined-steel chips-1700398918822",
+                      "price": 478287,
+                      "image": "http://localhost:3000/images/products/clock-store-refined-steel-chips-1700398918824-1.jpeg"
+                    },
+                    {
+                      "id": 126,
+                      "name": "Incredible Frozen Ball",
+                      "slug": "incredible-frozen ball-1700398918940",
+                      "price": 407679,
+                      "image": "http://localhost:3000/images/products/fa-torphy-incredible-frozen-ball-1700398918941-1.jpeg"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record data not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products/create": {
       "post": {
         "summary": "Create Product",
@@ -869,13 +946,24 @@
           "content": {
             "application/json": {
               "example": {
-                "category_id": 1,
-                "store_id": 1,
-                "name": "Jam Tangan",
-                "price": 150000,
-                "stock": 329,
-                "description": "Jam tangan bagus",
-                "photos": "product.jpeg"
+                "code": 200,
+                "result": "success",
+                "message": "record has been created",
+                "data": {
+                  "store_id": 1,
+                  "category_id": 3,
+                  "name": "Underwear",
+                  "slug": "mystore-Underwear-1700466471189",
+                  "description": "Sell angel chan underwear",
+                  "price": 25000,
+                  "stock": 2,
+                  "images": [
+                    {
+                      "product_id": 158,
+                      "name": "mystore-underwear-1700466471187-1.jpeg"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -938,6 +1026,83 @@
                   "code": 403,
                   "result": "forbidden",
                   "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{slug}": {
+      "get": {
+        "summary": "Get Product",
+        "description": "Get details information product and their store",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "example": "incredible-frozen ball-1700398918940"
+          }
+        ],
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "name": "Incredible Frozen Ball",
+                    "slug": "incredible-frozen ball-1700398918940",
+                    "description": "Canonicus corroboro depraedor suscipio adipiscor. Veritatis depromo creta deprimo summisse spes auditor claustrum attonbitus antiquus. Reiciendis apostolus valens.\nItaque vulnus certus creator usitas decretum explicabo. Amicitia rerum suasoria verto audentia demens basium. Vociferor claudeo comptus esse cribro.\nAro culpo talis comedo architecto acsi. Volutabrum textus vinculum cruentus apto placeat cernuus tantillus collum. Voco clam valde condico carpo asperiores accusator depopulo.",
+                    "price": 407679,
+                    "stock": 116,
+                    "createdAt": "2023-03-08T13:56:38.103Z",
+                    "updatedAt": "2023-11-18T19:06:00.400Z",
+                    "store": {
+                      "username": "Bakiono.Jakubowski",
+                      "name": "Fa Torphy",
+                      "photo": null,
+                      "createdAt": "2020-01-16T12:50:09.952Z",
+                      "updatedAt": "2020-01-16T12:50:09.952Z"
+                    },
+                    "images": [
+                      {
+                        "name": "fa-torphy-incredible-frozen-ball-1700398918941-1.jpeg"
+                      },
+                      {
+                        "name": "fa-torphy-incredible-frozen-ball-1700398918941-2.jpeg"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record not found"
                 }
               }
             }

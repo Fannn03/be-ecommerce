@@ -33,6 +33,30 @@ export const findAllProduct = async (take: number, skip: number) => {
   }
 }
 
+export const findProduct = async (query: any) => {
+  try {
+    return await prisma.product.findFirst({
+      where: {
+        OR: [
+          {id: query.id},
+          {slug: query.slug},
+          {name: query.name}
+        ],
+        deletedAt: null,
+        store: {
+          deletedAt: null
+        }
+      },
+      include: {
+        store: true,
+        images: true
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
 export const createProduct = async (product: productInterface, photos: photosInterface[]) => {
   try {
     return prisma.product.create({
@@ -47,6 +71,9 @@ export const createProduct = async (product: productInterface, photos: photosInt
         images: {
           create: photos
         }
+      },
+      include: {
+        images: true
       }
     })
   } catch (err) {

@@ -1,5 +1,4 @@
 import { Product } from "@prisma/client"
-import 'dotenv/config'
 import { findAllProduct } from "../../repositories/product"
 
 export default async (query: any) => {
@@ -16,7 +15,7 @@ export default async (query: any) => {
         name: data.name,
         slug: data.slug,
         price: data.price,
-        image: `${process.env.BASE_URL}/images/products/${data.images[0].name}`
+        image: `products/${data.images[0].name}`
       }
 
       response.push(payload)
