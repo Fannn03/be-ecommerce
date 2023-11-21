@@ -1044,6 +1044,59 @@
           }
         }
       }
+    },
+    "/products/{slug}": {
+      "get": {
+        "summary": "Get Product",
+        "description": "Get details information product and their store",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "example": "incredible-frozen ball-1700398918940"
+          }
+        ],
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "name": "Incredible Frozen Ball",
+                    "slug": "incredible-frozen ball-1700398918940",
+                    "description": "Canonicus corroboro depraedor suscipio adipiscor. Veritatis depromo creta deprimo summisse spes auditor claustrum attonbitus antiquus. Reiciendis apostolus valens.\nItaque vulnus certus creator usitas decretum explicabo. Amicitia rerum suasoria verto audentia demens basium. Vociferor claudeo comptus esse cribro.\nAro culpo talis comedo architecto acsi. Volutabrum textus vinculum cruentus apto placeat cernuus tantillus collum. Voco clam valde condico carpo asperiores accusator depopulo.",
+                    "price": 407679,
+                    "stock": 116,
+                    "createdAt": "2023-03-08T13:56:38.103Z",
+                    "updatedAt": "2023-11-18T19:06:00.400Z",
+                    "store": {
+                      "username": "Bakiono.Jakubowski",
+                      "name": "Fa Torphy",
+                      "photo": null,
+                      "createdAt": "2020-01-16T12:50:09.952Z",
+                      "updatedAt": "2020-01-16T12:50:09.952Z"
+                    },
+                    "images": [
+                      {
+                        "name": "fa-torphy-incredible-frozen-ball-1700398918941-1.jpeg"
+                      },
+                      {
+                        "name": "fa-torphy-incredible-frozen-ball-1700398918941-2.jpeg"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
