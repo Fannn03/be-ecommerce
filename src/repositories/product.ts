@@ -41,7 +41,15 @@ export const findProduct = async (query: any) => {
           {id: query.id},
           {slug: query.slug},
           {name: query.name}
-        ]
+        ],
+        deletedAt: null,
+        store: {
+          deletedAt: null
+        }
+      },
+      include: {
+        store: true,
+        images: true
       }
     })
   } catch (err) {
