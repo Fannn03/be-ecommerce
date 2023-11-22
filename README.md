@@ -3,6 +3,7 @@
 1. [Pengenalan](#pengenalan)
 2. [Instalasi project](#instalasi-project)
 3. [Menjalankan program](#menjalankan-program)
+4. [Dokumentasi API](#dokumentasi-api)
 
 ## Pengenalan
 
@@ -27,3 +28,15 @@ Berikut adalah beberapa langkah awal pada saat melakukan instalasi project.
 - Jalankan program dengan perintah `npm run dev`, atau lebih detailnya bisa lihat [disini](#menjalankan-program).
 
 ## Menjalankan program
+
+Berikut adalah beberapa langkah untuk menjalankan program :
+
+- `npm run dev` Menjalankan server dalam mode development atau pengembangan
+
+- `npm run seed [nama seeder]` Menjalankan data seeder dalam tahap pengembangan
+
+- `npm run test` Menjalankan mode testing menggunakan framework **Jest**
+
+## Dokumentasi API
+
+Dokumentasi API disini menggunakan **Swagger UI Express** anda dapat melihatnya detail lengkapnya dengan mengakses url docs ke : `http://localhost:port/docs`
