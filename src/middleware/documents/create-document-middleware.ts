@@ -55,7 +55,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     // delete file if exist
     if(req.file) fs.rmSync(req.file.path);
 
-    res.status(400).json({
+    return res.status(400).json({
       code: 400,
       result: 'bad request',
       message: errMessages
