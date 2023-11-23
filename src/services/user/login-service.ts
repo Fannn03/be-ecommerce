@@ -28,6 +28,7 @@ export default async (request: LoginBody) => {
 
   const payload = {
     id: user.id,
+    name: user.name
   }
   try {
     const verifyPassword = await bcrypt.compare(request.password as string || "", user.password);

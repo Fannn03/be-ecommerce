@@ -3,9 +3,10 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import { AdminLevel } from '@prisma/client'
 import 'dotenv/config'
 
-interface UserJWT {
-  id: number,
-  level?: AdminLevel,
+export interface UserJWT {
+  id      : string,
+  name    : string,
+  level?  : AdminLevel,
 }
 
 declare global {
