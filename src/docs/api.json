@@ -342,6 +342,100 @@
         }
       }
     },
+    "/documents/create": {
+      "post": {
+        "summary": "Create Document",
+        "description": "Create document of user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Documents"],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "fullname": "Jhon Doe",
+                "nik": 3201111111111111,
+                "photos": "secret.jpeg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "user_id": "user id",
+                    "fullname": "Jhon Doe",
+                    "nik": 3201111111111111,
+                    "photos": "documents/jhondoe321.jpeg",
+                    "createdAt": "2023-11-23T11:49:51.943Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "User document already exist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "You don't have any permission to use this level"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/admins/create": {
       "post": {
         "summary": "Create admin account",
