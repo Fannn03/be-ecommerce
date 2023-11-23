@@ -13,7 +13,7 @@ const router = express.Router()
 
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 router.use('/users', userRouter)
-router.use('/documents', documentRouter);
+router.use('/documents', authMiddleware, documentRouter);
 router.use('/admins', adminRouter)
 router.use('/stores', authMiddleware, storeRouter)
 router.use('/categories', categoryRouter)
