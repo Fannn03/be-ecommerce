@@ -4,6 +4,7 @@ import path from 'path'
 const imagesFolder = [
   'stores',
   'users',
+  'documents',
   'products',
   'temp'
 ]
@@ -18,7 +19,13 @@ export default () => {
   if(folders.length != imagesFolder.length) {
     for(let folder of folders) {
       imagesFolder.find((name: string) => {
-        if(name != folder) fs.mkdirSync(`${imagesPath}/${name}`)
+        if(name != folder) {
+          try {
+            fs.mkdirSync(`${imagesPath}/${name}`)
+          } catch (err) {
+            console.log('skipping folder exists')
+          }
+        }
       })
     }
   }
