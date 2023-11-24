@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import registerService from "../services/user/register-service";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import registerService, { UserRegisterError } from "../services/user/register-service";
 import loginService, { LoginError } from "../services/user/login-service";
 import verifyEmailService, { VerifyEmailError } from "../services/user/verify-email-service";
 import updateService, { UserUpdateError } from "../services/user/update-service";
@@ -11,19 +10,42 @@ export const registerUser = async (req: Request, res: Response) => {
   try {
     const userRegister = await registerService(req.body);
 
-    return res.json({
+    res.json({
       code: 200,
       result: 'success',
       message: 'record has been created',
       data: userRegister
     });
-  } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError || err instanceof Error) {
-      return res.status(400).json({
-        code: 400,
-        result: 'bad request',
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
+    if (err instanceof UserRegisterError) {
+      res.status(err.code).json({
+        code: err.code,
+        result: err.result,
         message: err.message
       });
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
+    } else {
+      res.status(500).json({
+        code: 500,
+        result: 'internal server error',
+        message: err.message
+      })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err
+      })
     }
   }
 }

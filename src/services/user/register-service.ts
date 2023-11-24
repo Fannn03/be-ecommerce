@@ -18,6 +18,14 @@ interface Response {
   createdAt : Date
 }
 
+export class UserRegisterError {
+  constructor(public message: string, public code: number, public result: string) {
+    this.message = message;
+    this.code = code;
+    this.result = result;
+  }
+}
+
 export default async (request: CreateBody) => {
   try {
     const hashPassword = await bcrypt.hash(request.password, 10)
@@ -42,12 +50,14 @@ export default async (request: CreateBody) => {
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "users_email_key") {
-        throw new Error("Email already taken")
+        throw new UserRegisterError("Email already taken", 400, "bad request")
       } else if (err.code === "P2002" && err.meta?.target === "users_name_key") {
-        throw new Error("Name already taken")
+        throw new UserRegisterError("Name already taken", 400, "bad request")
       } else {
         throw err
       }
+    } else {
+      throw err
     }
   }
 }
