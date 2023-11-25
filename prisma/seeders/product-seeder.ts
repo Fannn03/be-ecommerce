@@ -88,6 +88,9 @@ export default {
       } catch (err) {
         throw err
       }
-    } 
+    }
+
+    console.log('success');
+  
   }
 }
