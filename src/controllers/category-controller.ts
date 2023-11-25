@@ -2,22 +2,34 @@ import { Request, Response } from "express";
 import { Category } from "@prisma/client";
 import findAllCategoryService, { categoryInterface } from '../services/category/findall-service'
 import categoryService, { CreateCategoryError } from '../services/category/create-service'
+import loggerResponse from "../helpers/server/logger-response";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {
     const categories: categoryInterface[] = await findAllCategoryService()
 
-    return res.json({
+    res.json({
       code: 200,
       result: 'success',
       message: 'success get record data',
       data: categories
     })
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
   } catch (err: any) {
-    return res.status(500).json({
+    res.status(500).json({
       code: 500,
       result: 'internal server error',
       message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
     })
   }
 }
@@ -28,26 +40,42 @@ export const createCategory = async (req: Request, res: Response) => {
       name: req.body.name
     })
 
-    return res.json({
+    res.json({
       code: 200,
       result: 'success',
       message: 'record has been created',
       data: category
     })
-  } catch (err) {
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
     if(err instanceof CreateCategoryError) {
-      return res.status(err.code).json({
+      res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
     }
 
-    const error: Error = err as Error
-    return res.status(500).json({
+    res.status(500).json({
       code: 500,
       result: 'internal server error',
-      message: error.message
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
     })
   }
 }

@@ -1,10 +1,13 @@
 {
   "exclude": [
-    "./prisma/seeder",
-    "./test"
+    "./prisma/seeders",
+    "./test",
+    "./jest.config.ts"
   ],
   "compilerOptions": {
     // "target": "",
+    "rootDir": "./src",
+    "outDir": "./build",
     "module": "CommonJS",
     // "moduleResolution": "NodeNext",
     "resolveJsonModule": true,

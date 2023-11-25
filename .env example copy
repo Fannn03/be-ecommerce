@@ -3,6 +3,7 @@ SERVER_PORT=
 DATABASE_URL="mysql://user:pass@localhost:3306/db"
 SECRET_TOKEN=
 VERIF_EMAIL_URL=
+MONGODB_URL=mongodb://localhost:27017/database
 
 # webmail configuration
 EMAIL_HOST=

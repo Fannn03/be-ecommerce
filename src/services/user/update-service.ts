@@ -37,6 +37,8 @@ export default async (req: Request) => {
     if (err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002" && err.meta?.target === "users_name_key") {
         throw new UserUpdateError("Name already taken", 400, "bad request")
+      } else {
+        throw err
       }
     } else {
       throw err
