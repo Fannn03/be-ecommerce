@@ -108,38 +108,59 @@ export const loginUser = async (req: Request, res: Response) => {
 export const verifyEmail = async (req: Request, res: Response) => {
   try {
     await verifyEmailService(req.query)
-  } catch (err) {
+
+    res.json({
+      code: 200,
+      result: 'success',
+      message: 'success verif email'
+    });
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
     if(err instanceof VerifyEmailError) {
-      return res.status(err.code).json({
+      res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       });
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
     }else {
-      const error: Error = err as Error;
-      return res.status(500).json({
+      res.status(500).json({
         code: 500,
         result: 'internal server error',
-        message: error.message
+        message: err.message
       });
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
     }
   }
-
-  return res.json({
-    code: 200,
-    result: 'success',
-    message: 'success verif email'
-  });
 }
 
 export const detailsuser = async (req: Request, res: Response) => {
   const user = await detailsService(req.user)
 
-  return res.json({
+  res.json({
     code: 200,
     result: 'success',
     message: 'success get data user',
     data: user
+  })
+
+  return loggerResponse({
+    req: req,
+    res: res
   })
 }
 
@@ -147,26 +168,42 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const updatedUser = await updateService(req)
 
-    return res.json({
+    res.json({
       code: 200,
       result: 'success',
       message: 'success update record data',
       data: updatedUser
     })
-  } catch (err) {
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
     if(err instanceof UserUpdateError) {
-      return res.status(err.code).json({
+      res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
     }
     else {
-      const error: Error = err as Error
-      return res.status(500).json({
+      res.status(500).json({
         code: 500,
         result: 'internal server error',
-        message: error.message
+        message: err.message
+      })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
       })
     }
   }
