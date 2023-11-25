@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import { categoriesQuery } from "../services/product/findall-service"
 
 interface productInterface {
   store_id: number,
@@ -16,14 +17,25 @@ interface photosInterface {
 
 const prisma = new PrismaClient()
 
-export const findAllProduct = async (take: number, skip: number) => {
+export const findAllProduct = async (take: number, skip: number, categories: categoriesQuery) => {
   try {
     return await prisma.product.findMany({
       where: {
-        deletedAt: null
+        deletedAt: null,
+        AND: {
+          category: categories,
+          store: {
+            deletedAt: null
+          }
+        }
       },
+      orderBy: [
+        {createdAt: 'desc'}
+      ],
       include: {
-        images: true
+        store: true,
+        images: true,
+        category: true
       },
       take: take,
       skip: skip
