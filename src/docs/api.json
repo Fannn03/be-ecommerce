@@ -967,6 +967,13 @@
             "description": "display current pagination of products, default 0",
             "required": false,
             "example": 2
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Get all product filter by category name, default all category",
+            "required": true,
+            "example": "fashion"
           }
         ],
         "responses": {
