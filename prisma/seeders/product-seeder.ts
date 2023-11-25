@@ -31,7 +31,9 @@ export default {
       })
 
       const productName = faker.commerce.productName()
-      const slug = productName.replace(' ', '-') + '-' + new Date().getTime()
+      const slug = slugify(`${stores[getStore].name} ${productName} ${new Date().getTime()}`, {
+        lower: true
+      })
 
       const price = faker.number.int({
         min: 5000,
