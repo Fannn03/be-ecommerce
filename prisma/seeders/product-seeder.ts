@@ -17,7 +17,11 @@ export default {
     console.log("seeding product...")
 
     for(let i = 0; i < Number(number); i++) {
-      const stores: Store[] | [] = await prisma.store.findMany()
+      const stores: Store[] | [] = await prisma.store.findMany({
+        where: {
+          deletedAt: null
+        }
+      })
       const categories: Category[] | [] = await prisma.category.findMany()
 
       const getStore = faker.number.int({
