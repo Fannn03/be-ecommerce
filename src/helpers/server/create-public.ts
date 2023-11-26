@@ -6,7 +6,8 @@ const imagesFolder = [
   'users',
   'documents',
   'products',
-  'temp'
+  'temp',
+  'categories'
 ]
 
 export default () => {
