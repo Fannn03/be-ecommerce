@@ -22,15 +22,15 @@ export const findAllProduct = async (take: number, skip: number, categories: cat
     return await prisma.product.findMany({
       where: {
         deletedAt: null,
-        AND: {
-          category: categories,
-          store: {
-            deletedAt: null
+        AND: [
+          { category: categories },
+          { 
+            store: { deletedAt: null }
           }
-        }
+        ]
       },
       orderBy: [
-        {createdAt: 'desc'}
+        { createdAt: 'desc' }
       ],
       include: {
         store: true,

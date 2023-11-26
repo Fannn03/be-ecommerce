@@ -23,6 +23,9 @@ export const findStore = async (query: findStore) => {
         {id: query.id},
         {user_id: query.user_id},
         {name: query.name}
+      ],
+      AND: [
+        { deletedAt: null }
       ]
     }
   })

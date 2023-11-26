@@ -18,7 +18,8 @@ export const findCategory = async (category: findCategory) => {
       OR: [
         {id: category.id},
         {name: category.name}
-      ]
+      ],
+      deletedAt: null
     }
   })
 }
