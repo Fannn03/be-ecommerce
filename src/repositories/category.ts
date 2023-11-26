@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client"
 
 interface categoryInterface {
-  name: string
-  slug: string
+  name   :   string
+  slug   :   string,
+  photos :   string
 }
 
 interface findCategory {
@@ -37,7 +38,8 @@ export const createCategory = async (category: categoryInterface) => {
     return await prisma.category.create({
       data: {
         name: category.name,
-        slug: category.slug
+        slug: category.slug,
+        photos: category.photos
       }
     })
   } catch (err) {
