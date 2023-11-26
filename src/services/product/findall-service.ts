@@ -12,7 +12,7 @@ export default async (query: any) => {
     const skip = (Number(query.page) * take) - take || 0
     let categories: categoriesQuery = {};
 
-    if(query.category) categories.name = query.category;
+    if(query.category) categories.slug = query.category;
 
     const products: Product[] = await findAllProduct(take, skip, categories)
     const response: any = []
