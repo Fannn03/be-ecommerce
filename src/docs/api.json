@@ -872,7 +872,8 @@
           "content": {
             "application/json": {
               "example": {
-                "name": "required, name for category product"
+                "name": "required, name for category product",
+                "photos": "required, photos.png"
               }
             }
           }
@@ -887,10 +888,12 @@
                   "result": "success",
                   "message": "record has been created",
                   "data": {
-                    "id": 5,
-                    "name": "Phone",
-                    "createdAt": "2023-11-13T08:59:22.254Z",
-                    "updatedAt": "2023-11-13T08:59:22.254Z",
+                    "id": 29,
+                    "name": "kucing rumahan",
+                    "slug": "kucing-rumahan",
+                    "photos": "kucing-rumahan.jpeg",
+                    "createdAt": "2023-11-26T04:13:37.572Z",
+                    "updatedAt": "2023-11-26T04:13:37.572Z",
                     "deletedAt": null
                   }
                 }

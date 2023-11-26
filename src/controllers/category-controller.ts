@@ -37,7 +37,8 @@ export const findAllCategory = async (req: Request, res: Response) => {
 export const createCategory = async (req: Request, res: Response) => {
   try {
     const category: Category | undefined = await categoryService({
-      name: req.body.name
+      name: req.body.name,
+      photos: req.body.photos
     })
 
     res.json({
