@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+import fs from 'fs';
 
 interface ErrorMessage {
   name?: string
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-  req.body.photos = req.files
+  if(req.file) req.body.photos = req.file
 
   const form = Joi.object({
     name: Joi.string()
@@ -17,13 +18,11 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       ,
     photos: Joi.any()
       .required()
-      .custom((value, helpers) => {
+      .custom((value: Express.Multer.File, helpers) => {
         const extensions = ['image/png', 'image/jpg', 'image/jpeg']
-
-        for(let file in value) {
-          if(!extensions.includes(value[file].mimetype)) {
-            return helpers.error('any.invalid')
-          }
+        
+        if(!extensions.includes(value.mimetype)) {
+          return helpers.error('any.invalid');
         }
       })
       .messages({
@@ -36,6 +35,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       abortEarly: false
     })
   } catch (err: unknown) {
+    if(req.file) {
+      fs.rmSync(req.file.path);
+    }
+
     const errMessage: ErrorMessage = {}
     
     if(err instanceof Joi.ValidationError) {
