@@ -6,12 +6,29 @@ interface ErrorMessage {
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
+  req.body.photos = req.files
+
   const form = Joi.object({
     name: Joi.string()
       .required()
       .trim()
       .min(4)
       .max(30)
+      ,
+    photos: Joi.any()
+      .required()
+      .custom((value, helpers) => {
+        const extensions = ['image/png', 'image/jpg', 'image/jpeg']
+
+        for(let file in value) {
+          if(!extensions.includes(value[file].mimetype)) {
+            return helpers.error('any.invalid')
+          }
+        }
+      })
+      .messages({
+        'any.invalid': 'File type must be PNG, JPG, or JPEG'
+      })
   })
 
   try {
