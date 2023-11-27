@@ -1,13 +1,15 @@
 import express from 'express'
 import multer from 'multer'
 import storageMulter from '../config/multer'
-import { createStore, updateStore } from '../controllers/store-controller'
+import { createStore, detailStore, updateStore } from '../controllers/store-controller'
 import createStoreMiddleware from '../middleware/stores/create-store-middleware'
+import authMiddleware from '../middleware/auth-middleware'
 
 const router = express.Router()
 const upload = multer({storage: storageMulter('/temp')})
 
-router.post('/create', upload.single('file'), createStoreMiddleware, createStore)
-router.put('/update', upload.single('file'), createStoreMiddleware, updateStore)
+router.post('/create', authMiddleware, upload.single('file'), createStoreMiddleware, createStore);
+router.get('/:username', detailStore);
+router.put('/update', authMiddleware, upload.single('file'), createStoreMiddleware, updateStore);
 
 export default router
