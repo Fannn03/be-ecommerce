@@ -15,7 +15,7 @@ router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 router.use('/users', userRouter)
 router.use('/documents', authMiddleware, documentRouter);
 router.use('/admins', adminRouter)
-router.use('/stores', authMiddleware, storeRouter)
+router.use('/stores', storeRouter)
 router.use('/categories', categoryRouter)
 router.use('/products', productRouter)
 

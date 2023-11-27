@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import createService, { CreateStoreError } from "../services/store/create-service";
 import updateService, { UpdateStoreError } from "../services/store/update-service";
+import detailService from "../services/store/detail-service";
 import loggerResponse from "../helpers/server/logger-response";
 
 export const createStore = async (req: Request, res: Response) => {
@@ -45,6 +46,45 @@ export const createStore = async (req: Request, res: Response) => {
         error_message: error.message
       })
     }
+  }
+}
+
+export const detailStore = async (req: Request, res: Response) => {
+  try {
+    const store = await detailService(req.params.username);
+
+    if(!store)  {
+      res.status(404).json({
+        code: 404,
+        result: 'not found',
+        message: 'record not found',
+        data: store
+      })
+    } else {
+      res.json({
+        code: 200,
+        result: 'success',
+        message: 'success get record data',
+        data: store
+      })
+    }
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
+    })
   }
 }
 

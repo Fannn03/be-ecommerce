@@ -696,6 +696,68 @@
         }
       }
     },
+    "/stores/:username": {
+      "get": {
+        "summary": "Detail Store",
+        "description": "Get detail information user store",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "example": "my-first.store"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "id": 12,
+                    "username": "my-first.store",
+                    "name": "My First Store",
+                    "photos": "stores/01HFKNHBF2K58FBJVR4S06EB1T.jpeg",
+                    "description": null,
+                    "createdAt": "2021-01-19T05:08:43.498Z",
+                    "updatedAt": "2021-01-19T05:08:43.498Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record not found",
+                  "data": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/stores/update": {
       "put": {
         "summary": "Update store",
