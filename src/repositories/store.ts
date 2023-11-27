@@ -9,9 +9,10 @@ interface StoreInterface {
 }
 
 interface findStore {
-  id?: number,
-  user_id?: string,
-  name?: string
+  id?         : number,
+  user_id?    : string,
+  name?       : string,
+  username?   : string
 }
 
 const prisma = new PrismaClient()
@@ -22,7 +23,8 @@ export const findStore = async (query: findStore) => {
       OR: [
         {id: query.id},
         {user_id: query.user_id},
-        {name: query.name}
+        {name: query.name},
+        {username: query.username}
       ],
       AND: [
         { deletedAt: null }
