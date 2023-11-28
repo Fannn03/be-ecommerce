@@ -700,6 +700,7 @@
       "get": {
         "summary": "Detail Store",
         "description": "Get detail information user store",
+        "tags": ["Stores"],
         "parameters": [
           {
             "name": "username",
