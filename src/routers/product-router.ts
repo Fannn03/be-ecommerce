@@ -10,6 +10,6 @@ const upload = multer({storage: storageMulter('/temp')})
 
 router.get('/', findAllProduct)
 router.get('/:name', detailProduct)
-router.post('/create', upload.array('photos'), authMiddleware, createProductMiddleware, createProduct)
+router.post('/create', authMiddleware, upload.array('photos'), createProductMiddleware, createProduct)
 
 export default router
