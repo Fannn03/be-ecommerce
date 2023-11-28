@@ -21,6 +21,7 @@ model User {
   deletedAt       DateTime?
   document        Document?
   store           Store?
+  carts           ProductCart[]
 
   @@map("users")
 }
@@ -104,6 +105,7 @@ model Product {
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
   images        ProductImages[]
+  carts         ProductCart[]
 
   @@map("products")
 }
@@ -118,4 +120,19 @@ model ProductImages {
   deletedAt     DateTime?
 
   @@map("product_images")
+}
+
+model ProductCart {
+  id            String    @id @default(uuid())
+  user          User      @relation(fields: [user_id], references: [id])
+  user_id       String
+  product       Product   @relation(fields: [product_id], references: [id])
+  product_id    Int
+  quantity      Int
+  is_checkout   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("products_carts")
 }
