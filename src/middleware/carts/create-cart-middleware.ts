@@ -22,7 +22,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     await form.validateAsync(req.body, {
       abortEarly: false
     })
-  } catch (err) {
+  } catch (err: any) {
     const errMessage: ErrorMessage = {}
     
     if(err instanceof Joi.ValidationError) {
@@ -38,9 +38,22 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
       return loggerResponse({
         req: req,
-        res: res
+        res: res,
+        error_message: errMessage
       })
     }
+
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      mesage: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.mesage
+    })
   }
 
   return next();

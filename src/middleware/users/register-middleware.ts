@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import Joi, { ValidationError, ValidationErrorItem } from 'joi'
+import loggerResponse from '../../helpers/server/logger-response'
 
 interface ErrorMessages {
 	email?: string,
@@ -40,7 +41,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		await request.validateAsync(req.body, {
 			abortEarly: false
 		})
-	} catch (err) {
+	} catch (err: any) {
 		if(err instanceof ValidationError) {
 			
 			let errMessages: ErrorMessages = {}
@@ -49,18 +50,30 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 				if(err.context?.key) errMessages[err.context?.key as keyof ErrorMessages] = err.message
 			})
 
-			return res.status(400).json({
+			res.status(400).json({
 				code: 400,
 				result: 'bad request',
 				message: errMessages
 			})
+
+			return loggerResponse({
+        req: req,
+        res: res,
+        error_message: errMessages
+      })
 		}
 
-		return res.status(500).json({
-			code: 500,
-			result: 'internal server error',
-			message: 'internal server error'
-		})
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
+    })
 	}
 
 	return next()

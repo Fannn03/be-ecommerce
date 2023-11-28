@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs';
+import loggerResponse from "../../helpers/server/logger-response";
 
 interface ErrorMessage {
   name?: string
@@ -12,12 +13,14 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
     name: Joi.string()
       .required()
+      .empty()
       .trim()
       .min(4)
       .max(30)
       ,
     photos: Joi.any()
       .required()
+      .empty()
       .custom((value: Express.Multer.File, helpers) => {
         const extensions = ['image/png', 'image/jpg', 'image/jpeg']
         
@@ -34,7 +37,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     await form.validateAsync(req.body, {
       abortEarly: false
     })
-  } catch (err: unknown) {
+  } catch (err: any) {
     if(req.file) {
       fs.rmSync(req.file.path);
     }
@@ -46,12 +49,30 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         errMessage[data.context?.key as keyof ErrorMessage] = data.message
       })
 
-      return res.status(400).json({
+      res.status(400).json({
         code: 400,
         result: 'bad request',
         message: errMessage
       })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: errMessage
+      })
     }
+
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
+    })
   }
 
   return next()
