@@ -38,7 +38,7 @@ const responseSchema = new Schema({
     default: null
   },
   error_message: {
-    type: String,
+    type: Schema.Types.Mixed,
     default: null
   },
   date: {

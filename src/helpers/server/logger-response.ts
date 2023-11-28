@@ -6,7 +6,7 @@ interface loggerInterface {
   req: Request,
   res: Response,
   username?: String,
-  error_message?: String
+  error_message?: any
 }
 
 moment.locale('id');
