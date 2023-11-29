@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import fs from 'fs/promises'
+import fs from 'fs'
 import Joi from "joi";
+import loggerResponse from "../../helpers/server/logger-response";
 
 interface ErrorMessage {
   username?: string,
@@ -14,6 +15,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
     username: Joi.string()
       .required()
+      .empty()
       .trim()
       .min(5)
       .max(18)
@@ -23,6 +25,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			}),
     name: Joi.string()
       .required()
+      .empty()
       .trim()
       .min(5)
       .max(24),
@@ -48,21 +51,39 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       abortEarly: false
     })      
 
-  } catch (err) {
+  } catch (err: any) {
     let errMessages: ErrorMessage = {}
+
+    if(req.file) fs.rmSync(req.file.path)
 
     if(err instanceof Joi.ValidationError) {
       err.details.map((data: Joi.ValidationErrorItem) => {
         if(data.context?.key) errMessages[data.context?.key as keyof ErrorMessage] = data.message
       })
+
+      res.status(400).json({
+        code: 400,
+        result: 'bad request',
+        message: errMessages
+      })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: errMessages
+      })
     }
 
-    if(req.file) fs.unlink(req.file?.destination + '/' + req.file?.filename)
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
 
-    return res.status(400).json({
-      code: 400,
-      result: 'bad request',
-      message: errMessages
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
     })
   }
 

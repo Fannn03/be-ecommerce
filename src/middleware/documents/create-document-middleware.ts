@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs'
+import loggerResponse from "../../helpers/server/logger-response";
 
 interface ErrorMessage {
   username?: string,
@@ -14,11 +15,13 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const form = Joi.object({
     fullname: Joi.string()
       .required()
+      .empty()
       .trim()
       .min(4)
       ,
     nik: Joi.string()
       .required()
+      .empty()
       .trim()
       // source regex nik ktp https://www.huzefril.com/posts/regex/regex-ktp/
       .regex(RegExp("^\\d{16}$"))
@@ -28,6 +31,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       ,
     photos: Joi.any()
       .required()
+      .empty()
       .custom((value, helper) => {
         const allowedExtension = ['image/png', 'image/jpeg', 'image/jpg'];
 
@@ -44,22 +48,41 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     await form.validateAsync(req.body, {
       abortEarly: false
     })
-  } catch (err) {
+  } catch (err: any) {
     let errMessages: ErrorMessage = {}
+
+    // delete file if exist
+    if(req.file) fs.rmSync(req.file.path);
 
     if(err instanceof Joi.ValidationError) {
       err.details.map((data: Joi.ValidationErrorItem) => {
         if(data.context?.key) errMessages[data.context?.key as keyof ErrorMessage] = data.message;
       })
-    }
-    // delete file if exist
-    if(req.file) fs.rmSync(req.file.path);
 
-    return res.status(400).json({
-      code: 400,
-      result: 'bad request',
-      message: errMessages
-    });
+      res.status(400).json({
+        code: 400,
+        result: 'bad request',
+        message: errMessages
+      });
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
+    }
+
+    res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
+    })
   }
 
   return next();

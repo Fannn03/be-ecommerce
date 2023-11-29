@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import fs from 'fs';
 import loggerResponse from "../../helpers/server/logger-response";
 
 interface ErrorMessage {
@@ -8,29 +7,15 @@ interface ErrorMessage {
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-  if(req.file) req.body.photos = req.file
-
   const form = Joi.object({
-    name: Joi.string()
+    product_id: Joi.number()
       .required()
       .empty()
-      .trim()
-      .min(4)
-      .max(30)
       ,
-    photos: Joi.any()
+    quantity: Joi.number()
       .required()
       .empty()
-      .custom((value: Express.Multer.File, helpers) => {
-        const extensions = ['image/png', 'image/jpg', 'image/jpeg']
-        
-        if(!extensions.includes(value.mimetype)) {
-          return helpers.error('any.invalid');
-        }
-      })
-      .messages({
-        'any.invalid': 'File type must be PNG, JPG, or JPEG'
-      })
+      .min(1)
   })
 
   try {
@@ -38,10 +23,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       abortEarly: false
     })
   } catch (err: any) {
-    if(req.file) {
-      fs.rmSync(req.file.path);
-    }
-
     const errMessage: ErrorMessage = {}
     
     if(err instanceof Joi.ValidationError) {
@@ -65,15 +46,15 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     res.status(500).json({
       code: 500,
       result: 'internal server error',
-      message: err.message
+      mesage: err.message
     })
 
     return loggerResponse({
       req: req,
       res: res,
-      error_message: err.message
+      error_message: err.mesage
     })
   }
 
-  return next()
+  return next();
 }
