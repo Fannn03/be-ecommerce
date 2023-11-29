@@ -1051,22 +1051,29 @@
                   "code": 200,
                   "result": "success",
                   "message": "success get record data",
-                  "data": [
-                    {
-                      "id": 125,
-                      "name": "Refined Steel Chips",
-                      "slug": "refined-steel chips-1700398918822",
-                      "price": 478287,
-                      "image": "http://localhost:3000/images/products/clock-store-refined-steel-chips-1700398918824-1.jpeg"
-                    },
-                    {
-                      "id": 126,
-                      "name": "Incredible Frozen Ball",
-                      "slug": "incredible-frozen ball-1700398918940",
-                      "price": 407679,
-                      "image": "http://localhost:3000/images/products/fa-torphy-incredible-frozen-ball-1700398918941-1.jpeg"
+                  "data": {
+                    "products": [
+                      {
+                        "id": 620,
+                        "name": "Rustic Soft Sausages",
+                        "slug": "chocolate-store-rustic-soft-sausages-1700923973101",
+                        "price": 429647,
+                        "image": "products/chocolate-store-rustic-soft-sausages-1700923973101-1.jpeg"
+                      },
+                      {
+                        "id": 592,
+                        "name": "Intelligent Soft Salad",
+                        "slug": "clock-store-intelligent-soft-salad-1700923972439",
+                        "price": 116386,
+                        "image": "products/clock-store-intelligent-soft-salad-1700923972439-1.jpeg"
+                      }
+                    ],
+                    "pages": {
+                      "size": 2,
+                      "total": 35,
+                      "totalPages": 18
                     }
-                  ]
+                  }
                 }
               }
             }
