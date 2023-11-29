@@ -19,27 +19,40 @@ const prisma = new PrismaClient()
 
 export const findAllProduct = async (take: number, skip: number, categories: categoriesQuery) => {
   try {
-    return await prisma.product.findMany({
-      where: {
-        deletedAt: null,
-        AND: [
-          { category: categories },
-          { 
-            store: { deletedAt: null }
-          }
-        ]
-      },
-      orderBy: [
-        { createdAt: 'desc' }
-      ],
-      include: {
-        store: true,
-        images: true,
-        category: true
-      },
-      take: take,
-      skip: skip
-    })
+    return await prisma.$transaction([
+      prisma.product.count({
+        where: {
+          deletedAt: null,
+          AND: [
+            { category: categories },
+            {
+              store: { deletedAt: null }
+            }
+          ]
+        }
+      }),
+      prisma.product.findMany({
+        where: {
+          deletedAt: null,
+          AND: [
+            { category: categories },
+            { 
+              store: { deletedAt: null }
+            }
+          ]
+        },
+        orderBy: [
+          { createdAt: 'desc' }
+        ],
+        include: {
+          store: true,
+          images: true,
+          category: true
+        },
+        take: take,
+        skip: skip
+      })
+    ])
   } catch (err) {
     throw err
   }

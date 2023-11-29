@@ -8,7 +8,7 @@ export const findAllProduct = async (req: Request, res: Response) => {
   try {
     const products = await findAllProductService(req.query)
 
-    if(!products.length && req.query.page) {
+    if(!products.products.length && req.query.page) {
       res.status(404).json({
         code: 404,
         result: 'not found',
