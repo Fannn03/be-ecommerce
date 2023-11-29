@@ -19,7 +19,7 @@ export default async (query: string) => {
       store: {
         username: product?.store.username,
         name: product?.store.name,
-        photo: product?.store.photos,
+        photo: (product?.store.photos) ? `stores/${product?.store.photos}` : null,
         createdAt: product?.store.createdAt,
         updatedAt: product?.store.updatedAt
       },
