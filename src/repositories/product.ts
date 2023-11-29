@@ -24,6 +24,7 @@ export const findAllProduct = async (take: number, skip: number, categories: cat
         where: {
           deletedAt: null,
           AND: [
+            { category: categories },
             {
               store: { deletedAt: null }
             }
