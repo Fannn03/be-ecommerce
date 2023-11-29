@@ -14,22 +14,27 @@ export default async (query: any) => {
 
     if(query.category) categories.slug = query.category;
 
-    const products: Product[] = await findAllProduct(take, skip, categories)
-    const response: any = []
-
-    products.map((data: any) => {
-      const payload = {
+    const products = await findAllProduct(take, skip, categories)
+    const mapProducts = products[1].map((data: any) => (
+      {
         id: data.id,
         name: data.name,
         slug: data.slug,
         price: data.price,
         image: `products/${data.images[0].name}`
       }
+    ));
 
-      response.push(payload)
-    })
+    const response = {
+      products: mapProducts,
+      pages: {
+        size: mapProducts.length,
+        total: products[0],
+        totalPages: (Number(query.take) !== 1) ? Math.floor(products[0] / take) + 1 : Math.floor(products[0] / take)
+      }
+    };
 
-    return response
+    return response;
   } catch (err) {
     throw err
   }
