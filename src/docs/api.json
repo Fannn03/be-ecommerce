@@ -1038,7 +1038,7 @@
             "name": "category",
             "in": "query",
             "description": "Get all product filter by category name, default all category",
-            "required": true,
+            "required": false,
             "example": "fashion"
           }
         ],
