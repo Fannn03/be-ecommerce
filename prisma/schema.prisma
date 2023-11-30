@@ -22,6 +22,7 @@ model User {
   document        Document?
   store           Store?
   carts           ProductCart[]
+  ratings         Rating[]
 
   @@map("users")
 }
@@ -106,6 +107,7 @@ model Product {
   deletedAt     DateTime?
   images        ProductImages[]
   carts         ProductCart[]
+  ratings       Rating[]
 
   @@map("products")
 }
@@ -135,4 +137,32 @@ model ProductCart {
   deletedAt     DateTime?
 
   @@map("products_carts")
+}
+
+model Rating {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [user_id], references: [id])
+  user_id       String    @db.VarChar(50)
+  product       Product   @relation(fields: [product_id], references: [id])
+  product_id    Int
+  rating        Int
+  comment       String    @db.LongText
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  images        RatingImage[]
+
+  @@map("ratings")
+}
+
+model RatingImage {
+  id            Int       @id @default(autoincrement())
+  rating        Rating    @relation(fields: [rating_id], references: [id])
+  rating_id     Int
+  name          String    @unique @db.VarChar(255)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("rating_images")
 }
