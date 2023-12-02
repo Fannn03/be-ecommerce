@@ -28,22 +28,22 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .max(50)
       ,
     photos: Joi.array()
-    .required()
-    .empty()
-    .min(1)
-    .custom((value, helpers) => {
-      const extensions = ['image/png', 'image/jpg', 'image/jpeg']
+      .required()
+      .empty()
+      .min(1)
+      .custom((value, helpers) => {
+        const extensions = ['image/png', 'image/jpg', 'image/jpeg']
 
-      for(let file in value) {
-        if(!extensions.includes(value[file].mimetype)) {
-          return helpers.error('any.invalid')
+        for(let file in value) {
+          if(!extensions.includes(value[file].mimetype)) {
+            return helpers.error('any.invalid')
+          }
         }
-      }
-    })
-    .messages({
-      'any.invalid': 'File type must be PNG, JPG, or JPEG'
-    })
-    ,
+      })
+      .messages({
+        'any.invalid': 'File type must be PNG, JPG, or JPEG'
+      })
+      ,
     description: Joi.string()
       .required()
       .empty()
