@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client"
 import promptSync from 'prompt-sync'
 import { faker } from "@faker-js/faker/locale/id_ID"
 import slugify from "slugify"
+import axios from "axios"
+import fs from 'fs'
 
 const prisma = new PrismaClient()
 const prompt = promptSync()
@@ -21,29 +23,33 @@ export default {
 
     console.log("seeding category...")
 
-    const categories: Category[] = []
     for(let i = 0; i < Number(number); i++){
-      const name  = faker.commerce.department()
+      const photo = await axios.get(faker.image.urlLoremFlickr(), {
+        responseType: 'arraybuffer'
+      })
+      const name = faker.commerce.department()
+      const filename = `${name}.jpeg`;
 
       const data = {
         name: name,
         slug: slugify(name, {
           lower: true
         }),
+        photos: filename,
         createdAt: faker.date.past(),
         updatedAt: faker.date.recent()
       }
 
-      const uniqueName = categories.find((value: Category) => value.name == data.name)
-      if(!uniqueName) categories.push(data)
-    }
+      try {
+        const category = await prisma.category.create({
+          data: data
+        })
 
-    try {
-      await prisma.category.createMany({
-        data: categories
-      })
-    } catch (err) {
-      throw err
+        if(!fs.existsSync('./public/images/categories')) fs.mkdirSync('./public/images/categories', { recursive: true });
+        fs.writeFileSync(`./public/images/categories/${category.photos}`, photo.data);
+      } catch (err) {
+        console.log('error possible duplicate category name, skipping proses.')
+      }
     }
 
     console.log('success')
