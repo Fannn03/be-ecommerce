@@ -28,7 +28,7 @@ export default async (user: UserJWT | JwtPayload, body: any) => {
       id: cart.id,
       user_id: cart.user_id,
       product_id: cart.product_id,
-      quantiry: cart.quantity,
+      quantity: cart.quantity,
       createdAt: cart.createdAt,
     }
 

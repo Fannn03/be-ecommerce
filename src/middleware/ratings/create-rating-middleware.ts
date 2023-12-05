@@ -1,31 +1,34 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import fs from 'fs'
-import { productBodyInterface } from "../../services/product/create-service";
+import fs from 'fs';
 import loggerResponse from "../../helpers/server/logger-response";
 
 interface ErrorMessage {
-  name?: string
+  product_id?: string,
+  rating?: string,
+  comment?: string,
+  photos?: string
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-  req.body.photos = req.files
+  if(req.files) req.body.photos = req.files;
 
   const form = Joi.object({
-    store_id: Joi.number()
+    product_id: Joi.number()
       .required()
       .empty()
       ,
-    category_id: Joi.number()
+    rating: Joi.number()
       .required()
       .empty()
+      .min(1)
+      .max(5)
       ,
-    name: Joi.string()
+    comment: Joi.string()
       .required()
       .empty()
       .trim()
       .min(4)
-      .max(50)
       ,
     photos: Joi.array()
       .required()
@@ -43,23 +46,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .messages({
         'any.invalid': 'File type must be PNG, JPG, or JPEG'
       })
-      ,
-    description: Joi.string()
-      .required()
-      .empty()
-      .trim()
-      ,
-    price: Joi.number()
-      .required()
-      .empty()
-      .min(500)
-      .max(10000000)
-      ,
-    stock: Joi.number()
-      .required()
-      .empty()
-      .min(1)
-      .max(10000)
   })
 
   try {
@@ -68,13 +54,13 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     })
   } catch (err: any) {
     const errMessage: ErrorMessage = {}
-    // delete product photos in temp directory
     if(req.body.photos?.length) {
-      req.body.photos.map((data: productBodyInterface) => {
-        fs.rmSync(`public/images/temp/${data.filename}`)
-      })
+      const photos = req.body.photos;
+      for(let photo in photos) {
+        fs.rmSync(photos[photo].path);
+      }
     }
-    
+
     if(err instanceof Joi.ValidationError) {
       err.details.map((data: Joi.ValidationErrorItem) => {
         errMessage[data.context?.key as keyof ErrorMessage] = data.message
@@ -106,5 +92,5 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     })
   }
 
-  return next()
+  return next();
 }
