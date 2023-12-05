@@ -49,7 +49,7 @@ export const findAllProduct = async (req: Request, res: Response) => {
 
 export const detailProduct = async (req: Request, res: Response) => {
   try {
-    const product = await detailProductService(req.params.name)
+    const product = await detailProductService(req.params.slug)
 
     if(!product) {
       res.status(404).json({
