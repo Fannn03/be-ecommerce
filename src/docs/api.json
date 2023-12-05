@@ -1402,6 +1402,124 @@
           }
         }
       }
+    },
+    "/ratings/create": {
+      "post": {
+        "summary": "Create rating",
+        "description": "User create rating product",
+        "tags": ["Ratings"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "product_id": 321,
+                "rating": 5,
+                "comment": "Good product",
+                "photos": "required, photos.png ( can send multiple images )"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "rating": 3,
+                    "comment": "Good product",
+                    "images": [
+                      {
+                        "name": "ratings/579-01HFBXQ2EGC8M3G8HB5BA5N43T-1701737917005-1.jpeg"
+                      },
+                      {
+                        "name": "ratings/579-01HFBXQ2EGC8M3G8HB5BA5N43T-1701737917006-2.jpeg"
+                      }
+                    ],
+                    "product": {
+                      "id": 579,
+                      "name": "Gorgeous Plastic Gloves"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": {
+                    "rating": "\"rating\" is required"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "You have already submit rating before"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "Product not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
