@@ -3,6 +3,7 @@ import userSeeder from "./user-seeder";
 import storeSeeder from "./store-seeder";
 import categorySeeder from "./category-seeder";
 import productSeeder from "./product-seeder";
+import ratingSeeder from "./rating-seeder";
 
 interface Seeder {
   name: string,
@@ -21,6 +22,7 @@ interface Seeder {
   seeders.push(storeSeeder)
   seeders.push(categorySeeder)
   seeders.push(productSeeder)
+  seeders.push(ratingSeeder)
 
   const getAllSeederName = () => {
     console.log("Available seeders name :\n");
