@@ -1422,7 +1422,7 @@
                 "product_id": 321,
                 "rating": 5,
                 "comment": "Good product",
-                "photos": "required, photos.png ( can send multiple images )"
+                "photos": "optional, photos.png ( can send multiple images )"
               }
             }
           }
