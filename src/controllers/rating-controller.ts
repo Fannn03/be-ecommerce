@@ -1,6 +1,50 @@
 import { Request, Response } from "express";
 import createRatingService, { CreateRatingError } from '../services/rating/create-service';
+import findAllRatingService from '../services/rating/findall-service';
 import loggerResponse from "../helpers/server/logger-response";
+
+export const findAllRating = async (req: Request, res: Response) => {
+  try {
+    const ratings = await findAllRatingService(req.params.slug, req.query);
+
+    if(ratings.comment.length && req.query.page) {
+      res.status(404).json({
+        code: 404,
+        result: 'not found',
+        message: 'record data not found'
+      })
+
+      return loggerResponse({
+        req: req,
+        res: res
+      })
+    }
+
+    res.json({
+      code: 200,
+      result: 'success',
+      message: 'success get record data',
+      data: ratings
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res
+    })
+  } catch (err: any) {
+    res.status(500).json({
+      code: 500,
+      result: 'bad request',
+      message: err.message
+    })
+
+    return loggerResponse({
+      req: req,
+      res: res,
+      error_message: err.message
+    })
+  }
+}
 
 export const createRating = async (req: Request, res: Response) => {
   try {
