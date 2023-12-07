@@ -1520,6 +1520,160 @@
           }
         }
       }
+    },
+    "/ratings/{productSlug}": {
+      "get": {
+        "summary": "Get ratings",
+        "description": "Get all product ratings by product slug",
+        "tags": ["Ratings"],
+        "parameters": [
+          {
+            "name": "productSlug",
+            "in": "path",
+            "description": "Get product ratings by product slug",
+            "required": true,
+            "example": "my-store-school-bag"
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data products, default 10",
+            "required": false,
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Get current pagionation, default 1",
+            "required": false,
+            "example": 2
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "description": "Filter by rating number, default all",
+            "required": false,
+            "example": "5"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Filter rating by accending or descending, default desc",
+            "required": false,
+            "example": "asc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "comment": [
+                      {
+                        "user": "Bahuwarna.Moen44",
+                        "rating": 2,
+                        "comment": "Iure turba subito thesaurus conspergo. Trado adulatio cerno succedo solutio soluta valde tergeo concido. Sodalitas cogito conspergo aliquam earum amissio.\nVidelicet harum voluptatem tergiversatio temeritas. Adnuo pectus virga aeger delicate. Ad coadunatio adsum antea cupiditate tepidus cognomen.\nArbustum occaecati triduana perferendis arma confugo arbustum pariatur bis summa. Doloremque causa sulum accusantium comis spargo angelus sufficio suadeo. Vel quo adulescens charisma absque sufficio.",
+                        "images": [
+                          {
+                            "name": "ratings/608-01HFKNH7VGS34ZEZ20NKEMP2BK-1701777037933-1.jpeg"
+                          },
+                          {
+                            "name": "ratings/608-01HFKNH7VGS34ZEZ20NKEMP2BK-1701777037933-2.jpeg"
+                          }
+                        ],
+                        "createdAt": "2023-12-05T11:50:37.935Z"
+                      },
+                      {
+                        "user": "Maria.Mraz31",
+                        "rating": 4,
+                        "comment": "Similique qui voro abbas somnus spoliatio similique beatus tandem. Tum cupio congregatio thorax bardus decimus somnus. Perferendis cuppedia totam vobis aperiam crinis ex illum tergo vomica.\nTam patria autus pariatur amor. Vicissitudo alii aestus confugo viscus coniecto coaegresco. Caelestis auxilium cursus clibanus vulgaris sufficio vulgo cibus super advenio.\nUllus harum arbor teneo deinde. Cariosus demoror usus velit carpo suffragium voluptates. Decretum acceptus occaecati curo abscido deprimo.",
+                        "images": [
+                          {
+                            "name": "ratings/608-01HFKNH9GEG0JR9NVH1SVAY12T-1701777032619-1.jpeg"
+                          },
+                          {
+                            "name": "ratings/608-01HFKNH9GEG0JR9NVH1SVAY12T-1701777032619-2.jpeg"
+                          }
+                        ],
+                        "createdAt": "2023-12-05T11:50:32.624Z"
+                      },
+                      {
+                        "user": "Vega_Becker",
+                        "rating": 5,
+                        "comment": "Virgo demergo verus repellendus vestrum arbor dolorem decipio volubilis. Amplitudo volutabrum concido deleo crustulum vomito abeo acsi aspernatur. Cunabula centum minus stipes.\nDemum iusto voluptatem depopulo quam taedium amicitia aeneus sto. Caste cavus terra aetas solutio cupiditate spoliatio clamo expedita ventito. Reiciendis veritatis ratione.\nExercitationem est constans audentia suppellex spoliatio arma clarus sed adinventitias. Cohibeo comparo angulus ea optio debilito caritas consuasor decerno cribro. Urbs unus architecto tunc annus vere subito.",
+                        "images": [
+                          {
+                            "name": "ratings/608-01HFKNH9PJ880WYN7SV5S7KVN5-1701777023946-1.jpeg"
+                          },
+                          {
+                            "name": "ratings/608-01HFKNH9PJ880WYN7SV5S7KVN5-1701777023946-2.jpeg"
+                          }
+                        ],
+                        "createdAt": "2023-12-05T11:50:23.948Z"
+                      },
+                      {
+                        "user": "Koko.Bernier54",
+                        "rating": 1,
+                        "comment": "Cursim iste casus. Solus demens cupressus umquam desipio claustrum ara. Tersus urbanus cultura thesis accusamus cena.\nSuccedo sponte totam. Vomer vulgus textilis auxilium delinquo umquam. Ambulo tabernus callide cena assentator demo dedecor.\nVicinus circumvenio curriculum cauda. Eligendi vox capillus. Charisma inflammatio vita.",
+                        "images": [
+                          {
+                            "name": "ratings/608-01HFKNHA0DXVXFW0531EJEKFA4-1701777013748-1.jpeg"
+                          },
+                          {
+                            "name": "ratings/608-01HFKNHA0DXVXFW0531EJEKFA4-1701777013748-2.jpeg"
+                          }
+                        ],
+                        "createdAt": "2023-12-05T11:50:13.749Z"
+                      }
+                    ],
+                    "ratings": {
+                      "starsOne": 2,
+                      "starsTwo": 1,
+                      "starsThree": 1,
+                      "starsFour": 2,
+                      "starsFive": 1
+                    },
+                    "page": {
+                      "size": 4,
+                      "total": 7,
+                      "totalPages": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record data not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
