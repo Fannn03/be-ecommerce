@@ -31,7 +31,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .min(4)
       ,
     photos: Joi.array()
-      .required()
+      .optional()
       .empty()
       .min(1)
       .custom((value, helpers) => {
