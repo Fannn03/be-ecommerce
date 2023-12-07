@@ -25,8 +25,7 @@ export default async (user: JwtPayload | UserJWT, body: any) => {
   }, user.id)
   if(isUserAlreadyGiveRating) throw new CreateRatingError("You have already submit rating before", 403, "forbidden");
 
-  const photos = body.photos.map((data: Express.Multer.File, index: number
-    ) => ({
+  const photos = (!body.photos.length) ? [] : body.photos.map((data: Express.Multer.File, index: number) => ({
     oldPath: data.path,
     name: slugify(`${body.product_id}-${user.id}-${new Date().getTime()}-${index + 1}.${data.mimetype.split('/')[1]}`),
   }))
@@ -37,12 +36,14 @@ export default async (user: JwtPayload | UserJWT, body: any) => {
       product_id: Number(body.product_id),
       rating: Number(body.rating),
       comment: body.comment
-    }, photos.map((data: any) => ({
+    }, (!body.photos.length) ? photos : photos.map((data: any) => ({
       name: data.name
     })))
 
-    for (let photo in photos) {
-      fs.renameSync(photos[photo].oldPath, `public/images/ratings/${photos[photo].name}`)
+    if(!body.photos.length) {
+      for (let photo in photos) {
+        fs.renameSync(photos[photo].oldPath, `public/images/ratings/${photos[photo].name}`)
+      }
     }
 
     const response = {
@@ -59,6 +60,12 @@ export default async (user: JwtPayload | UserJWT, body: any) => {
 
     return response;
   } catch (err) {
+    if(body.photos.length) {
+      const photos = body.photos;
+      for (let photo in photos) {
+        fs.rmSync(photos[photo].path)
+      }
+    }
     throw err;
   }
 }
