@@ -6,8 +6,7 @@ import loggerResponse from "../helpers/server/logger-response";
 export const findAllRating = async (req: Request, res: Response) => {
   try {
     const ratings = await findAllRatingService(req.params.slug, req.query);
-
-    if(ratings.comment.length && req.query.page) {
+    if(!ratings || (!ratings?.comment.length && req.query.page)) {
       res.status(404).json({
         code: 404,
         result: 'not found',

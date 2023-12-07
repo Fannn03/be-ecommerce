@@ -10,6 +10,8 @@ export default async (productSlug: string, query: any) => {
   (query.sortBy) ? sort["createdAt"] = query.sortBy : sort["createdAt"] = "desc";
   
   const ratings = await findAllRating(productSlug, take, skip, queries, sort);
+  if(!ratings.length) return null;
+
   const countRatings = await countRating({ slug: productSlug });
   const countRatingOne = await countRating({ rating: 1, slug: productSlug });
   const countRatingTwo = await countRating({ rating: 2, slug: productSlug});
