@@ -1,6 +1,4 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { number } from "joi";
-import { registerAdmin } from "../controllers/admin-controller";
 
 interface createUserInterface {
   user_id       : string,

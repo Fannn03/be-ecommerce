@@ -1,4 +1,3 @@
-import { Product } from "@prisma/client"
 import { findAllProduct } from "../../repositories/product"
 
 export interface categoriesQuery {
