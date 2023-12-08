@@ -1403,6 +1403,139 @@
         }
       }
     },
+    "/carts": {
+      "get": {
+        "summary": "Get carts",
+        "description": "Get user products carts",
+        "tags": ["Carts"],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data products carts, default 5",
+            "required": false,
+            "example": 5
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "display current pagination of carts, default 0",
+            "required": false,
+            "example": 2
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "carts": [
+                      {
+                        "store": {
+                          "id": 16,
+                          "name": "PD Spencer",
+                          "username": "Yance4",
+                          "photo": "stores/01HFKNH87YFJHVGTHQ1D4D12SQ.jpeg"
+                        },
+                        "product": {
+                          "id": 586,
+                          "slug": "pd-spencer-fantastic-wooden-fish-1700923972301",
+                          "name": "Fantastic Wooden Fish",
+                          "price": 102551,
+                          "quantity": 20
+                        }
+                      },
+                      {
+                        "store": {
+                          "id": 20,
+                          "name": "Fa Torphy",
+                          "username": "Bakiono.Jakubowski",
+                          "photo": null
+                        },
+                        "product": {
+                          "id": 599,
+                          "slug": "fa-torphy-licensed-rubber-chicken-1700923972596",
+                          "name": "Licensed Rubber Chicken",
+                          "price": 237742,
+                          "quantity": 20
+                        }
+                      },
+                      {
+                        "store": {
+                          "id": 16,
+                          "name": "PD Spencer",
+                          "username": "Yance4",
+                          "photo": "stores/01HFKNH87YFJHVGTHQ1D4D12SQ.jpeg"
+                        },
+                        "product": {
+                          "id": 586,
+                          "slug": "pd-spencer-fantastic-wooden-fish-1700923972301",
+                          "name": "Fantastic Wooden Fish",
+                          "price": 102551,
+                          "quantity": 20
+                        }
+                      }
+                    ],
+                    "pages": {
+                      "size": 3,
+                      "total": 4,
+                      "totalPages": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "data not found",
+                  "data": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ratings/create": {
       "post": {
         "summary": "Create rating",
