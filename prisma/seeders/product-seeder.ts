@@ -1,6 +1,6 @@
 import { Category, PrismaClient, Store } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from "@faker-js/faker/locale/id_ID"
+import { faker } from "@faker-js/faker"
 import slugify from "slugify"
 import axios from "axios"
 import fs from 'fs'
@@ -17,6 +17,7 @@ export default {
     if(!Number(number)) number = "50";
 
     console.log("seeding product...")
+    if(!fs.existsSync('./public/images/products')) fs.mkdirSync('./public/images/products', { recursive: true });
 
     for(let i = 0; i < Number(number); i++) {
       const stores: Store[] | [] = await prisma.store.findMany({
@@ -80,20 +81,20 @@ export default {
           }
         })
 
-        product.images.map(async (data: any) => {
-          const fileName = data.name
-          const image = await axios.get(faker.image.urlLoremFlickr(), {
+        const images = product.images;
+        for (let image in images) {
+          const fileName = images[image].name;
+          const randomImage = await axios.get(faker.image.urlLoremFlickr(), {
             responseType: 'arraybuffer'
-          })
+          });
 
-          fs.writeFileSync(`./public/images/products/${fileName}`, image.data)
-        })
+          fs.writeFileSync(`./public/images/products/${fileName}`, randomImage.data);
+        }
       } catch (err) {
         throw err
       }
     }
 
     console.log('success');
-  
   }
 }

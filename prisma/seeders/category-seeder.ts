@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from "@faker-js/faker/locale/id_ID"
+import { faker } from "@faker-js/faker"
 import slugify from "slugify"
 import axios from "axios"
 import fs from 'fs'
@@ -24,7 +24,8 @@ export default {
     if(!Number(number)) number = "10";
 
     console.log("seeding category...")
-
+    if(!fs.existsSync('./public/images/categories')) fs.mkdirSync('./public/images/categories', { recursive: true });
+    
     for(let i = 0; i < Number(number); i++){
       const photo = await axios.get(faker.image.urlLoremFlickr(), {
         responseType: 'arraybuffer'
@@ -45,7 +46,6 @@ export default {
           data: data
         })
 
-        if(!fs.existsSync('./public/images/categories')) fs.mkdirSync('./public/images/categories', { recursive: true });
         fs.writeFileSync(`./public/images/categories/${category.photos}`, photo.data);
       } catch (err) {
         console.log('error possible duplicate category name, skipping proses.')

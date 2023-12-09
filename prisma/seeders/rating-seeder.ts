@@ -1,6 +1,6 @@
 import { PrismaClient, RatingImage } from "@prisma/client";
 import promptSync from 'prompt-sync';
-import { faker } from '@faker-js/faker/locale/en_IND';
+import { faker } from '@faker-js/faker';
 import slugify from "slugify";
 import fs from 'fs';
 import axios from "axios";
@@ -17,6 +17,8 @@ export default {
     if(!Number(number)) number = "100";
 
     console.log("seeding ratings...")
+    if(!fs.existsSync('public/images/ratings')) fs.mkdirSync('public/images/ratings', { recursive: true });
+
     for(let i: number = 0; i <= Number(number); i ++) {
       const users = await prisma.user.findMany({
         where: { deletedAt: null }
@@ -56,15 +58,13 @@ export default {
         const images = rating.images
         for (let image in images) {
           const getImage = await axios.get(faker.image.urlLoremFlickr(), { responseType: 'arraybuffer' });
-
-          if(!fs.existsSync('public/images/ratings')) fs.mkdirSync('public/images/ratings', { recursive: true });
           fs.writeFileSync(`public/images/ratings/${images[image].name}`, getImage.data);
-        }
-        
-        console.log('success');
+        }        
       } catch (err) {
         throw err
       }
     }
+
+    console.log('success');
   }
 }

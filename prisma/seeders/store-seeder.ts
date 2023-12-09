@@ -1,6 +1,6 @@
 import { PrismaClient, User } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from "@faker-js/faker/locale/id_ID"
+import { faker } from "@faker-js/faker"
 import axios from "axios"
 import fs from 'fs'
 
@@ -10,12 +10,13 @@ const prompt = promptSync()
 export default {
   name: 'store',
   run: async () => {
-    console.log("[Q] How mane store do you want to create? type C to cancel.");
+    console.log("[Q] How many store do you want to create? type C to cancel.");
     let number = prompt("[A] Default 50: ");
     if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
     if(!Number(number)) number = "50";
 
     console.log("seeding store...")
+    if(!fs.existsSync('./public/images/stores')) fs.mkdirSync('./public/images/stores', {recursive: true});
 
     for(let i = 0; i < Number(number); i++) {
       try {

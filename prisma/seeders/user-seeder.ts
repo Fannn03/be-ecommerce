@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from '@faker-js/faker/locale/en_IN'
+import { faker } from '@faker-js/faker'
 import { ulid } from 'ulid'
 import bcrypt from 'bcrypt'
 
