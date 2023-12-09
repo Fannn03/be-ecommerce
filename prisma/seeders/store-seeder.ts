@@ -1,6 +1,6 @@
 import { PrismaClient, User } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from "@faker-js/faker/locale/id_ID"
+import { faker } from "@faker-js/faker"
 import axios from "axios"
 import fs from 'fs'
 
@@ -10,10 +10,13 @@ const prompt = promptSync()
 export default {
   name: 'store',
   run: async () => {
-    const number = prompt("How many stores do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many store do you want to create? type C to cancel.");
+    let number = prompt("[A] Default 50: ");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "50";
 
-    console.log("seeding store...")
+    console.log("[S] Seeding Store")
+    if(!fs.existsSync('./public/images/stores')) fs.mkdirSync('./public/images/stores', {recursive: true});
 
     for(let i = 0; i < Number(number); i++) {
       try {
@@ -40,7 +43,6 @@ export default {
         const getPhoto = await axios.get(photoUrl, {
           responseType: 'arraybuffer'
         })
-
         const isPhoto: boolean = faker.datatype.boolean({
           probability: 0.5
         })
@@ -48,17 +50,7 @@ export default {
         const isDescription: boolean = faker.datatype.boolean({
           probability: 0.5
         })
-
         const description = faker.lorem.paragraph()
-
-        const isDeleted: boolean = faker.datatype.boolean({
-          probability: 0.2
-        })
-
-        const deletedAt: Date[] = faker.date.betweens({
-          from: users[getUser].updatedAt,
-          to: "2023-01-09T06:34:30.000Z"
-        })
 
         await prisma.store.create({
           data: {
@@ -67,9 +59,6 @@ export default {
             name: faker.company.name(),
             photos: isPhoto ? `${users[getUser].id}.jpeg` : null,
             description: isDescription ? description : null,
-            createdAt: users[getUser].updatedAt,
-            updatedAt: users[getUser].updatedAt,
-            deletedAt: isDeleted ? deletedAt[0] : null
           }
         })
 
@@ -79,6 +68,6 @@ export default {
       }
     }
 
-    console.log("success")
+    console.log("[S] Success");
   }
 }

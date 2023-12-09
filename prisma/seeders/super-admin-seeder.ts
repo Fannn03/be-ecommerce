@@ -6,7 +6,7 @@ export default {
   name: 'superadmin',
   run: async () => {
       try {
-      console.log('seeding superadmin...');
+      console.log('[S] Seeding Superadmin');
       await prisma.admin.create({
         data: {
           email: 'superadmin@gmail.com',
@@ -16,7 +16,7 @@ export default {
           level: 'superadmin'
         }
       })
-        console.log('success');
+        console.log('[S] Success');
       } catch (err) {
         return  err
       }

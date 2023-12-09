@@ -1,6 +1,6 @@
 import { PrismaClient, RatingImage } from "@prisma/client";
 import promptSync from 'prompt-sync';
-import { faker } from '@faker-js/faker/locale/en_IND';
+import { faker } from '@faker-js/faker';
 import slugify from "slugify";
 import fs from 'fs';
 import axios from "axios";
@@ -11,10 +11,14 @@ const prompt = promptSync();
 export default {
   name: 'rating',
   run: async () => {
-    const number = prompt("How many ratings do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many rating do you want to create? type C to cancel.");
+    let number = prompt("[A] Default 100: ");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "100";
 
-    console.log("seeding ratings...")
+    console.log("[S] Seeding Rating")
+    if(!fs.existsSync('public/images/ratings')) fs.mkdirSync('public/images/ratings', { recursive: true });
+
     for(let i: number = 0; i <= Number(number); i ++) {
       const users = await prisma.user.findMany({
         where: { deletedAt: null }
@@ -54,15 +58,13 @@ export default {
         const images = rating.images
         for (let image in images) {
           const getImage = await axios.get(faker.image.urlLoremFlickr(), { responseType: 'arraybuffer' });
-
-          if(!fs.existsSync('public/images/ratings')) fs.mkdirSync('public/images/ratings', { recursive: true });
           fs.writeFileSync(`public/images/ratings/${images[image].name}`, getImage.data);
-        }
-        
-        console.log('success');
+        }        
       } catch (err) {
         throw err
       }
     }
+
+    console.log("[S] Success");
   }
 }

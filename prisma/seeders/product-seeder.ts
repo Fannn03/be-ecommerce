@@ -1,6 +1,6 @@
 import { Category, PrismaClient, Store } from "@prisma/client"
 import promptSync from 'prompt-sync'
-import { faker } from "@faker-js/faker/locale/id_ID"
+import { faker } from "@faker-js/faker"
 import slugify from "slugify"
 import axios from "axios"
 import fs from 'fs'
@@ -11,10 +11,13 @@ const prompt = promptSync()
 export default {
   name: 'product',
   run: async () => {
-    const number = prompt("How many product do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many product do you want to create? type C to cancel.");
+    let number = prompt("[A] Default 50: ");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "50";
 
-    console.log("seeding product...")
+    console.log("[S] Seeding Product")
+    if(!fs.existsSync('./public/images/products')) fs.mkdirSync('./public/images/products', { recursive: true });
 
     for(let i = 0; i < Number(number); i++) {
       const stores: Store[] | [] = await prisma.store.findMany({
@@ -48,10 +51,6 @@ export default {
         max: 1000
       })
 
-      const isDeleted: boolean = faker.datatype.boolean({
-        probability: 0.3
-      })
-
       try {
         const product = await prisma.product.create({
           data: {
@@ -64,7 +63,6 @@ export default {
             stock: stock,
             createdAt: faker.date.past(),
             updatedAt: faker.date.recent(),
-            deletedAt: isDeleted ? faker.date.recent() : null,
             images: {
               createMany: {
                 data: [
@@ -83,20 +81,20 @@ export default {
           }
         })
 
-        product.images.map(async (data: any) => {
-          const fileName = data.name
-          const image = await axios.get(faker.image.urlLoremFlickr(), {
+        const images = product.images;
+        for (let image in images) {
+          const fileName = images[image].name;
+          const randomImage = await axios.get(faker.image.urlLoremFlickr(), {
             responseType: 'arraybuffer'
-          })
+          });
 
-          fs.writeFileSync(`./public/images/products/${fileName}`, image.data)
-        })
+          fs.writeFileSync(`./public/images/products/${fileName}`, randomImage.data);
+        }
       } catch (err) {
         throw err
       }
     }
 
-    console.log('success');
-  
+    console.log("[S] Success");
   }
 }

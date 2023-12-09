@@ -37,6 +37,8 @@ Berikut adalah beberapa langkah untuk menjalankan program :
 
 - `npm run seed [nama seeder]` Menjalankan data seeder dalam tahap pengembangan
 
+- `npm run seed:all` Menjalankan automatic seeder
+
 - `npm run test` Menjalankan mode testing menggunakan framework **Jest**
 
 ## Dokumentasi API
