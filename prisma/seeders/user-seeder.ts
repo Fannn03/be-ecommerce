@@ -12,10 +12,10 @@ export default {
   run: async () => {
     console.log('[Q] How many user do you want to create? type C to cancel.');
     let number = prompt("[A] Default 100: ");
-    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
     if(!Number(number)) number = "100";
 
-    console.log("seeding user...");
+    console.log("[S] Seeding User");
     
     for(let i = 0; i < Number(number); i++) {
       const isVerified: boolean = faker.datatype.boolean({
@@ -47,6 +47,6 @@ export default {
       }
     }
 
-    console.log("success");
+    console.log("[S] Success");
   }
 }

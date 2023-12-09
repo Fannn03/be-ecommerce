@@ -20,10 +20,10 @@ export default {
   run: async () => {
     console.log("[Q] How many category do you want to create? type C to cancel.");
     let number = prompt("[A] Default posibbly less than 10: ");
-    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
     if(!Number(number)) number = "10";
 
-    console.log("seeding category...")
+    console.log("[S] Seeding Category")
     if(!fs.existsSync('./public/images/categories')) fs.mkdirSync('./public/images/categories', { recursive: true });
     
     for(let i = 0; i < Number(number); i++){
@@ -52,6 +52,6 @@ export default {
       }
     }
 
-    console.log('success')
+    console.log('[S] Success');
   }
 }

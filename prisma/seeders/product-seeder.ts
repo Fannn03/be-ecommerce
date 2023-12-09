@@ -13,10 +13,10 @@ export default {
   run: async () => {
     console.log("[Q] How many product do you want to create? type C to cancel.");
     let number = prompt("[A] Default 50: ");
-    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
     if(!Number(number)) number = "50";
 
-    console.log("seeding product...")
+    console.log("[S] Seeding Product")
     if(!fs.existsSync('./public/images/products')) fs.mkdirSync('./public/images/products', { recursive: true });
 
     for(let i = 0; i < Number(number); i++) {
@@ -95,6 +95,6 @@ export default {
       }
     }
 
-    console.log('success');
+    console.log("[S] Success");
   }
 }
