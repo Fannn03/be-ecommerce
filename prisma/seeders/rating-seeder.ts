@@ -11,8 +11,10 @@ const prompt = promptSync();
 export default {
   name: 'rating',
   run: async () => {
-    const number = prompt("How many ratings do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many rating do you want to create? type C to cancel.");
+    let number = prompt("[A] Default 100: ");
+    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "100";
 
     console.log("seeding ratings...")
     for(let i: number = 0; i <= Number(number); i ++) {

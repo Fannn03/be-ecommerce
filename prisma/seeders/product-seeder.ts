@@ -11,8 +11,10 @@ const prompt = promptSync()
 export default {
   name: 'product',
   run: async () => {
-    const number = prompt("How many product do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many product do you want to create? type C to cancel.");
+    let number = prompt("[A] Default 50: ");
+    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "50";
 
     console.log("seeding product...")
 
@@ -48,10 +50,6 @@ export default {
         max: 1000
       })
 
-      const isDeleted: boolean = faker.datatype.boolean({
-        probability: 0.3
-      })
-
       try {
         const product = await prisma.product.create({
           data: {
@@ -64,7 +62,6 @@ export default {
             stock: stock,
             createdAt: faker.date.past(),
             updatedAt: faker.date.recent(),
-            deletedAt: isDeleted ? faker.date.recent() : null,
             images: {
               createMany: {
                 data: [

@@ -18,8 +18,10 @@ interface Category {
 export default {
   name: 'category',
   run: async () => {
-    const number = prompt("How many category do you want to create ? : ")
-    if(!Number(number)) throw new Error("Invalid value number")
+    console.log("[Q] How many category do you want to create? type C to cancel.");
+    let number = prompt("[A] Default posibbly less than 10: ");
+    if(number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
+    if(!Number(number)) number = "10";
 
     console.log("seeding category...")
 
@@ -36,8 +38,6 @@ export default {
           lower: true
         }),
         photos: filename,
-        createdAt: faker.date.past(),
-        updatedAt: faker.date.recent()
       }
 
       try {
