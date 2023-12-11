@@ -52,7 +52,9 @@ model Address {
   phone           String
   street          String
   zip_code        Int
-  state           String
+  village         String
+  district        String
+  regency         String
   province        String
   latitude        Float
   longitude       Float
