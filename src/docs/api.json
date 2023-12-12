@@ -416,7 +416,113 @@
                 "example": {
                   "code": 403,
                   "result": "forbidden",
-                  "message": "You don't have any permission to use this level"
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/address/create": {
+      "post": {
+        "summary": "Create Address",
+        "description": "Create user address",
+        "tags": ["Address"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Jhon Doe",
+                "phone": "081333333333",
+                "street": "My home",
+                "zip_code": "16830",
+                "village": "Menan",
+                "district": "Jonggol",
+                "regency": "Kabupaten Bogor",
+                "province": "Jawa Barat",
+                "latitude": "-10.00",
+                "longitude": "-250.200"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "name": "Jhon Doe",
+                    "phone": "081333333333",
+                    "street": "My home",
+                    "zip_code": "16830",
+                    "village": "Menan",
+                    "district": "Jonggol",
+                    "regency": "Kabupaten Bogor",
+                    "province": "Jawa Barat",
+                    "latitude": "-10.00",
+                    "longitude": "-250.200"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": "This address seems already exist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
                 }
               }
             }
