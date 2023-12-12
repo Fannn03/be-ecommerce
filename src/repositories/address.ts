@@ -1,4 +1,12 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+interface findAddressInterface {
+  userId   : string,
+  skip?    : number,
+  take?    : number,
+  query?   : Prisma.AddressWhereInput[]
+}
 
 interface createAddressInterface {
   user_id    :  string,
@@ -15,6 +23,18 @@ interface createAddressInterface {
 }
 
 const prisma = new PrismaClient();
+
+export const findAddress = async (params: findAddressInterface) => {
+  return await prisma.address.findMany({
+    where: {
+      user_id: params.userId,
+      deletedAt: null,
+      AND: params.query
+    },
+    skip: (params.skip) ? params.skip : undefined,
+    take: (params.take) ? params.take : undefined,
+  })
+}
 
 export const createAddress = async (body: createAddressInterface) => {
   try {

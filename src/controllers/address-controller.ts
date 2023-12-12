@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import createAddressService from "../services/address/create-service";
+import createAddressService, { CreateAddressError } from "../services/address/create-service";
 import loggerResponse from "../helpers/server/logger-response";
 
 export const createAddress = async (req: Request, res: Response) => {
@@ -18,6 +18,20 @@ export const createAddress = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
+    if(err instanceof CreateAddressError) {
+      res.status(err.code).json({
+        code: err.code,
+        result: err.result,
+        message: err.message
+      })
+
+      return loggerResponse({
+        req: req,
+        res: res,
+        error_message: err.message
+      })
+    }
+    
     res.status(500).json({
       code: 500,
       result: 'internal server error',
