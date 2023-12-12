@@ -16,6 +16,7 @@ export default async (params: loggerInterface) => {
   const Response = models.response;
 
   if(req.body.password) req.body.password = "*****";
+  if(req.body.phone) req.body.phone = "***";
 
   const response = new Response({
     url: req.originalUrl,
