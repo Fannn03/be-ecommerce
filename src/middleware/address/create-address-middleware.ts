@@ -22,7 +22,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       .pattern(/^[0-9]+$/)
       .messages({
         'string.min': 'phone cannot less than 11 digit number',
-        'string.max': 'phone cannot great than 13 digit number'
+        'string.max': 'phone cannot great than 13 digit number',
+        'string.pattern.base': 'phone value must be input number'
       })
       ,
     street: Joi.string()
