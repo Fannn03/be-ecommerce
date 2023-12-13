@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import createService, { CreateStoreError } from "../services/store/create-service";
-import updateService, { UpdateStoreError } from "../services/store/update-service";
-import detailService from "../services/store/detail-service";
-import loggerResponse from "../helpers/server/logger-response";
+import createService, { CreateStoreError } from "@services/store/create-service";
+import updateService, { UpdateStoreError } from "@services/store/update-service";
+import detailService from "@services/store/detail-service";
+import loggerResponse from "@helpers/server/logger-response";
 
 export const createStore = async (req: Request, res: Response) => {
   try {

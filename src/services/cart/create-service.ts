@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
-import { createCart } from "../../repositories/cart";
-import { UserJWT } from "../../middleware/auth-middleware";
-import { findProduct } from "../../repositories/product";
+import { createCart } from "@domain/repositories/cart";
+import { UserJWT } from "@middleware/auth-middleware";
+import { findProduct } from "@domain/repositories/product";
 
 export class CreateCartError {
   constructor (public message: string, public code: number, public result: string) {

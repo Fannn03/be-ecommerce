@@ -2,7 +2,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 import bcrypt from 'bcrypt'
 import { AdminLevel } from '@prisma/client';
 import 'dotenv/config'
-import { createAdmin } from "../../repositories/admin";
+import { createAdmin } from "@domain/repositories/admin";
 
 interface createBody {
   name      : string;

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import loginService from "../services/admin/login-service";
-import createService, { CreateAdminError } from "../services/admin/create-service";
-import deleteService from "../services/admin/delete-service";
-import updateService from "../services/admin/update-service";
-import loggerResponse from "../helpers/server/logger-response";
+import loginService from "@services/admin/login-service";
+import createService, { CreateAdminError } from "@services/admin/create-service";
+import deleteService from "@services/admin/delete-service";
+import updateService from "@services/admin/update-service";
+import loggerResponse from "@helpers/server/logger-response";
 
 export const registerAdmin = async (req: Request, res: Response) => {
   try {

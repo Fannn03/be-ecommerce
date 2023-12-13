@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { updateUser } from "../../repositories/user";
+import { updateUser } from "@domain/repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 interface Response {

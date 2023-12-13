@@ -1,7 +1,7 @@
 import { ParsedQs } from "qs"
 import { Key } from "node-cache"
-import cache from "../../config/cache"
-import { verifyUser } from "../../repositories/user"
+import cache from "@config/cache"
+import { verifyUser } from "@domain/repositories/user"
 
 export class VerifyEmailError{
   constructor(public message: string, public code:number, public result: string) {

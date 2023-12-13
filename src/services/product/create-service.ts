@@ -3,9 +3,9 @@ import slugify from "slugify";
 import { Category, Store } from "@prisma/client";
 import fs from 'fs'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { findStore } from "../../repositories/store";
-import { createProduct } from "../../repositories/product";
-import { findCategory } from "../../repositories/category";
+import { findStore } from "@domain/repositories/store";
+import { createProduct } from "@domain/repositories/product";
+import { findCategory } from "@domain/repositories/category";
 
 export interface productBodyInterface {
   fieldname: string,

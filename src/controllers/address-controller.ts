@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import createAddressService, { CreateAddressError } from "../services/address/create-service";
-import loggerResponse from "../helpers/server/logger-response";
+import createAddressService, { CreateAddressError } from "@services/address/create-service";
+import loggerResponse from "@helpers/server/logger-response";
 
 export const createAddress = async (req: Request, res: Response) => {
   try {

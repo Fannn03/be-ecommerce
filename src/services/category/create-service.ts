@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 import slugify from "slugify";
 import fs from 'fs';
-import { createCategory } from "../../repositories/category"
+import { createCategory } from "@domain/repositories/category"
 
 interface CreateBody {
   name: string

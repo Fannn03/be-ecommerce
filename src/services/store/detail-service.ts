@@ -1,4 +1,4 @@
-import { findStore } from "../../repositories/store"
+import { findStore } from "@domain/repositories/store"
 
 export default async (username: string) => {
   try {

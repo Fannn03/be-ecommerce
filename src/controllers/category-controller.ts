@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Category } from "@prisma/client";
-import findAllCategoryService, { categoryInterface } from '../services/category/findall-service'
-import categoryService, { CreateCategoryError } from '../services/category/create-service'
-import loggerResponse from "../helpers/server/logger-response";
+import findAllCategoryService, { categoryInterface } from '@services/category/findall-service'
+import categoryService, { CreateCategoryError } from '@services/category/create-service'
+import loggerResponse from "@helpers/server/logger-response";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {

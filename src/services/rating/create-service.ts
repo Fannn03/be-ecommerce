@@ -2,9 +2,9 @@ import { JwtPayload } from "jsonwebtoken";
 import { RatingImage } from "@prisma/client";
 import slugify from "slugify";
 import fs from 'fs';
-import { UserJWT } from "../../middleware/auth-middleware";
-import { createRating, findRating } from "../../repositories/rating";
-import { findProduct } from "../../repositories/product";
+import { UserJWT } from "@middleware/auth-middleware";
+import { createRating, findRating } from "@domain/repositories/rating";
+import { findProduct } from "@domain/repositories/product";
 
 export class CreateRatingError {
   constructor (public message: string, public code: number, public result: string) {

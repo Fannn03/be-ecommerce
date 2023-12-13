@@ -1,4 +1,4 @@
-import { Request, Response, query } from "express";
+import { Request, Response } from "express";
 import createCartService, { CreateCartError } from '../services/cart/create-service';
 import findAllCartService from "../services/cart/findall-service";
 import loggerResponse from "../helpers/server/logger-response";

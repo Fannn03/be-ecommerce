@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs'
-import loggerResponse from "../../helpers/server/logger-response";
+import loggerResponse from "@helpers/server/logger-response";
 
 interface ErrorMessage {
   username?: string,

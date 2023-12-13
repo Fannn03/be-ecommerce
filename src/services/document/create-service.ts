@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import fs from 'fs';
-import { UserJWT } from "../../middleware/auth-middleware";
-import { insertDocument } from "../../repositories/document"
+import { UserJWT } from "@middleware/auth-middleware";
+import { insertDocument } from "@domain/repositories/document"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 interface documentInterface {

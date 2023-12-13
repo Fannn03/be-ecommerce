@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import createRatingService, { CreateRatingError } from '../services/rating/create-service';
-import findAllRatingService from '../services/rating/findall-service';
-import loggerResponse from "../helpers/server/logger-response";
+import createRatingService, { CreateRatingError } from '@services/rating/create-service';
+import findAllRatingService from '@services/rating/findall-service';
+import loggerResponse from "@helpers/server/logger-response";
 
 export const findAllRating = async (req: Request, res: Response) => {
   try {

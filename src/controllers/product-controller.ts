@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import findAllProductService from '../services/product/findall-service'
-import createProductService, { CreateProductError } from '../services/product/create-service'
-import detailProductService from '../services/product/detail-service'
-import loggerResponse from "../helpers/server/logger-response";
+import findAllProductService from '@services/product/findall-service'
+import createProductService, { CreateProductError } from '@services/product/create-service'
+import detailProductService from '@services/product/detail-service'
+import loggerResponse from "@helpers/server/logger-response";
 
 export const findAllProduct = async (req: Request, res: Response) => {
   try {

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs'
-import { productBodyInterface } from "../../services/product/create-service";
-import loggerResponse from "../../helpers/server/logger-response";
+import { productBodyInterface } from "@services/product/create-service";
+import loggerResponse from "@helpers/server/logger-response";
 
 interface ErrorMessage {
   name?: string

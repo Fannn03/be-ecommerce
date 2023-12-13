@@ -1,6 +1,6 @@
 import { Request } from "express"
 import fs from 'fs/promises'
-import { createStore } from "../../repositories/store"
+import { createStore } from "@domain/repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
 export class CreateStoreError{

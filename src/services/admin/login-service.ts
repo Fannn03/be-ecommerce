@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
-import { getAdmin } from "../../repositories/admin";
+import { getAdmin } from "@domain/repositories/admin";
 
 interface LoginBody {
   name: string,

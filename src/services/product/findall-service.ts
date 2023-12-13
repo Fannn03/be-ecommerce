@@ -1,4 +1,4 @@
-import { findAllProduct } from "../../repositories/product"
+import { findAllProduct } from "@domain/repositories/product"
 
 export interface categoriesQuery {
   name?: string,

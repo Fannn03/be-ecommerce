@@ -1,7 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
-import { UserJWT } from "../../middleware/auth-middleware";
-import { createAddress, findAddress } from "../../repositories/address";
-import { Address } from "@prisma/client";
+import { UserJWT } from "@middleware/auth-middleware";
+import { createAddress, findAddress } from "@domain/repositories/address";
 
 export class CreateAddressError {
   constructor (public message: string, public code: number, public result: string) {

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import registerService, { UserRegisterError } from "../services/user/register-service";
-import loginService, { LoginError } from "../services/user/login-service";
-import verifyEmailService, { VerifyEmailError } from "../services/user/verify-email-service";
-import updateService, { UserUpdateError } from "../services/user/update-service";
-import detailsService from "../services/user/details-service";
-import loggerResponse from "../helpers/server/logger-response";
+import registerService, { UserRegisterError } from "@services/user/register-service";
+import loginService, { LoginError } from "@services/user/login-service";
+import verifyEmailService, { VerifyEmailError } from "@services/user/verify-email-service";
+import updateService, { UserUpdateError } from "@services/user/update-service";
+import detailsService from "@services/user/details-service";
+import loggerResponse from "@helpers/server/logger-response";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {

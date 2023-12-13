@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import Joi, { ValidationError, ValidationErrorItem } from 'joi'
-import loggerResponse from '../../helpers/server/logger-response'
+import loggerResponse from '@helpers/server/logger-response'
 
 interface ErrorMessages {
 	email?: string,

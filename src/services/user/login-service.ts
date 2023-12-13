@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import bcrypt from 'bcrypt'
-import { getUser } from "../../repositories/user"
+import { getUser } from "@domain/repositories/user"
 
 interface LoginBody {
   email: string,

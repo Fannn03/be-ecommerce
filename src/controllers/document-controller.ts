@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import createDocumentService, { CreateDocumentError } from '../services/document/create-service';
-import loggerResponse from "../helpers/server/logger-response";
+import createDocumentService, { CreateDocumentError } from '@services/document/create-service';
+import loggerResponse from "@helpers/server/logger-response";
 
 export const createDocument = async (req: Request, res: Response) => {
   try {
