@@ -16,7 +16,13 @@
     "sourceMap": true,
     "baseUrl": "./src",
     "paths": {
+      "@config/*": ["config/*"],
+      "@controllers/*": ["controllers/*"],
+      "@domain/*": ["domain/*"],
+      "@helpers/*": ["helpers/*"],
+      "@middleware/*": ["middleware/*"],
       "@routers/*": ["routers/*"],
+      "@services/*": ["services/*"],
     }
   },
   "ts-node": {
