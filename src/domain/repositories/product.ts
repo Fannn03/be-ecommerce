@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { categoriesQuery } from "../services/product/findall-service"
+import { categoriesQuery } from "@services/product/findall-service"
 
 interface productInterface {
   store_id: number,
