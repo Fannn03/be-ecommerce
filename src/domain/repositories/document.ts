@@ -1,22 +1,16 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
+import { createDocumentInterface } from "@domain/interfaces/document.interface";
 
-interface documentInterface {
-  user_id   :   string,
-  fullname  :   string,
-  nik       :   string,
-  photos    :   string
-}
+const prisma = new PrismaClient();
 
-const prisma = new PrismaClient()
-
-export const insertDocument = async (request: documentInterface) => {
+export const insertDocument = async (body: createDocumentInterface) => {
   try {
     return await prisma.document.create({
       data: {
-        user_id: request.user_id,
-        fullname: request.fullname,
-        nik: request.nik,
-        photos: request.photos,
+        user_id: body.user_id,
+        fullname: body.fullname,
+        nik: body.nik,
+        photos: body.photos,
       }
     })
   } catch (err) {

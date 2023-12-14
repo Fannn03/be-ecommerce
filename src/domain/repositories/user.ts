@@ -1,28 +1,17 @@
-import { PrismaClient } from "@prisma/client"
-import { ulid } from 'ulid'
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+import { ulid } from 'ulid';
+import { createUserInterface, updateUserInterface } from "@domain/interfaces/user.interface";
 
-interface UserInterface {
-  id?       : string,
-  email     : string,
-  name      : string,
-  password  : string,
-}
+const prisma = new PrismaClient();
 
-interface UpdateUser {
-  id    : string,
-  email : string,
-  name  : string
-}
-
-export const insertUser = async (request: UserInterface) => {
+export const insertUser = async (body: createUserInterface) => {
   try {
     return await prisma.user.create({
       data: {
         id: ulid(),
-        email: request.email,
-        name: request.name,
-        password: request.password
+        email: body.email,
+        name: body.name,
+        password: body.password
       }
     });
   } catch (err) {
@@ -57,7 +46,7 @@ export const verifyUser = async (id: string) => {
   }
 }
 
-export const updateUser = async (request: UpdateUser) => {
+export const updateUser = async (request: updateUserInterface) => {
   try {
     return await prisma.user.update({
       data: {

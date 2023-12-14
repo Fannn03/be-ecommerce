@@ -1,24 +1,14 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
+import { createCategoryInterface, findCategoryInterface } from "@domain/interfaces/category.interface";
 
-interface categoryInterface {
-  name   :   string
-  slug   :   string,
-  photos :   string
-}
+const prisma = new PrismaClient();
 
-interface findCategory {
-  id?: number,
-  name?: string,
-}
-
-const prisma = new PrismaClient()
-
-export const findCategory = async (category: findCategory) => {
+export const findCategory = async (params: findCategoryInterface) => {
   return await prisma.category.findFirst({
     where: {
       OR: [
-        {id: category.id},
-        {name: category.name}
+        {id: params.id},
+        {name: params.name}
       ],
       deletedAt: null
     }
@@ -33,13 +23,13 @@ export const findAllCategory = async () => {
   })
 }
 
-export const createCategory = async (category: categoryInterface) => {
+export const createCategory = async (body: createCategoryInterface) => {
   try {
     return await prisma.category.create({
       data: {
-        name: category.name,
-        slug: category.slug,
-        photos: category.photos
+        name: body.name,
+        slug: body.slug,
+        photos: body.photos
       }
     })
   } catch (err) {
