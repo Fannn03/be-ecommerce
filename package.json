@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev" : "concurrently -k \"npm run dev:watch\" \"npm run dev:run\"",
+    "dev" : "concurrently -k -s \"first\" \"npm run dev:watch\" \"npm run dev:run\"",
     "dev:watch": "tsc --watch",
-    "dev:run": "nodemon ./src/server.js",
+    "dev:run": "nodemon ./src/server.ts",
     "build": "tsc && npm run start",
     "start": "node ./build/server.js",
     "seed": "ts-node-esm ./prisma/seeders/index.ts",
@@ -10,6 +10,7 @@
     "test": "jest --forceExit"
   },
   "_moduleAliases": {
+    "@common": "build/common",
     "@config": "build/config",
     "@controllers": "build/controllers",
     "@domain": "build/domain",
