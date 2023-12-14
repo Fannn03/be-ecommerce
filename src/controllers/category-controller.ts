@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { Category } from "@prisma/client";
 import findAllCategoryService, { categoryInterface } from '@services/category/findall-service'
-import categoryService, { CreateCategoryError } from '@services/category/create-service'
+import categoryService from '@services/category/create-service'
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {
@@ -53,7 +54,7 @@ export const createCategory = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if(err instanceof CreateCategoryError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

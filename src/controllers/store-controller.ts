@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import createService, { CreateStoreError } from "@services/store/create-service";
+import createService from "@services/store/create-service";
 import updateService, { UpdateStoreError } from "@services/store/update-service";
 import detailService from "@services/store/detail-service";
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const createStore = async (req: Request, res: Response) => {
   try {
@@ -20,7 +21,7 @@ export const createStore = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err) {
-    if(err instanceof CreateStoreError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
@@ -104,7 +105,7 @@ export const updateStore = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err) {
-    if(err instanceof UpdateStoreError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

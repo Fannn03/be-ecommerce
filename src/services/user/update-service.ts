@@ -1,20 +1,13 @@
 import { Request } from "express";
 import { updateUser } from "@domain/repositories/user";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 interface Response {
   id        : string,
   email     : string,
   name      : string,
   updatedAt : Date
-}
-
-export class UserUpdateError{
-  constructor(public message: string, public code: number, public result: string) {
-    this.message = message
-    this.code = code
-    this.result = result
-  }
 }
 
 export default async (req: Request) => {
@@ -36,7 +29,7 @@ export default async (req: Request) => {
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002" && err.meta?.target === "users_name_key") {
-        throw new UserUpdateError("Name already taken", 400, "bad request")
+        throw new ValidationErrorAdapter("Name already taken", 400, "bad request")
       } else {
         throw err
       }

@@ -1,14 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import { UserJWT } from "@middleware/auth-middleware";
 import { createAddress, findAddress } from "@domain/repositories/address";
-
-export class CreateAddressError {
-  constructor (public message: string, public code: number, public result: string) {
-    this.message = message;
-    this.code = code;
-    this.result = result;
-  }
-}
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export default async (user: JwtPayload | UserJWT, body: any) => {
   const { name, phone, street, zip_code, village, district, regency, province, latitude, longitude } = body;
@@ -20,7 +13,7 @@ export default async (user: JwtPayload | UserJWT, body: any) => {
       { district: district, regency: regency, province: province } 
     ]
   });
-  if(duplicateAddress.length) throw new CreateAddressError("This address seems already exist", 400, "bad request");
+  if(duplicateAddress.length) throw new ValidationErrorAdapter("This address seems already exist", 400, "bad request");
 
   try {
     const address = await createAddress({

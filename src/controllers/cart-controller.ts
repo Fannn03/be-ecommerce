@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import createCartService, { CreateCartError } from '@services/cart/create-service';
+import createCartService from '@services/cart/create-service';
 import findAllCartService from "@services/cart/findall-service";
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllCart = async (req: Request, res: Response) => {
   const carts = await findAllCartService(req.user, req.query);
@@ -49,7 +50,7 @@ export const createCart = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if (err instanceof CreateCartError) {
+    if (err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

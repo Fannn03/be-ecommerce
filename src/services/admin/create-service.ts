@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { AdminLevel } from '@prisma/client';
 import 'dotenv/config'
 import { createAdmin } from "@domain/repositories/admin";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 interface createBody {
   name      : string;
@@ -17,14 +18,6 @@ interface Response {
   email   : string;
   level   : AdminLevel;
   createdAt: Date
-}
-
-export class CreateAdminError{
-  constructor(public message: string, public code: number, public result: string) {
-    this.message = message
-    this.code = code
-    this.result = result
-  }
 }
 
 export default async (req: createBody) => {
@@ -52,11 +45,11 @@ export default async (req: createBody) => {
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code == "P2002" && err.meta?.target == 'admins_email_key') {
-        throw new CreateAdminError("Email already taken", 400, "bad request")
+        throw new ValidationErrorAdapter("Email already taken", 400, "bad request")
       }
 
       if(err.code == "P2002" && err.meta?.target == "admins_name_key") {
-        throw new CreateAdminError("Name already taken", 400, "bad request")
+        throw new ValidationErrorAdapter("Name already taken", 400, "bad request")
       }
     }
     

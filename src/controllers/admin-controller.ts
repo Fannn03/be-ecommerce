@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import loginService from "@services/admin/login-service";
-import createService, { CreateAdminError } from "@services/admin/create-service";
+import createService from "@services/admin/create-service";
 import deleteService from "@services/admin/delete-service";
 import updateService from "@services/admin/update-service";
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const registerAdmin = async (req: Request, res: Response) => {
   try {
@@ -21,7 +22,7 @@ export const registerAdmin = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if(err instanceof CreateAdminError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

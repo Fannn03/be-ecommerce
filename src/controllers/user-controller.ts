@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import registerService, { UserRegisterError } from "@services/user/register-service";
+import registerService from "@services/user/register-service";
 import loginService, { LoginError } from "@services/user/login-service";
-import verifyEmailService, { VerifyEmailError } from "@services/user/verify-email-service";
-import updateService, { UserUpdateError } from "@services/user/update-service";
+import verifyEmailService from "@services/user/verify-email-service";
+import updateService from "@services/user/update-service";
 import detailsService from "@services/user/details-service";
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -22,7 +23,7 @@ export const registerUser = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if (err instanceof UserRegisterError) {
+    if (err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
@@ -120,7 +121,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if(err instanceof VerifyEmailError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
@@ -180,7 +181,7 @@ export const updateUser = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if(err instanceof UserUpdateError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

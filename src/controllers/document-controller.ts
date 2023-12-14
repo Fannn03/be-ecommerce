@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import createDocumentService, { CreateDocumentError } from '@services/document/create-service';
+import createDocumentService from '@services/document/create-service';
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const createDocument = async (req: Request, res: Response) => {
   try {
@@ -18,7 +19,7 @@ export const createDocument = async (req: Request, res: Response) => {
       res: res
     })
   } catch (err: any) {
-    if (err instanceof CreateDocumentError) {
+    if (err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,

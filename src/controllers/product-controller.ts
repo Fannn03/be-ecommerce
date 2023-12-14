@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import findAllProductService from '@services/product/findall-service'
-import createProductService, { CreateProductError } from '@services/product/create-service'
+import createProductService from '@services/product/create-service'
 import detailProductService from '@services/product/detail-service'
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllProduct = async (req: Request, res: Response) => {
   try {
@@ -106,7 +107,7 @@ export const createProduct = async (req: Request, res: Response) => {
       res: res,
     })
   } catch (err: any) {
-    if(err instanceof CreateProductError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(404).json({
         code: err.code,
         result: err.result,
