@@ -1,6 +1,6 @@
-import { transport } from "../../config/mailer"
+import { transport } from "@config/mailer"
 import 'dotenv/config'
-import registerMessage from "./register-message"
+import registerMessage from "@common/helpers/email/register-message"
 
 export const sendRegisterMail = async (receiver: string, keyId: string) => {
   transport.sendMail({

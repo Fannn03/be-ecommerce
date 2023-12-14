@@ -1,5 +1,5 @@
 import { Category } from "@prisma/client"
-import { findAllCategory } from "../../repositories/category"
+import { findAllCategory } from "@domain/repositories/category"
 
 export interface categoryInterface {
   id        :   number,

@@ -1,5 +1,5 @@
 import { JwtPayload } from "jsonwebtoken";
-import { getUser } from "../../repositories/user";
+import { getUser } from "@domain/repositories/user";
 
 interface Response {
   id              : string | undefined,

@@ -1,21 +1,14 @@
 import { JwtPayload } from "jsonwebtoken";
 import fs from 'fs';
-import { UserJWT } from "../../middleware/auth-middleware";
-import { insertDocument } from "../../repositories/document"
+import { UserJWT } from "@middleware/auth-middleware";
+import { insertDocument } from "@domain/repositories/document"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 interface documentInterface {
   fullname  :   string,
   nik       :   string,
   photos    :   Express.Multer.File
-}
-
-export class CreateDocumentError {
-  constructor(public message: string, public code: number, public result: string) {
-    this.message = message;
-    this.code = code;
-    this.result = result;
-  }
 }
 
 export default async (user: UserJWT | JwtPayload, body: documentInterface) => {
@@ -45,9 +38,9 @@ export default async (user: UserJWT | JwtPayload, body: documentInterface) => {
     
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "documents_user_id_key") {
-        throw new CreateDocumentError("User document already exist", 400, "bad request");
+        throw new ValidationErrorAdapter("User document already exist", 400, "bad request");
       } else if(err.code === "P2002" && err.meta?.target === "documents_nik_key") {
-        throw new CreateDocumentError("User nik already taken", 400, "bad request");
+        throw new ValidationErrorAdapter("User nik already taken", 400, "bad request");
       } else {
         throw err
       }

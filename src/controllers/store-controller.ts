@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import createService, { CreateStoreError } from "../services/store/create-service";
-import updateService, { UpdateStoreError } from "../services/store/update-service";
-import detailService from "../services/store/detail-service";
-import loggerResponse from "../helpers/server/logger-response";
+import createService from "@services/store/create-service";
+import updateService, { UpdateStoreError } from "@services/store/update-service";
+import detailService from "@services/store/detail-service";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const createStore = async (req: Request, res: Response) => {
   try {
@@ -15,19 +16,19 @@ export const createStore = async (req: Request, res: Response) => {
       data: createdStore
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
   } catch (err) {
-    if(err instanceof CreateStoreError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -40,7 +41,7 @@ export const createStore = async (req: Request, res: Response) => {
         message: error.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: error.message
@@ -69,7 +70,7 @@ export const detailStore = async (req: Request, res: Response) => {
       })
     }
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -80,7 +81,7 @@ export const detailStore = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -99,19 +100,19 @@ export const updateStore = async (req: Request, res: Response) => {
       data: storeUpdated
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
   } catch (err) {
-    if(err instanceof UpdateStoreError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -124,7 +125,7 @@ export const updateStore = async (req: Request, res: Response) => {
         message: error.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: error.message

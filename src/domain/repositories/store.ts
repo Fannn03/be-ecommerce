@@ -1,30 +1,16 @@
 import { PrismaClient } from "@prisma/client";
+import { createStoreInterface, findStoreInterface } from "@domain/interfaces/store.interface";
 
-interface StoreInterface {
-  user_id       : string,
-  username      : string,
-  name          : string,
-  photos?       : string,
-  description?  : string
-}
+const prisma = new PrismaClient();
 
-interface findStore {
-  id?         : number,
-  user_id?    : string,
-  name?       : string,
-  username?   : string
-}
-
-const prisma = new PrismaClient()
-
-export const findStore = async (query: findStore) => {
+export const findStore = async (params: findStoreInterface) => {
   return prisma.store.findFirst({
     where: {
       OR: [
-        {id: query.id},
-        {user_id: query.user_id},
-        {name: query.name},
-        {username: query.username}
+        {id: params.id},
+        {user_id: params.user_id},
+        {name: params.name},
+        {username: params.username}
       ],
       AND: [
         { deletedAt: null }
@@ -33,10 +19,10 @@ export const findStore = async (query: findStore) => {
   })
 }
 
-export const createStore = async (request: StoreInterface) => {
+export const createStore = async (body: createStoreInterface) => {
   try {
     return await prisma.store.create({
-      data: request,
+      data: body,
       include: {
         user: true
       }
@@ -46,6 +32,7 @@ export const createStore = async (request: StoreInterface) => {
   }
 }
 
+// TODO: change params any interface
 export const updateStore = async (request: any) => {
   try {
     return await prisma.store.update({

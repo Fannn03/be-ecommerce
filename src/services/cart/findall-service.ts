@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
-import { UserJWT } from "../../middleware/auth-middleware";
-import { findAllCart } from "../../repositories/cart";
-import { findStore } from "../../repositories/store";
+import { UserJWT } from "@middleware/auth-middleware";
+import { findAllCart } from "@domain/repositories/cart";
+import { findStore } from "@domain/repositories/store";
 
 export default async (user: UserJWT | JwtPayload, query: any) => {
   const take = Number(query.take) || 5;

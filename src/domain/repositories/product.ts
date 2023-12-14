@@ -1,21 +1,9 @@
-import { PrismaClient } from "@prisma/client"
-import { categoriesQuery } from "../services/product/findall-service"
+import { PrismaClient } from "@prisma/client";
+import { createProductInterface } from "@domain/interfaces/product.interface";
+import { categoriesQuery } from "@services/product/findall-service";
+import { createProductPhotoInterface } from "@domain/interfaces/product-photo.interface";
 
-interface productInterface {
-  store_id: number,
-  categpry_id   : number,
-  name          : string,
-  slug          : string,
-  description   : string,
-  price         : number,
-  stock         : number
-}
-
-interface photosInterface {
-  name: string
-}
-
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export const findAllProduct = async (take: number, skip: number, categories: categoriesQuery) => {
   try {
@@ -82,17 +70,17 @@ export const findProduct = async (query: any) => {
   }
 }
 
-export const createProduct = async (product: productInterface, photos: photosInterface[]) => {
+export const createProduct = async (body: createProductInterface, photos: createProductPhotoInterface[]) => {
   try {
     return prisma.product.create({
       data: {
-        store_id: product.store_id,
-        category_id: product.categpry_id,
-        name: product.name,
-        slug: product.slug,
-        description: product.description,
-        price: product.price,
-        stock: product.stock,
+        store_id: body.store_id,
+        category_id: body.categpry_id,
+        name: body.name,
+        slug: body.slug,
+        description: body.description,
+        price: body.price,
+        stock: body.stock,
         images: {
           create: photos
         }

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { deleteAdmin } from "../../repositories/admin";
+import { deleteAdmin } from "@domain/repositories/admin";
 
 interface deleteParams {
   id      : number;

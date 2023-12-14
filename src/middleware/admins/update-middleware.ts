@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import Joi, { ValidationError, ValidationErrorItem } from 'joi'
-import loggerResponse from '../../helpers/server/logger-response'
+import loggerResponseAdapter from '@common/adapters/server/logger-response.adapter'
 
 interface ErrorMessages {
 	email?: string,
@@ -57,7 +57,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 				message: errMessages
 			})
 
-			return loggerResponse({
+			return loggerResponseAdapter({
 				req: req,
 				res: res,
 				error_message: errMessages
@@ -70,7 +70,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			message: 'internal server error'
 		})
 
-		return loggerResponse({
+		return loggerResponseAdapter({
 			req: req,
 			res: res,
 			error_message: err.message

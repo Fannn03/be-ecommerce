@@ -2,28 +2,21 @@ import { JwtPayload } from "jsonwebtoken";
 import { RatingImage } from "@prisma/client";
 import slugify from "slugify";
 import fs from 'fs';
-import { UserJWT } from "../../middleware/auth-middleware";
-import { createRating, findRating } from "../../repositories/rating";
-import { findProduct } from "../../repositories/product";
-
-export class CreateRatingError {
-  constructor (public message: string, public code: number, public result: string) {
-    this.message = message;
-    this.code = code;
-    this.result = result;
-  }
-}
+import { UserJWT } from "@middleware/auth-middleware";
+import { createRating, findRating } from "@domain/repositories/rating";
+import { findProduct } from "@domain/repositories/product";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export default async (user: JwtPayload | UserJWT, body: any) => {
   const getProduct = await findProduct({
     id: Number(body.product_id)
   })
-  if(!getProduct) throw new CreateRatingError("Product not found", 404, "not found");
+  if(!getProduct) throw new ValidationErrorAdapter("Product not found", 404, "not found");
 
   const isUserAlreadyGiveRating = await findRating({
     product_id: Number(body.product_id)
   }, user.id)
-  if(isUserAlreadyGiveRating) throw new CreateRatingError("You have already submit rating before", 403, "forbidden");
+  if(isUserAlreadyGiveRating) throw new ValidationErrorAdapter("You have already submit rating before", 403, "forbidden");
 
   const photos = (!body.photos.length) ? [] : body.photos.map((data: Express.Multer.File, index: number) => ({
     oldPath: data.path,

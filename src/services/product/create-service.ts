@@ -3,9 +3,10 @@ import slugify from "slugify";
 import { Category, Store } from "@prisma/client";
 import fs from 'fs'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { findStore } from "../../repositories/store";
-import { createProduct } from "../../repositories/product";
-import { findCategory } from "../../repositories/category";
+import { findStore } from "@domain/repositories/store";
+import { createProduct } from "@domain/repositories/product";
+import { findCategory } from "@domain/repositories/category";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export interface productBodyInterface {
   fieldname: string,
@@ -23,14 +24,6 @@ interface productPhotosInterface {
   newname: string
 }
 
-export class CreateProductError {
-  constructor(public message: string, public code: number, public result: string) {
-    this.message = message
-    this.code = code
-    this.result = result
-  }
-}
-
 export default async (req: Request) => {
   const { store_id, category_id, name, photos, description, price, stock } = req.body
 
@@ -42,9 +35,9 @@ export default async (req: Request) => {
       id: Number(store_id)
     })
 
-    if(!category) throw new CreateProductError("Category doesn't exist", 400, "bad request")
-    if(!store) throw new CreateProductError("Store doesn't exist", 400, "bad request")
-    if(store.user_id !== req.user.id) throw new CreateProductError("You don't have any permission to create other product store", 403, "forbidden")
+    if(!category) throw new ValidationErrorAdapter("Category doesn't exist", 400, "bad request")
+    if(!store) throw new ValidationErrorAdapter("Store doesn't exist", 400, "bad request")
+    if(store.user_id !== req.user.id) throw new ValidationErrorAdapter("You don't have any permission to create other product store", 403, "forbidden")
     
   // TODO: minimize loop file photos due reduce lack of memory if it's possible
 
@@ -104,7 +97,7 @@ export default async (req: Request) => {
     })
 
     if(err instanceof PrismaClientKnownRequestError) {
-      throw new CreateProductError(err.message, 404, "bad request")
+      throw new ValidationErrorAdapter(err.message, 404, "bad request")
     } else {
       throw new Error(err.message)
     }

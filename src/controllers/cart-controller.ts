@@ -1,7 +1,8 @@
-import { Request, Response, query } from "express";
-import createCartService, { CreateCartError } from '../services/cart/create-service';
-import findAllCartService from "../services/cart/findall-service";
-import loggerResponse from "../helpers/server/logger-response";
+import { Request, Response } from "express";
+import createCartService from '@services/cart/create-service';
+import findAllCartService from "@services/cart/findall-service";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllCart = async (req: Request, res: Response) => {
   const carts = await findAllCartService(req.user, req.query);
@@ -14,7 +15,7 @@ export const findAllCart = async (req: Request, res: Response) => {
       data: null
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
     })
@@ -27,7 +28,7 @@ export const findAllCart = async (req: Request, res: Response) => {
     data: carts
   })
 
-  return loggerResponse({
+  return loggerResponseAdapter({
     req: req,
     res: res
   })
@@ -44,19 +45,19 @@ export const createCart = async (req: Request, res: Response) => {
       data: cart
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
   } catch (err: any) {
-    if (err instanceof CreateCartError) {
+    if (err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -69,7 +70,7 @@ export const createCart = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message

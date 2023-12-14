@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { Category } from "@prisma/client";
-import findAllCategoryService, { categoryInterface } from '../services/category/findall-service'
-import categoryService, { CreateCategoryError } from '../services/category/create-service'
-import loggerResponse from "../helpers/server/logger-response";
+import findAllCategoryService, { categoryInterface } from '@services/category/findall-service'
+import categoryService from '@services/category/create-service'
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {
@@ -15,7 +16,7 @@ export const findAllCategory = async (req: Request, res: Response) => {
       data: categories
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -26,7 +27,7 @@ export const findAllCategory = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -48,19 +49,19 @@ export const createCategory = async (req: Request, res: Response) => {
       data: category
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
   } catch (err: any) {
-    if(err instanceof CreateCategoryError) {
+    if(err instanceof ValidationErrorAdapter) {
       res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -73,7 +74,7 @@ export const createCategory = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message

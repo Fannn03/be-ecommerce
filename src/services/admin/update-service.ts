@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
-import { updateAdmin } from "../../repositories/admin";
+import { updateAdmin } from "@domain/repositories/admin";
 import { AdminLevel } from '@prisma/client';
 
 interface body {

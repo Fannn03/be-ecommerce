@@ -1,10 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-
-interface createCartInterface {
-  user_id     : string,
-  product_id  : number,
-  quantity    : number
-}
+import { createCartInterface } from "@domain/interfaces/cart.interface";
 
 const prisma = new PrismaClient();
 
@@ -30,13 +25,13 @@ export const findAllCart = async (userId: string, take: number, skip: number) =>
   ])
 }
 
-export const createCart = async (query: createCartInterface) => {
+export const createCart = async (body: createCartInterface) => {
   try {
     return await prisma.productCart.create({
       data: {
-        user_id: query.user_id,
-        product_id: query.product_id,
-        quantity: query.quantity
+        user_id: body.user_id,
+        product_id: body.product_id,
+        quantity: body.quantity
       }
     })
   } catch (err) {

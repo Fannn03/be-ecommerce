@@ -1,15 +1,8 @@
 import { Request } from "express"
 import fs from 'fs/promises'
-import { createStore } from "../../repositories/store"
+import { createStore } from "@domain/repositories/store"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-
-export class CreateStoreError{
-  constructor(public message: string, public code: number, public result: string) {
-    this.message = message
-    this.code = code
-    this.result = result
-  }
-}
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter"
 
 export default async (request: Request) => {
   let {username, name, photos, description} = request.body
@@ -57,9 +50,9 @@ export default async (request: Request) => {
 
     if(err instanceof PrismaClientKnownRequestError) {
       if(err.code === "P2002" && err.meta?.target === "stores_user_id_key") {
-        throw new CreateStoreError("This account already has store exists", 400, "bad request")
+        throw new ValidationErrorAdapter("This account already has store exists", 400, "bad request")
       } else if (err.code === "P2002" && err.meta?.target === "stores_username_key") {
-        throw new CreateStoreError("Username store already taken", 400, "bad request")
+        throw new ValidationErrorAdapter("Username store already taken", 400, "bad request")
       }
     } else {
       throw err

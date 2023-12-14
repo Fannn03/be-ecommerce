@@ -1,26 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { Prisma } from "@prisma/client";
-
-interface findAddressInterface {
-  userId   : string,
-  skip?    : number,
-  take?    : number,
-  query?   : Prisma.AddressWhereInput[]
-}
-
-interface createAddressInterface {
-  user_id    :  string,
-  name       :  string,
-  phone      :  string,
-  street     :  string,
-  zip_code   :  number,
-  village    :  string,
-  district   :  string,
-  regency    :  string,
-  province   :  string,
-  latitude   :  number,
-  longitude  :  number
-}
+import { createAdrressInterface, findAddressInterface } from "@domain/interfaces/address.interface";
 
 const prisma = new PrismaClient();
 
@@ -36,7 +15,7 @@ export const findAddress = async (params: findAddressInterface) => {
   })
 }
 
-export const createAddress = async (body: createAddressInterface) => {
+export const createAddress = async (body: createAdrressInterface) => {
   try {
     return await prisma.address.create({
       data: {

@@ -1,4 +1,4 @@
-import { countRating, findAllRating } from "../../repositories/rating"
+import { countRating, findAllRating } from "@domain/repositories/rating"
 
 export default async (productSlug: string, query: any) => {
   const take = Number(query.take) || 10;

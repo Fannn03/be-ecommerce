@@ -1,21 +1,14 @@
 import { JwtPayload } from "jsonwebtoken";
-import { createCart } from "../../repositories/cart";
-import { UserJWT } from "../../middleware/auth-middleware";
-import { findProduct } from "../../repositories/product";
-
-export class CreateCartError {
-  constructor (public message: string, public code: number, public result: string) {
-    this.message = message;
-    this.code = code;
-    this.result = result;
-  }
-}
+import { createCart } from "@domain/repositories/cart";
+import { UserJWT } from "@middleware/auth-middleware";
+import { findProduct } from "@domain/repositories/product";
+import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export default async (user: UserJWT | JwtPayload, body: any) => {
   const getProduct = await findProduct({
     id: Number(body.product_id)
   })
-  if(!getProduct) throw new CreateCartError("Product doesn't exist", 404, "not found");
+  if(!getProduct) throw new ValidationErrorAdapter("Product doesn't exist", 404, "not found");
 
   try {
     const cart = await createCart({

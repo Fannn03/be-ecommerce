@@ -1,4 +1,4 @@
-import { findProduct } from "../../repositories/product"
+import { findProduct } from "@domain/repositories/product"
 
 export default async (query: string) => {
   try {

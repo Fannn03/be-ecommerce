@@ -1,25 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-
-interface createUserInterface {
-  user_id       : string,
-  product_id    : number,
-  rating        : number,
-  comment       : string,
-}
-
-interface findRatingInterface {
-  product_id?: number,
-  product_slug?: string
-}
-
-interface queryInterface {
-  rating: number
-}
-
-interface countRatingInterface {
-  rating?: number,
-  slug?: string
-}
+import { countRatingInterface, createRatingInterface, findRatingInterface, findRatingQueryInterface } from "@domain/interfaces/rating.interface";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +15,7 @@ export const countRating = async (params: countRatingInterface) => {
   })
 }
 
-export const findAllRating = async (productSlug: string, take: number, skip: number, query?: queryInterface[], sortBy?: any) => {
+export const findAllRating = async (productSlug: string, take: number, skip: number, query?: findRatingQueryInterface[], sortBy?: any) => {
   return await prisma.rating.findMany({
     where: {
       product: {
@@ -74,14 +54,14 @@ export const findRating = async (params: findRatingInterface, userId?: string) =
   })
 }
 
-export const createRating = async (data: createUserInterface, images: Prisma.RatingImageCreateInput[]) => {
+export const createRating = async (body: createRatingInterface, images: Prisma.RatingImageCreateInput[]) => {
   try {
     return await prisma.rating.create({
       data: {
-        user_id: data.user_id,
-        product_id: data.product_id,
-        rating: data.rating,
-        comment: data.comment,
+        user_id: body.user_id,
+        product_id: body.product_id,
+        rating: body.rating,
+        comment: body.comment,
         images: {
           create: images
         }

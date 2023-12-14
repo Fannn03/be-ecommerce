@@ -33,7 +33,7 @@ Berikut adalah beberapa langkah untuk menjalankan program :
 
 - `npm run dev` Menjalankan server dalam mode development atau pengembangan
 
-- `npm run build` Build kode typescipt ke dalam javascript
+- `npm run start` Build kode typescipt ke dalam javascript
 
 - `npm run seed [nama seeder]` Menjalankan data seeder dalam tahap pengembangan
 
