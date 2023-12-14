@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import createDocumentService, { CreateDocumentError } from '@services/document/create-service';
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const createDocument = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const createDocument = async (req: Request, res: Response) => {
       data: document
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -25,7 +25,7 @@ export const createDocument = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -37,7 +37,7 @@ export const createDocument = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message

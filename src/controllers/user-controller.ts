@@ -4,7 +4,7 @@ import loginService, { LoginError } from "@services/user/login-service";
 import verifyEmailService, { VerifyEmailError } from "@services/user/verify-email-service";
 import updateService, { UserUpdateError } from "@services/user/update-service";
 import detailsService from "@services/user/details-service";
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -17,7 +17,7 @@ export const registerUser = async (req: Request, res: Response) => {
       data: userRegister
     });
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -29,7 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
         message: err.message
       });
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -41,7 +41,7 @@ export const registerUser = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err
@@ -61,7 +61,7 @@ export const loginUser = async (req: Request, res: Response) => {
       message: data.message
     });
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: data.message
@@ -73,7 +73,7 @@ export const loginUser = async (req: Request, res: Response) => {
       message: 'cannot retrieve data user'
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     });
@@ -85,7 +85,7 @@ export const loginUser = async (req: Request, res: Response) => {
       message: data.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: data.message
@@ -99,7 +99,7 @@ export const loginUser = async (req: Request, res: Response) => {
     data: data
   });
 
-  return loggerResponse({
+  return loggerResponseAdapter({
     req: req,
     res: res
   })
@@ -115,7 +115,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
       message: 'success verif email'
     });
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -127,7 +127,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
         message: err.message
       });
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -139,7 +139,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
         message: err.message
       });
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -158,7 +158,7 @@ export const detailsuser = async (req: Request, res: Response) => {
     data: user
   })
 
-  return loggerResponse({
+  return loggerResponseAdapter({
     req: req,
     res: res
   })
@@ -175,7 +175,7 @@ export const updateUser = async (req: Request, res: Response) => {
       data: updatedUser
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -187,7 +187,7 @@ export const updateUser = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -200,7 +200,7 @@ export const updateUser = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message

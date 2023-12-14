@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import createRatingService, { CreateRatingError } from '@services/rating/create-service';
 import findAllRatingService from '@services/rating/findall-service';
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const findAllRating = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const findAllRating = async (req: Request, res: Response) => {
         message: 'record data not found'
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res
       })
@@ -26,7 +26,7 @@ export const findAllRating = async (req: Request, res: Response) => {
       data: ratings
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -37,7 +37,7 @@ export const findAllRating = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -56,7 +56,7 @@ export const createRating = async (req: Request, res: Response) => {
       data: rating
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -68,7 +68,7 @@ export const createRating = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -80,7 +80,7 @@ export const createRating = async (req: Request, res: Response) => {
         message: err.message
       })
   
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message

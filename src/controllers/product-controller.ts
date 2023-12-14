@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import findAllProductService from '@services/product/findall-service'
 import createProductService, { CreateProductError } from '@services/product/create-service'
 import detailProductService from '@services/product/detail-service'
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const findAllProduct = async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ export const findAllProduct = async (req: Request, res: Response) => {
         message: 'record data not found'
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res
       })
@@ -28,7 +28,7 @@ export const findAllProduct = async (req: Request, res: Response) => {
       data: products
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -39,7 +39,7 @@ export const findAllProduct = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -58,7 +58,7 @@ export const detailProduct = async (req: Request, res: Response) => {
         message: 'record not found'
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
       })
@@ -71,7 +71,7 @@ export const detailProduct = async (req: Request, res: Response) => {
       data: product
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
     })
@@ -82,7 +82,7 @@ export const detailProduct = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -101,7 +101,7 @@ export const createProduct = async (req: Request, res: Response) => {
       data: product
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
     })
@@ -113,7 +113,7 @@ export const createProduct = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -125,7 +125,7 @@ export const createProduct = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message

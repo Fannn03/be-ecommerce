@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import cache from '@config/cache';
 import { insertUser } from "@domain/repositories/user";
-import { sendRegisterMail } from '@helpers/email/send-email-register';
+import { sendRegisterMail } from '@common/adapters/email/email-register.adapter';
 
 interface CreateBody {
   email     : string,

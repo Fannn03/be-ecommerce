@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import { AdminLevel } from '@prisma/client'
 import 'dotenv/config'
-import loggerResponse from '@helpers/server/logger-response'
+import loggerResponse from '@common/adapters/server/logger-response.adapter'
 
 export interface UserJWT {
   id      : string,

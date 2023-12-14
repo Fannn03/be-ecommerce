@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Category } from "@prisma/client";
 import findAllCategoryService, { categoryInterface } from '@services/category/findall-service'
 import categoryService, { CreateCategoryError } from '@services/category/create-service'
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ export const findAllCategory = async (req: Request, res: Response) => {
       data: categories
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -26,7 +26,7 @@ export const findAllCategory = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -48,7 +48,7 @@ export const createCategory = async (req: Request, res: Response) => {
       data: category
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -60,7 +60,7 @@ export const createCategory = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -73,7 +73,7 @@ export const createCategory = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message

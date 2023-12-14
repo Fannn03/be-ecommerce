@@ -3,7 +3,7 @@ import loginService from "@services/admin/login-service";
 import createService, { CreateAdminError } from "@services/admin/create-service";
 import deleteService from "@services/admin/delete-service";
 import updateService from "@services/admin/update-service";
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const registerAdmin = async (req: Request, res: Response) => {
   try {
@@ -16,7 +16,7 @@ export const registerAdmin = async (req: Request, res: Response) => {
       data: adminRegister
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -28,7 +28,7 @@ export const registerAdmin = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -41,7 +41,7 @@ export const registerAdmin = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -60,7 +60,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
           message: 'cannot retrieved data admin'
         });
 
-        return loggerResponse({
+        return loggerResponseAdapter({
           req: req,
           res: res,
         })
@@ -75,7 +75,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
         }
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
       })
@@ -86,7 +86,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
           message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -105,7 +105,7 @@ export const updateAdmin = async (req: Request, res: Response) => {
         message: 'Failed to update record'
       });
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res
       })
@@ -118,7 +118,7 @@ export const updateAdmin = async (req: Request, res: Response) => {
       data : adminUpdated
     });
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -129,7 +129,7 @@ export const updateAdmin = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -148,7 +148,7 @@ export const deleteAdmin = async (req: Request, res: Response) => {
         message: 'Failed to delete record'
       });
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res
       })
@@ -160,7 +160,7 @@ export const deleteAdmin = async (req: Request, res: Response) => {
       message: 'Success to delete record',
     });
     
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
     })
@@ -171,7 +171,7 @@ export const deleteAdmin = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message

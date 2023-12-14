@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import createService, { CreateStoreError } from "@services/store/create-service";
 import updateService, { UpdateStoreError } from "@services/store/update-service";
 import detailService from "@services/store/detail-service";
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const createStore = async (req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ export const createStore = async (req: Request, res: Response) => {
       data: createdStore
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -27,7 +27,7 @@ export const createStore = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -40,7 +40,7 @@ export const createStore = async (req: Request, res: Response) => {
         message: error.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: error.message
@@ -69,7 +69,7 @@ export const detailStore = async (req: Request, res: Response) => {
       })
     }
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -80,7 +80,7 @@ export const detailStore = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message
@@ -99,7 +99,7 @@ export const updateStore = async (req: Request, res: Response) => {
       data: storeUpdated
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -111,7 +111,7 @@ export const updateStore = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -124,7 +124,7 @@ export const updateStore = async (req: Request, res: Response) => {
         message: error.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: error.message

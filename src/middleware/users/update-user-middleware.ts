@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import loggerResponse from "../../helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 interface ErrorMessages {
   email?: string
@@ -38,7 +38,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 				message: errMessages
 			})
 
-			return loggerResponse({
+			return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: errMessages
@@ -51,7 +51,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err.message

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import createAddressService, { CreateAddressError } from "@services/address/create-service";
-import loggerResponse from "@helpers/server/logger-response";
+import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 export const createAddress = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const createAddress = async (req: Request, res: Response) => {
       data: address
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res
     })
@@ -25,7 +25,7 @@ export const createAddress = async (req: Request, res: Response) => {
         message: err.message
       })
 
-      return loggerResponse({
+      return loggerResponseAdapter({
         req: req,
         res: res,
         error_message: err.message
@@ -38,7 +38,7 @@ export const createAddress = async (req: Request, res: Response) => {
       message: err.message
     })
 
-    return loggerResponse({
+    return loggerResponseAdapter({
       req: req,
       res: res,
       error_message: err
