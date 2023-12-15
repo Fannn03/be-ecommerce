@@ -201,7 +201,7 @@
         }
       }
     },
-    "/users/details": {
+    "/users": {
       "get": {
         "summary": "Details User",
         "description": "Get details user, identified by login token",
@@ -258,9 +258,7 @@
             }
           }
         }
-      }
-    },
-    "/users/update": {
+      },
       "put": {
         "summary": "User Update",
         "description": "Update current data user, identified by login token",
@@ -342,7 +340,7 @@
         }
       }
     },
-    "/documents/create": {
+    "/documents": {
       "post": {
         "summary": "Create Document",
         "description": "Create document of user",
@@ -436,7 +434,7 @@
         }
       }
     },
-    "/address/create": {
+    "/address": {
       "post": {
         "summary": "Create Address",
         "description": "Create user address",
@@ -542,7 +540,7 @@
         }
       }
     },
-    "/admins/create": {
+    "/admins/register": {
       "post": {
         "summary": "Create admin account",
         "description": "Create new admin or cs account",
@@ -700,7 +698,7 @@
         }
       }
     },
-    "/stores/create": {
+    "/stores": {
       "post": {
         "summary": "Create store",
         "description": "Create store for use who wants to sell their products",
@@ -800,72 +798,7 @@
             }
           }
         }
-      }
-    },
-    "/stores/:username": {
-      "get": {
-        "summary": "Detail Store",
-        "description": "Get detail information user store",
-        "tags": ["Stores"],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "required": true,
-            "example": "my-first.store"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 200,
-                  "result": "success",
-                  "message": "success get record data",
-                  "data": {
-                    "id": 12,
-                    "username": "my-first.store",
-                    "name": "My First Store",
-                    "photos": "stores/01HFKNHBF2K58FBJVR4S06EB1T.jpeg",
-                    "description": null,
-                    "createdAt": "2021-01-19T05:08:43.498Z",
-                    "updatedAt": "2021-01-19T05:08:43.498Z"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "not found",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 404,
-                  "result": "not found",
-                  "message": "record not found",
-                  "data": null
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "internal server error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 500,
-                  "result": "internal server error",
-                  "message": "some message server error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/stores/update": {
+      },
       "put": {
         "summary": "Update store",
         "description": "Update their own store",
@@ -976,6 +909,69 @@
         }
       }
     },
+    "/stores/{username}": {
+      "get": {
+        "summary": "Detail Store",
+        "description": "Get detail information user store",
+        "tags": ["Stores"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "example": "my-first.store"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "id": 12,
+                    "username": "my-first.store",
+                    "name": "My First Store",
+                    "photos": "stores/01HFKNHBF2K58FBJVR4S06EB1T.jpeg",
+                    "description": null,
+                    "createdAt": "2021-01-19T05:08:43.498Z",
+                    "updatedAt": "2021-01-19T05:08:43.498Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record not found",
+                  "data": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/categories": {
       "get": {
         "summary": "Get Categories",
@@ -1023,9 +1019,7 @@
             }
           }
         }
-      }
-    },
-    "/categories/create": {
+      },
       "post": {
         "summary": "Create category",
         "description": "Create category of products",
@@ -1209,9 +1203,7 @@
             }
           }
         }
-      }
-    },
-    "/products/create": {
+      },
       "post": {
         "summary": "Create Product",
         "description": "Create product store",
@@ -1402,113 +1394,6 @@
         }
       }
     },
-    "/carts/create": {
-      "post": {
-        "summary": "Create Cart",
-        "description": "Create Product Cart User",
-        "tags": ["Carts"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "description": "Example form request body",
-          "required": true,
-          "content": {
-            "application/json": {
-              "example": {
-                "product_id": 12,
-                "quantity": 3
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 200,
-                  "result": "success",
-                  "message": "record has been created",
-                  "data": {
-                    "id": "fee5d5d9-04ca-4794-a649-db5bc5d5b4ca",
-                    "user_id": "01HFBXQ2EGC8M3G8HB5BA5N43T",
-                    "product_id": 620,
-                    "quantiry": 25,
-                    "createdAt": "2023-11-29T12:57:01.979Z"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad request",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 400,
-                  "result": "bad request",
-                  "message": {
-                    "product_id": "\"product_id\" is required"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 401,
-                  "result": "unauthorized",
-                  "message": "token does not provided"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "forbidden",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 403,
-                  "result": "forbidden",
-                  "message": "invalid token or token already expired"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "not found",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 404,
-                  "result": "not found",
-                  "message": "Product doesn't exist"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "internal server error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "code": 500,
-                  "result": "internal server error",
-                  "message": "some message server error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/carts": {
       "get": {
         "summary": "Get carts",
@@ -1640,9 +1525,114 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "Create Cart",
+        "description": "Create Product Cart User",
+        "tags": ["Carts"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Example form request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "product_id": 12,
+                "quantity": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "record has been created",
+                  "data": {
+                    "id": "fee5d5d9-04ca-4794-a649-db5bc5d5b4ca",
+                    "user_id": "01HFBXQ2EGC8M3G8HB5BA5N43T",
+                    "product_id": 620,
+                    "quantiry": 25,
+                    "createdAt": "2023-11-29T12:57:01.979Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "bad request",
+                  "message": {
+                    "product_id": "\"product_id\" is required"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "Product doesn't exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/ratings/create": {
+    "/ratings": {
       "post": {
         "summary": "Create rating",
         "description": "User create rating product",
