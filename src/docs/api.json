@@ -1110,6 +1110,22 @@
         "summary": "Get Categories",
         "description": "Get all available categories",
         "tags": ["Categories"],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data categories, default 10",
+            "required": false,
+            "example": 5
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "display current pagination of categories, default 0",
+            "required": false,
+            "example": 2
+          }
+        ],
         "responses": {
           "200": {
             "description": "success",
@@ -1119,22 +1135,41 @@
                   "code": 200,
                   "result": "success",
                   "message": "success get record data",
-                  "data": [
-                    {
-                      "id": 1,
-                      "name": "Elektronik",
-                      "slug": "elektronik",
-                      "createdAt": "2023-11-17T02:17:45.932Z",
-                      "updatedAt": "2023-11-17T02:17:45.932Z"
-                    },
-                    {
-                      "id": 3,
-                      "name": "Fashion",
-                      "slug": "fashion",
-                      "createdAt": "2023-11-17T02:18:33.858Z",
-                      "updatedAt": "2023-11-17T02:18:33.858Z"
+                  "data": {
+                    "categories": [
+                      {
+                        "id": 1,
+                        "name": "Electronics",
+                        "slug": "electronics",
+                        "createdAt": "2023-12-09T03:06:51.246Z",
+                        "updatedAt": "2023-12-09T03:06:51.246Z"
+                      },
+                      {
+                        "id": 2,
+                        "name": "Tools",
+                        "slug": "tools",
+                        "createdAt": "2023-12-09T03:06:52.471Z",
+                        "updatedAt": "2023-12-09T03:06:52.471Z"
+                      }
+                    ],
+                    "pages": {
+                      "size": 2,
+                      "total": 2,
+                      "totalPages": 1
                     }
-                  ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "result": "not found",
+                  "message": "record not found"
                 }
               }
             }
