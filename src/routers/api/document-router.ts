@@ -7,6 +7,6 @@ import createDocumentMiddleware from '@middleware/documents/create-document-midd
 const router: Router = express.Router();
 const upload = multer({storage: storageMulter("/temp")})
 
-router.post('/create', upload.single('photos'), createDocumentMiddleware, createDocument);
+router.post('/', upload.single('photos'), createDocumentMiddleware, createDocument);
 
 export default router;

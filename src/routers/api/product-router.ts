@@ -10,6 +10,6 @@ const upload = multer({storage: storageMulter('/temp')});
 
 router.get('/', findAllProduct);
 router.get('/:slug', detailProduct);
-router.post('/create', authMiddleware, upload.array('photos'), createProductMiddleware, createProduct);
+router.post('/', authMiddleware, upload.array('photos'), createProductMiddleware, createProduct);
 
 export default router;

@@ -5,6 +5,6 @@ import { createCart, findAllCart } from '@controllers/cart-controller';
 const router: Router = express.Router();
 
 router.get('/', findAllCart);
-router.post('/create', createCartMiddleware, createCart);
+router.post('/', createCartMiddleware, createCart);
 
 export default router;

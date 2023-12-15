@@ -4,6 +4,6 @@ import { createAddress } from '@controllers/address-controller';
 
 const router: Router = express.Router();
 
-router.post('/create', createAddressMiddleware, createAddress);
+router.post('/', createAddressMiddleware, createAddress);
 
 export default router;

@@ -5,9 +5,9 @@ import authMiddleware from '@middleware/auth-middleware';
 
 const router = express.Router();
 
-router.post('/create', authMiddleware, registerMiddleware, registerAdmin);
+router.post('/register', authMiddleware, registerMiddleware, registerAdmin);
 router.post('/login', loginAdmin);
-router.put('/update', updateAdmin);
+router.put('/', updateAdmin);
 router.delete('/:id', deleteAdmin);
 
 export default router;

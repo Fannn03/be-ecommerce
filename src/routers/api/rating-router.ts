@@ -9,6 +9,6 @@ const router: Router = express.Router();
 const upload = multer({storage: storageMulter('/temp')});
 
 router.get('/:slug', findAllRating);
-router.post('/create', authMiddleware, upload.array('photos'), createRatingMiddleware, createRating);
+router.post('/', authMiddleware, upload.array('photos'), createRatingMiddleware, createRating);
 
 export default router;

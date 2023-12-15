@@ -8,8 +8,8 @@ import authMiddleware from '@middleware/auth-middleware';
 const router = express.Router();
 const upload = multer({storage: storageMulter('/temp')});
 
-router.post('/create', authMiddleware, upload.single('file'), createStoreMiddleware, createStore);
+router.post('/', authMiddleware, upload.single('file'), createStoreMiddleware, createStore);
 router.get('/:username', detailStore);
-router.put('/update', authMiddleware, upload.single('file'), createStoreMiddleware, updateStore);
+router.put('/', authMiddleware, upload.single('file'), createStoreMiddleware, updateStore);
 
 export default router;

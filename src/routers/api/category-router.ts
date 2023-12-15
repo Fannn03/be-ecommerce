@@ -9,6 +9,6 @@ const router: Router = express.Router();
 const upload = multer({storage: storageMulter('/temp')});
 
 router.get('/', findAllCategory);
-router.post("/create", authMiddleware, allowedLevels(["superadmin", "admin"]), upload.single('photos'), createCategoryMiddleware, createCategory);
+router.post("/", authMiddleware, allowedLevels(["superadmin", "admin"]), upload.single('photos'), createCategoryMiddleware, createCategory);
 
 export default router;

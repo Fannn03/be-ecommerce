@@ -18,7 +18,7 @@ router.post('/login', loginUser);
 router.put('/verify', verifyEmail);
 
 // crud user
-router.get('/details', authMiddleware, detailsuser);
-router.put('/update', [authMiddleware, updateUserMiddleware], updateUser);
+router.get('/', authMiddleware, detailsuser);
+router.put('/', [authMiddleware, updateUserMiddleware], updateUser);
 
 export default router;
