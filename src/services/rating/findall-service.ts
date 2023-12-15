@@ -41,7 +41,7 @@ export default async (productSlug: string, query: any) => {
     page: {
       size: ratings.length,
       total: (query.rating) ? await countRating({ rating: Number(query.rating), slug: productSlug }) : countRatings,
-      totalPages: (Number(query.take) !== 1) ? Math.floor(countRatings / take) + 1 : Math.floor(countRatings / take)
+      totalPages: Math.ceil(countRatings / take)
     }
   }
 

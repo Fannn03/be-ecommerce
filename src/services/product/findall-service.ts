@@ -29,7 +29,7 @@ export default async (query: any) => {
       pages: {
         size: mapProducts.length,
         total: products[0],
-        totalPages: (Number(query.take) !== 1) ? Math.floor(products[0] / take) + 1 : Math.floor(products[0] / take)
+        totalPages: Math.ceil(products[0] / take)
       }
     };
 

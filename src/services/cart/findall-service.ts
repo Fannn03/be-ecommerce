@@ -34,7 +34,7 @@ export default async (user: UserJWT | JwtPayload, query: any) => {
     pages: {
       size: mappedCarts.length,
       total: carts[0],
-      totalPages: (Number(query.take) !== 1) ? Math.floor(carts[0] / take) + 1 : Math.floor(carts[0] / take)
+      totalPages: Math.ceil(carts[0] / take)
     }
   }
 
