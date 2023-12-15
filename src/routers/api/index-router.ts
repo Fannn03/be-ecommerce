@@ -1,6 +1,4 @@
 import express from 'express'
-import swaggerUi from 'swagger-ui-express'
-import swaggerDoc from '../docs/api.json'
 import userRouter from './user-router'
 import documentRouter from './document-router'
 import addressRouter from './address-router'
@@ -10,11 +8,10 @@ import categoryRouter from './category-router'
 import productRouter from './product-router'
 import cartRouter from './cart-router'
 import ratingRouter from './rating-router'
-import authMiddleware from '../middleware/auth-middleware'
+import authMiddleware from '@middleware/auth-middleware'
 
 const router = express.Router()
 
-router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 router.use('/users', userRouter);
 router.use('/documents', authMiddleware, documentRouter);
 router.use('/address', authMiddleware, addressRouter);

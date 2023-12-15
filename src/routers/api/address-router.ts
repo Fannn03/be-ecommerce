@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
-import createAddressMiddleware from '../middleware/address/create-address-middleware';
-import { createAddress } from '../controllers/address-controller';
+import createAddressMiddleware from '@middleware/address/create-address-middleware';
+import { createAddress } from '@controllers/address-controller';
 
 const router: Router = express.Router();
 
