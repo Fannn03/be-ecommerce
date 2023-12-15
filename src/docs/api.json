@@ -435,6 +435,139 @@
       }
     },
     "/address": {
+      "get": {
+        "summary": "Get user address",
+        "description": "Get list current user addresses",
+        "tags": ["Address"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Get total data address, default 10",
+            "required": false,
+            "example": 5
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "display current pagination of address, default 0",
+            "required": false,
+            "example": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "result": "success",
+                  "message": "success get record data",
+                  "data": {
+                    "address": [
+                      {
+                        "name": "name",
+                        "phone": "08138111111",
+                        "street": "Perumahan citra graha prima rt 00 / 00 blok h 12 no 12",
+                        "zip_code": 1703,
+                        "village": "Cipeucang",
+                        "district": "Cipeucang",
+                        "regency": "Kabupaten Bogor",
+                        "province": "Jawa Barat",
+                        "latitud": -10.123,
+                        "longitude": 200.215
+                      },
+                      {
+                        "name": "name1",
+                        "phone": "08138111111",
+                        "street": "Perumahan citra graha prima rt 00 / 00 blok h 12 no 12",
+                        "zip_code": 1703,
+                        "village": "Cipeucang",
+                        "district": "Cipeucang",
+                        "regency": "Kabupaten Bogor",
+                        "province": "Jawa Barat",
+                        "latitud": -10.123,
+                        "longitude": 200.215
+                      },
+                      {
+                        "name": "name12",
+                        "phone": "08138111111",
+                        "street": "Perumahan citra graha prima rt 00 / 00 blok h 12 no 12",
+                        "zip_code": 1703,
+                        "village": "Cipeucang",
+                        "district": "Cipeucang",
+                        "regency": "Kabupaten Bogor",
+                        "province": "Jawa Barat",
+                        "latitud": -10.123,
+                        "longitude": 200.215
+                      }
+                    ],
+                    "pages": {
+                      "size": 3,
+                      "total": 3,
+                      "totalPages": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "result": "unauthorized",
+                  "message": "token does not provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "result": "forbidden",
+                  "message": "invalid token or token already expired"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 404,
+                  "result": "not found",
+                  "message": "record data not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 500,
+                  "result": "internal server error",
+                  "message": "some message server error"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "summary": "Create Address",
         "description": "Create user address",
