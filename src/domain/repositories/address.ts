@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createAdrressInterface, findAddressInterface } from "@domain/models/interfaces/address.interface";
+import { countAddressInterface, createAdrressInterface, findAddressInterface } from "@domain/models/interfaces/address.interface";
 
 const prisma = new PrismaClient();
 
@@ -12,6 +12,15 @@ export const findAddress = async (params: findAddressInterface) => {
     },
     skip: (params.skip) ? params.skip : undefined,
     take: (params.take) ? params.take : undefined,
+  })
+}
+
+export const countAddress = async (params: countAddressInterface) => {
+  return await prisma.address.count({
+    where: {
+      deletedAt: null,
+      AND: params.query
+    },
   })
 }
 

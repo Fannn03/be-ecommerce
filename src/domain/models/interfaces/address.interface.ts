@@ -7,6 +7,10 @@ export interface findAddressInterface {
   query?   : Prisma.AddressWhereInput[]
 }
 
+export interface countAddressInterface {
+  query?  :  Prisma.AddressWhereInput[]
+}
+
 export interface createAdrressInterface {
   user_id    :  string,
   name       :  string,
