@@ -4,6 +4,7 @@ import storeSeeder from "./store-seeder";
 import categorySeeder from "./category-seeder";
 import productSeeder from "./product-seeder";
 import ratingSeeder from "./rating-seeder";
+import addressSeeder from "./address-seeder";
 
 interface Seeder {
   name: string,
@@ -22,11 +23,12 @@ interface Seeder {
   seeders.push(categorySeeder)
   seeders.push(productSeeder)
   seeders.push(ratingSeeder)
+  seeders.push(addressSeeder)
 
   try {
     let number = 1;
     for(let seeder in seeders) {
-      console.log(`[S] Running auto seeder [${number}/${seeders.length}]\n`);
+      console.log(`[S] Running auto seeder ${seeders[seeder].name} [${number}/${seeders.length}]\n`);
       await seeders[seeder].run()
       console.log(`\n===========================\n`);
       number++;
