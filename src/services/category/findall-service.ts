@@ -1,5 +1,5 @@
 import { Category } from "@prisma/client"
-import { findAllCategory } from "@domain/repositories/category"
+import { countCategory, findAllCategory } from "@domain/repositories/category"
 
 export interface categoryInterface {
   id        :   number,
@@ -9,24 +9,31 @@ export interface categoryInterface {
   updatedAt :   Date
 }
 
-export default async () => {
+export default async (query: any) => {
+  const take = Number(query.take) || 10
+  const skip = (Number(query.page) * take) - take || 0
+
   try {
-    const categories = await findAllCategory()
-    const response: categoryInterface[] = []
-
-    categories.map((data: Category) => {
-      const payload = {
-        id: data.id,
-        name: data.name,
-        slug: data.slug,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt
-      }
-
-      response.push(payload)
-    })
+    const categories = await findAllCategory(take, skip);
+    const countCategories = await countCategory();
+    const mapCategories = categories.map((data: Category) => ({
+      id: data.id,
+      name: data.name,
+      slug: data.slug,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt
+    }));
     
-    return response
+    const response = {
+      categories: mapCategories,
+      pages: {
+        size: mapCategories.length,
+        total: countCategories,
+        totalPages: Math.ceil(countCategories / take)
+      }
+    };
+
+    return response;
   } catch (err) {
     throw err
   }

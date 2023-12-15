@@ -15,8 +15,18 @@ export const findCategory = async (params: findCategoryInterface) => {
   })
 }
 
-export const findAllCategory = async () => {
+export const findAllCategory = async (take: number, skip: number) => {
   return await prisma.category.findMany({
+    where: {
+      deletedAt: null
+    },
+    take: take,
+    skip: skip
+  })
+}
+
+export const countCategory = async () => {
+  return await prisma.category.count({
     where: {
       deletedAt: null
     }

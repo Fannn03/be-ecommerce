@@ -1,13 +1,26 @@
 import { Request, Response } from "express";
 import { Category } from "@prisma/client";
-import findAllCategoryService, { categoryInterface } from '@services/category/findall-service'
+import findAllCategoryService from '@services/category/findall-service'
 import categoryService from '@services/category/create-service'
 import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const findAllCategory = async (req: Request, res: Response) => {
   try {
-    const categories: categoryInterface[] = await findAllCategoryService()
+    const categories = await findAllCategoryService(req.query);
+
+    if(!categories.categories.length && req.query.page) {
+      res.status(400).json({
+        code: 400,
+        result: 'not found',
+        message: 'record not found'
+      })
+
+      return loggerResponseAdapter({
+        req: req,
+        res: res
+      })
+    }
 
     res.json({
       code: 200,
