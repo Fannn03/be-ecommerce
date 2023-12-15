@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createDocumentInterface } from "@domain/interfaces/document.interface";
+import { createDocumentInterface } from "@domain/models/interfaces/document.interface";
 
 const prisma = new PrismaClient();
 

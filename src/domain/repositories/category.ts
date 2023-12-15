@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createCategoryInterface, findCategoryInterface } from "@domain/interfaces/category.interface";
+import { createCategoryInterface, findCategoryInterface } from "@domain/models/interfaces/category.interface";
 
 const prisma = new PrismaClient();
 

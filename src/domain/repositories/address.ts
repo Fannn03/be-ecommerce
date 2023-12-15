@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createAdrressInterface, findAddressInterface } from "@domain/interfaces/address.interface";
+import { createAdrressInterface, findAddressInterface } from "@domain/models/interfaces/address.interface";
 
 const prisma = new PrismaClient();
 
