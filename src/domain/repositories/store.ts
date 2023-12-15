@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createStoreInterface, findStoreInterface } from "@domain/interfaces/store.interface";
+import { createStoreInterface, findStoreInterface } from "@domain/models/interfaces/store.interface";
 
 const prisma = new PrismaClient();
 

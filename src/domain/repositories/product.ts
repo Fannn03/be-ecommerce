@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { createProductInterface } from "@domain/interfaces/product.interface";
+import { createProductInterface } from "@domain/models/interfaces/product.interface";
 import { categoriesQuery } from "@services/product/findall-service";
-import { createProductPhotoInterface } from "@domain/interfaces/product-photo.interface";
+import { createProductPhotoInterface } from "@domain/models/interfaces/product-photo.interface";
 
 const prisma = new PrismaClient();
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ulid } from 'ulid';
-import { createUserInterface, updateUserInterface } from "@domain/interfaces/user.interface";
+import { createUserInterface, updateUserInterface } from "@domain/models/interfaces/user.interface";
 
 const prisma = new PrismaClient();
 

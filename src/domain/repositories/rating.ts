@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { countRatingInterface, createRatingInterface, findRatingInterface, findRatingQueryInterface } from "@domain/interfaces/rating.interface";
+import { countRatingInterface, createRatingInterface, findRatingInterface, findRatingQueryInterface } from "@domain/models/interfaces/rating.interface";
 
 const prisma = new PrismaClient();
 

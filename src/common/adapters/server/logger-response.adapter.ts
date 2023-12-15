@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import moment from "moment";
-import { models } from '@domain/models/index';
+import { models } from '@domain/schemas/index';
 
 interface loggerInterface {
   req: Request,

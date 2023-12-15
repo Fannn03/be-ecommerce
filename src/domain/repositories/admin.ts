@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createAdminInterface, updateAdminInterface } from "@domain/interfaces/admin.interface";
+import { createAdminInterface, updateAdminInterface } from "@domain/models/interfaces/admin.interface";
 
 const prisma = new PrismaClient()
 
