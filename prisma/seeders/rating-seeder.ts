@@ -16,21 +16,26 @@ export default {
     if(number !== null && number.toLowerCase() === "c") return console.log("Operation cancelled by user.");
     if(!Number(number)) number = "100";
 
-    console.log("[S] Seeding Rating")
+    console.log("[S] Seeding Rating");
+
+    const users = await prisma.user.findMany({
+      where: { deletedAt: null }
+    });
+
+    const products = await prisma.product.findMany({
+      where: { deletedAt: null }
+    })
+
+    if(!users.length) return console.log("There's no data users exist!");
+    if(!products.length) return console.log("There's no data products exist!");
     if(!fs.existsSync('public/images/ratings')) fs.mkdirSync('public/images/ratings', { recursive: true });
 
     for(let i: number = 0; i <= Number(number); i ++) {
-      const users = await prisma.user.findMany({
-        where: { deletedAt: null }
-      });
       const getUser = faker.number.int({
         min: 0,
         max: users.length - 1
       })
 
-      const products = await prisma.product.findMany({
-        where: { deletedAt: null }
-      })
       const getProduct = faker.number.int({
         min: 0,
         max: products.length - 1

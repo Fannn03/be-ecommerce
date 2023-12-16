@@ -19,13 +19,17 @@ export default {
     console.log("[S] Seeding Product")
     if(!fs.existsSync('./public/images/products')) fs.mkdirSync('./public/images/products', { recursive: true });
 
+    const stores: Store[] | [] = await prisma.store.findMany({
+      where: {
+        deletedAt: null
+      }
+    })
+    const categories: Category[] | [] = await prisma.category.findMany()
+
+    if(!stores.length) return console.log("There's no data stores exist!");
+    if(!categories.length) return console.log("There's no data categories exist!");
+
     for(let i = 0; i < Number(number); i++) {
-      const stores: Store[] | [] = await prisma.store.findMany({
-        where: {
-          deletedAt: null
-        }
-      })
-      const categories: Category[] | [] = await prisma.category.findMany()
 
       const getStore = faker.number.int({
         min: 0,

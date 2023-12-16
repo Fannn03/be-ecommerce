@@ -18,18 +18,16 @@ export default {
     console.log("[S] Seeding Store")
     if(!fs.existsSync('./public/images/stores')) fs.mkdirSync('./public/images/stores', {recursive: true});
 
+    const users: User[] | [] = await prisma.user.findMany({
+      where: {
+        store: {is: null}
+      }
+    })
+
+    if(!users.length) return console.log("Cannot find data user that has no store left.");
+
     for(let i = 0; i < Number(number); i++) {
       try {
-        const users: User[] | [] = await prisma.user.findMany({
-          where: {
-            store: {is: null}
-          }
-        })
-
-        if(!users.length) {
-          console.log("Cannot find data user that has no store left.")
-          break
-        }
 
         const getUser = faker.number.int({
           min: 0,
