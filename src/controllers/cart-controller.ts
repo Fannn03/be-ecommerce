@@ -3,6 +3,7 @@ import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.
 import createCartService from '@services/cart/create-service';
 import findAllCartService from "@services/cart/findall-service";
 import updateCartService from "@services/cart/update-service";
+import deleteCartService from "@services/cart/delete-service";
 
 export const findAllCart = async (req: Request, res: Response) => {
   const carts = await findAllCartService(req.user, req.query);
@@ -67,6 +68,31 @@ export const updateCart = async (req: Request, res: Response) => {
       code: 200,
       result: 'success',
       message: 'success update record data',
+      data: cart
+    })
+  } catch (err: any) {
+    return res.status(500).json({
+      code: 500,
+      result: 'internal server error',
+      message: err.message
+    })
+  }
+}
+
+export const deleteCart = async (req: Request, res: Response) => {
+  try {
+    const cart = await deleteCartService(req.user, req.params.id);
+
+    if(!cart) return res.status(404).json({
+      code: 404,
+      result: 'not found',
+      message: 'record to update not found'
+    })
+
+    return res.json({
+      code: 200,
+      result: 'success',
+      message: 'success delete record data',
       data: cart
     })
   } catch (err: any) {
