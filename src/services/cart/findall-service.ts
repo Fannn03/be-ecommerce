@@ -13,6 +13,7 @@ export default async (user: UserJWT | JwtPayload, query: any) => {
   const mappedCarts = await Promise.all(carts[1].map(async(data: any) => {
     const store = await findStore({id: data.product.store_id});
     return {
+      cartId: data.id,
       store: {
         id: store?.id,
         name: store?.name,

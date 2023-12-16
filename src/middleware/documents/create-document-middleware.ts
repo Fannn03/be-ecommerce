@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs'
-import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 interface ErrorMessage {
   username?: string,
@@ -59,29 +58,17 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         if(data.context?.key) errMessages[data.context?.key as keyof ErrorMessage] = data.message;
       })
 
-      res.status(400).json({
+      return res.status(400).json({
         code: 400,
         result: 'bad request',
         message: errMessages
       });
-
-      return loggerResponseAdapter({
-        req: req,
-        res: res,
-        error_message: err.message
-      })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       code: 500,
       result: 'internal server error',
       message: err.message
-    })
-
-    return loggerResponseAdapter({
-      req: req,
-      res: res,
-      error_message: err.message
     })
   }
 

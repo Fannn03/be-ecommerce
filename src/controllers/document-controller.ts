@@ -1,47 +1,29 @@
 import { Request, Response } from "express";
 import createDocumentService from '@services/document/create-service';
-import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 import { ValidationErrorAdapter } from "@common/adapters/error/validation-error.adapter";
 
 export const createDocument = async (req: Request, res: Response) => {
   try {
     const document = await createDocumentService(req.user, req.body);
 
-    res.json({
+    return res.json({
       code: 200,
       result: 'success',
       message: 'record has been created',
       data: document
     })
-
-    return loggerResponseAdapter({
-      req: req,
-      res: res
-    })
   } catch (err: any) {
     if (err instanceof ValidationErrorAdapter) {
-      res.status(err.code).json({
+      return res.status(err.code).json({
         code: err.code,
         result: err.result,
         message: err.message
       })
-
-      return loggerResponseAdapter({
-        req: req,
-        res: res,
-        error_message: err.message
-      })
     } else {
-      res.status(500).json({
+      return res.status(500).json({
         code: 500,
         result: 'internal server error',
         message: err.message
-      })
-
-      return loggerResponseAdapter({
-        req: req,
-        res: res,
-        error_message: err.message
       })
     }
   }

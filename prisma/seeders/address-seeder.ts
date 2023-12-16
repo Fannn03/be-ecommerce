@@ -21,6 +21,8 @@ export default {
       }
     })
 
+    if(!users.length) return console.log("There's not data users exist!");
+
     for(let i = 0; i <= Number(number); i++) {
       const getUser = faker.number.int({
         min: 0,
