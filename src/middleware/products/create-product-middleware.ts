@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import fs from 'fs'
 import { productBodyInterface } from "@services/product/create-service";
-import loggerResponseAdapter from "@common/adapters/server/logger-response.adapter";
 
 interface ErrorMessage {
   name?: string
@@ -74,35 +73,23 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         fs.rmSync(`public/images/temp/${data.filename}`)
       })
     }
-    
+
     if(err instanceof Joi.ValidationError) {
       err.details.map((data: Joi.ValidationErrorItem) => {
         errMessage[data.context?.key as keyof ErrorMessage] = data.message
       })
 
-      res.status(400).json({
+      return res.status(400).json({
         code: 400,
         result: 'bad request',
         message: errMessage
       })
-
-      return loggerResponseAdapter({
-        req: req,
-        res: res,
-        error_message: errMessage
-      })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       code: 500,
       result: 'internal server error',
       message: err.message
-    })
-
-    return loggerResponseAdapter({
-      req: req,
-      res: res,
-      error_message: err.message
     })
   }
 
